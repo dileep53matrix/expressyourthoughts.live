@@ -828,4 +828,42 @@
             const successModal = document.getElementById('successModal');
             const errorModal = document.getElementById('errorModal');
             if (e.target === successModal) {
-                success
+                successModal.style.display = 'none';
+            }
+            if (e.target === errorModal) {
+                errorModal.style.display = 'none';
+            }
+        });
+
+        // Initialize particles when page loads
+        window.addEventListener('load', createParticles);
+
+        // Add some interactive hover effects
+        document.querySelectorAll('.rule-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+                this.style.transition = 'all 0.3s ease';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Dynamic background color change on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            // Subtle parallax effect for hero section
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        console.log('🚀 Express Your Thoughts website loaded successfully!');
+        console.log('💡 Ready to collect amazing thoughts and ideas!');
+    </script>
+</body>
+</html>
