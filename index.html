@@ -522,61 +522,61 @@
     <section id="submit" class="section">
         <h2>Submit Your Thoughts</h2>
         <div class="form-container">
-            <form id="thoughtForm" action="https://formspree.io/f/https://formspree.io/f/xldpqerp" method="POST">
-                <!-- Hidden fields for better email organization -->
-                <input type="hidden" name="_subject" value="New Thought Submission - Express Your Thoughts Contest">
-                <input type="hidden" name="_replyto" value="">
-                <input type="hidden" name="_cc" value="dileepchoudhary1008@gmail.com">
-                <input type="hidden" name="_format" value="plain">
-                
-                <div class="form-group">
-                    <label for="name">Your Name *</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email Address *</label>
-                    <input type="email" id="email" name="_replyto" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="category">Category *</label>
-                    <select id="category" name="category" required>
-                        <option value="">Select a category</option>
-                        <option value="future-technology">Future Technology</option>
-                        <option value="social-impact">Social Impact</option>
-                        <option value="environmental">Environmental Solutions</option>
-                        <option value="personal-growth">Personal Growth</option>
-                        <option value="business-innovation">Business Innovation</option>
-                        <option value="education">Education & Learning</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="title">Title of Your Thought *</label>
-                    <input type="text" id="title" name="title" required placeholder="Give your idea a compelling title">
-                </div>
-                
-                <div class="form-group">
-                    <label for="thoughts">Your Thoughts & Future Plans *</label>
-                    <textarea id="thoughts" name="thoughts" required 
-                              placeholder="Share your vision, ideas, and plans for the future. Be creative, be bold, be inspiring! What do you see happening? What would you like to create or achieve?"></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="impact">Expected Impact</label>
-                    <textarea id="impact" name="impact" 
-                              placeholder="How do you think your idea could impact the world or your community?"></textarea>
-                </div>
-                
-                <!-- Anti-spam field -->
-                <input type="text" name="_gotcha" style="display:none">
-                
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
-                    Submit My Thoughts ✨
-                </button>
-            </form>
+ <form id="thoughtForm" action="https://api.web3forms.com/submit" method="POST">
+    <!-- Web3Forms Access Key -->
+    <input type="hidden" name="access_key" value="498e3586-a0c2-4658-8459-522d68585558">
+    <input type="hidden" name="subject" value="New Thought Submission - Express Your Thoughts Contest">
+    <input type="hidden" name="from_name" value="Express Your Thoughts">
+    
+    <div class="form-group">
+        <label for="name">Your Name *</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="category">Category *</label>
+        <select id="category" name="category" required>
+            <option value="">Select a category</option>
+            <option value="future-technology">Future Technology</option>
+            <option value="social-impact">Social Impact</option>
+            <option value="environmental">Environmental Solutions</option>
+            <option value="personal-growth">Personal Growth</option>
+            <option value="business-innovation">Business Innovation</option>
+            <option value="education">Education & Learning</option>
+            <option value="other">Other</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="title">Title of Your Thought *</label>
+        <input type="text" id="title" name="title" required placeholder="Give your idea a compelling title">
+    </div>
+    
+    <div class="form-group">
+        <label for="thoughts">Your Thoughts & Future Plans *</label>
+        <textarea id="thoughts" name="message" required 
+                  placeholder="Share your vision, ideas, and plans for the future. Be creative, be bold, be inspiring! What do you see happening? What would you like to create or achieve?"></textarea>
+    </div>
+    
+    <div class="form-group">
+        <label for="impact">Expected Impact</label>
+        <textarea id="impact" name="impact" 
+                  placeholder="How do you think your idea could impact the world or your community?"></textarea>
+    </div>
+    
+    <!-- Anti-spam -->
+    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+    <input type="hidden" name="redirect" value="https://expressyourthoughts.live#success">
+    
+    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+        Submit My Thoughts ✨
+    </button>
+</form>
         </div>
     </section>
 
@@ -738,54 +738,17 @@
             }
         }
 
-        // Form submission with email backend
-        document.getElementById('thoughtForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalText = submitButton.innerHTML;
-            
-            // Show loading state
-            submitButton.innerHTML = 'Sending... ⏳';
-            submitButton.disabled = true;
-            
-            try {
-                // Get form data
-                const formData = new FormData(this);
-                
-                // Add timestamp and additional info
-                formData.append('submission_time', new Date().toLocaleString());
-                formData.append('user_agent', navigator.userAgent);
-                formData.append('page_url', window.location.href);
-                
-                // Send to Formspree (replace with your actual endpoint)
-                const response = await fetch('https://formspree.io/f/xldpqerp', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-                
-                if (response.ok) {
-                    showSuccessModal();
-                    this.reset();
-                    
-                    // Send confirmation email to user
-                    await sendConfirmationEmail(formData.get('email'), formData.get('name'));
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-                
-            } catch (error) {
-                console.error('Error:', error);
-                showErrorModal();
-            } finally {
-                // Reset button
-                submitButton.innerHTML = originalText;
-                submitButton.disabled = false;
-            }
-        });
+        // Simple form submission with success message
+document.getElementById('thoughtForm').addEventListener('submit', function(e) {
+    const submitButton = this.querySelector('button[type="submit"]');
+    submitButton.innerHTML = 'Sending... ⏳';
+    submitButton.disabled = true;
+    
+    // Form will submit to Web3Forms, then show success
+    setTimeout(() => {
+        showSuccessModal();
+    }, 1000);
+});
         
         // Send confirmation email to user
         async function sendConfirmationEmail(userEmail, userName) {
