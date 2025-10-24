@@ -397,6 +397,135 @@
         .social-link:hover {
             transform: scale(1.1) rotate(5deg);
         }
+        /* About Me Section */
+        .about-me-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .about-me-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: start;
+            margin-bottom: 4rem;
+        }
+
+        .about-me-photo {
+            text-align: center;
+            position: sticky;
+            top: 100px;
+        }
+
+        .about-me-photo img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .about-me-photo img:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-caption {
+            margin-top: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .about-me-text {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-me-text h3 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-me-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-me-contact {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .about-me-contact p {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .about-me-contact strong {
+            font-size: 1.1rem;
+        }
+
+        /* Photo Gallery */
+        .photo-gallery-section {
+            margin-top: 4rem;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 1.5rem 1rem 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
 /* Winners Gallery */
         .contest-title {
             text-align: center;
@@ -429,7 +558,22 @@
             gap: 2.5rem;
             margin-bottom: 4rem;
         }
+.about-me-container {
+                grid-template-columns: 1fr;
+            }
 
+            .about-me-photo {
+                position: relative;
+                top: 0;
+            }
+
+            .about-me-text {
+                padding: 2rem;
+            }
+
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
         .winner-card {
             background: white;
             border-radius: 20px;
@@ -760,32 +904,103 @@
             </div>
         </div>
     </section>
-
-    <!-- About Section -->
-    <section id="about" class="section">
-        <h2>About Express Your Thoughts</h2>
-        <div class="about-content">
-            <div class="about-text">
-                <p>
-                    Express Your Thoughts is more than just a platform - it's a community of forward-thinkers, 
-                    dreamers, and innovators who believe in the power of ideas to shape our future.
-                </p>
-                <p>
-                    Founded with the vision of giving everyone a voice in tomorrow's world, we provide a space 
-                    where your thoughts matter, your plans inspire others, and your creativity is rewarded.
-                </p>
-                <p>
-                    Whether you're envisioning the next breakthrough in technology, planning a social impact 
-                    project, or dreaming of a better world, this is your platform to share, connect, and be heard.
-                </p>
-                <p>
-                    <strong>Join us in building a community where thoughts become reality and dreams find their wings, Remember This name : Dileep.</strong>
-                </p>
+<!-- About Me Section -->
+    <section id="about" class="section about-me-section">
+        <h2>About Me</h2>
+        
+        <div class="about-me-container">
+            <!-- My Photo -->
+            <div class="about-me-photo">
+                <img src="https://via.placeholder.com/400x400/667eea/ffffff?text=Your+Photo" alt="Dileep Choudhary">
+                <div class="photo-caption">Dileep Choudhary</div>
             </div>
-            <div class="about-image">
-                💭
+            
+            <!-- About Me Text -->
+            <div class="about-me-text">
+                <h3>Welcome to Express Your Thoughts!</h3>
+                <p>
+                    Hello! I'm <strong>Dileep Choudhary</strong>, the founder of Express Your Thoughts. 
+                    I believe that everyone has unique ideas and visions that deserve to be heard and celebrated.
+                </p>
+                <p>
+                    This platform was born from my passion for innovation and my desire to create a space 
+                    where creative minds can share their thoughts about the future, inspire others, and be 
+                    rewarded for their brilliance.
+                </p>
+                <p>
+                    Through this contest platform, I aim to discover and support the next generation of 
+                    thinkers, innovators, and changemakers. Your ideas have the power to shape tomorrow, 
+                    and I'm here to help amplify your voice.
+                </p>
+                <p>
+                    <strong>My Mission:</strong> To create a community where thoughts matter, creativity thrives, 
+                    and great ideas are recognized and rewarded.
+                </p>
+                <div class="about-me-contact">
+                    <p><strong>📧 Email:</strong> choudharydileep990@gmail.com</p>
+                    <p><strong>🌐 Website:</strong> expressyourthoughts.live</p>
+                </div>
             </div>
         </div>
+
+        <!-- Photo Gallery -->
+        <div class="photo-gallery-section">
+            <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; color: #667eea;">
+                📸 My Journey
+            </h3>
+            
+            <div class="photo-gallery">
+                <!-- Photo 1 -->
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/400x300/667eea/ffffff?text=Photo+1" alt="Gallery Photo 1">
+                    <div class="gallery-caption">Working on Ideas</div>
+                </div>
+                
+                <!-- Photo 2 -->
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/400x300/764ba2/ffffff?text=Photo+2" alt="Gallery Photo 2">
+                    <div class="gallery-caption">Community Events</div>
+                </div>
+                
+                <!-- Photo 3 -->
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/400x300/f093fb/ffffff?text=Photo+3" alt="Gallery Photo 3">
+                    <div class="gallery-caption">Innovation Sessions</div>
+                </div>
+                
+                <!-- Photo 4 -->
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/400x300/f5576c/ffffff?text=Photo+4" alt="Gallery Photo 4">
+                    <div class="gallery-caption">Meeting Winners</div>
+                </div>
+                
+                <!-- Photo 5 -->
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/400x300/667eea/ffffff?text=Photo+5" alt="Gallery Photo 5">
+                    <div class="gallery-caption">Creative Workspace</div>
+                </div>
+                
+                <!-- Photo 6 -->
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/400x300/764ba2/ffffff?text=Photo+6" alt="Gallery Photo 6">
+                    <div class="gallery-caption">Behind the Scenes</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Update Instructions (HTML comment - won't show on website) -->
+        <!--
+        TO UPDATE YOUR PROFILE:
+        1. Replace main photo: Change "https://via.placeholder.com/400x400..." to your photo URL
+        2. Update text: Edit the paragraphs to tell your story
+        3. Update email and website if needed
+        
+        TO UPDATE PHOTO GALLERY:
+        1. Upload your photos to GitHub (create "images" folder)
+        2. Replace placeholder URLs with: "images/photo1.jpg", "images/photo2.jpg", etc.
+        3. Update gallery captions to describe each photo
+        4. Add more photos by copying a gallery-item div
+        -->
     </section>
 <!-- Winners Gallery Section -->
     <section id="winners" class="section">
