@@ -134,6 +134,28 @@
             list-style: none;
             gap: 2rem;
         }
+        .auth-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .btn-login, .btn-signup {
+                font-size: 0.85rem;
+                padding: 6px 15px;
+            }
+
+            .opportunity-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                flex: 1;
+                min-width: 100px;
+            }
 
         .nav-links a {
             text-decoration: none;
@@ -843,7 +865,256 @@
         .close:hover {
             color: #000;
         }
+/* Auth Buttons in Navigation */
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
 
+        .btn-login, .btn-signup {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-login:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-signup {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-logout {
+            padding: 8px 20px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        /* Auth Modals */
+        .auth-modal-content {
+            max-width: 450px;
+        }
+
+        .auth-modal-content h2 {
+            color: #667eea;
+            margin-bottom: 2rem;
+        }
+
+        .auth-modal-content .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .auth-modal-content label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .auth-modal-content input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .auth-modal-content input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Dashboard Modal */
+        .dashboard-modal-content {
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e1e5e9;
+        }
+
+        .dashboard-header h2 {
+            color: #667eea;
+            margin: 0;
+        }
+
+        /* Dashboard Tabs */
+        .dashboard-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e1e5e9;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: #667eea;
+        }
+
+        .tab-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Opportunity Cards */
+        .opportunity-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .opportunity-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .opportunity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .opportunity-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .opportunity-badge.hackathon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .opportunity-badge.internship {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .opportunity-card h4 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 1rem;
+            padding-right: 100px;
+        }
+
+        .opportunity-desc {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .opportunity-details {
+            background: rgba(255,255,255,0.7);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .opportunity-details p {
+            margin: 0.5rem 0;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .opportunity-card .btn {
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        /* Profile Info */
+        .profile-info {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .profile-info p {
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            color: #555;
+        }
+
+        .profile-info strong {
+            color: #667eea;
+            display: inline-block;
+            min-width: 150px;
+        }
+
+        /* Submissions List */
+        .submissions-list {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            min-height: 200px;
+        }
         .success-icon {
             font-size: 4rem;
             color: #4CAF50;
@@ -858,17 +1129,19 @@
     <nav id="navbar">
         <div class="nav-container">
             <a href="#" class="logo">Express Your Thoughts</a>
-            <ul class="nav-links">
+        <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#submit">Submit</a></li>
+                <li><a href="#winners">Winners</a></li>
+                <li><a href="#team">Team</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#rules">Rules</a></li>
-                <li><a href="#Winners">Winners</a></li>
-                <li><a href="#team">Team</a></li>
                 <li><a href="#social">Social</a></li>
-                
             </ul>
-        </div>
+            <div class="auth-buttons">
+                <button class="btn-login" onclick="openLoginModal()">Login</button>
+                <button class="btn-signup" onclick="openSignupModal()">Sign Up</button>
+            </div>
     </nav>
 
     <!-- Hero Section -->
@@ -1294,6 +1567,165 @@
             </button>
         </div>
     </div>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>🔐 Login to Your Account</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                <p style="text-align: center; margin-top: 1rem;">
+                    Don't have an account? <a href="#" onclick="switchToSignup()" style="color: #667eea; font-weight: bold;">Sign Up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close" onclick="closeSignupModal()">&times;</span>
+            <h2>✨ Create Your Account</h2>
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required placeholder="Create a password" minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm">Confirm Password</label>
+                    <input type="password" id="signup-confirm" required placeholder="Confirm your password">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+                <p style="text-align: center; margin-top: 1rem;">
+                    Already have an account? <a href="#" onclick="switchToLogin()" style="color: #667eea; font-weight: bold;">Login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Dashboard Modal -->
+    <div id="dashboardModal" class="modal dashboard-modal">
+        <div class="modal-content dashboard-modal-content">
+            <span class="close" onclick="closeDashboard()">&times;</span>
+            
+            <div class="dashboard-header">
+                <h2>🎯 Welcome, <span id="dashboard-username">User</span>!</h2>
+                <button class="btn-logout" onclick="handleLogout()">Logout</button>
+            </div>
+
+            <!-- Dashboard Tabs -->
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" onclick="showTab('opportunities')">Opportunities</button>
+                <button class="tab-btn" onclick="showTab('submissions')">My Submissions</button>
+                <button class="tab-btn" onclick="showTab('profile')">Profile</button>
+            </div>
+
+            <!-- Opportunities Tab -->
+            <div id="opportunities-tab" class="tab-content active">
+                <h3>🚀 Upcoming Hackathons & Internships</h3>
+                
+                <div class="opportunity-cards">
+                    <!-- Hackathon 1 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-badge hackathon">Hackathon</div>
+                        <h4>Tech Innovation Challenge 2025</h4>
+                        <p class="opportunity-desc">Build innovative solutions for real-world problems. Win prizes up to ₹1,00,000!</p>
+                        <div class="opportunity-details">
+                            <p><strong>📅 Deadline:</strong> March 15, 2025</p>
+                            <p><strong>💰 Prize Pool:</strong> ₹1,00,000</p>
+                            <p><strong>📍 Mode:</strong> Online</p>
+                        </div>
+                        <a href="https://example.com/hackathon1" target="_blank" class="btn btn-primary">Join Now →</a>
+                    </div>
+
+                    <!-- Internship 1 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-badge internship">Internship</div>
+                        <h4>Software Development Internship</h4>
+                        <p class="opportunity-desc">6-month paid internship with leading tech company. Hands-on experience with latest technologies.</p>
+                        <div class="opportunity-details">
+                            <p><strong>📅 Deadline:</strong> February 28, 2025</p>
+                            <p><strong>💰 Stipend:</strong> ₹15,000/month</p>
+                            <p><strong>📍 Location:</strong> Remote</p>
+                        </div>
+                        <a href="https://example.com/internship1" target="_blank" class="btn btn-primary">Apply Now →</a>
+                    </div>
+
+                    <!-- Hackathon 2 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-badge hackathon">Hackathon</div>
+                        <h4>AI/ML Competition 2025</h4>
+                        <p class="opportunity-desc">Solve machine learning challenges and compete with top developers globally.</p>
+                        <div class="opportunity-details">
+                            <p><strong>📅 Deadline:</strong> April 10, 2025</p>
+                            <p><strong>💰 Prize Pool:</strong> ₹75,000</p>
+                            <p><strong>📍 Mode:</strong> Online</p>
+                        </div>
+                        <a href="https://example.com/hackathon2" target="_blank" class="btn btn-primary">Join Now →</a>
+                    </div>
+
+                    <!-- Internship 2 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-badge internship">Internship</div>
+                        <h4>Data Science Internship</h4>
+                        <p class="opportunity-desc">Work on real data projects and learn from industry experts. Certificate provided.</p>
+                        <div class="opportunity-details">
+                            <p><strong>📅 Deadline:</strong> March 5, 2025</p>
+                            <p><strong>💰 Stipend:</strong> ₹12,000/month</p>
+                            <p><strong>📍 Location:</strong> Hybrid</p>
+                        </div>
+                        <a href="https://example.com/internship2" target="_blank" class="btn btn-primary">Apply Now →</a>
+                    </div>
+                </div>
+
+                <!-- Instructions for updating opportunities (HTML comment) -->
+                <!--
+                TO ADD NEW OPPORTUNITIES:
+                1. Copy an opportunity-card div
+                2. Update the badge (hackathon/internship)
+                3. Update title, description, deadline, prize/stipend, mode/location
+                4. Update the link URL
+                -->
+            </div>
+
+            <!-- My Submissions Tab -->
+            <div id="submissions-tab" class="tab-content">
+                <h3>📝 Your Contest Submissions</h3>
+                <div class="submissions-list" id="user-submissions">
+                    <p style="text-align: center; color: #888; padding: 2rem;">
+                        Your submissions will appear here after you participate in contests.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div id="profile-tab" class="tab-content">
+                <h3>👤 Your Profile</h3>
+                <div class="profile-info">
+                    <p><strong>Name:</strong> <span id="profile-name">-</span></p>
+                    <p><strong>Email:</strong> <span id="profile-email">-</span></p>
+                    <p><strong>Member Since:</strong> <span id="profile-joined">-</span></p>
+                    <p><strong>Total Submissions:</strong> <span id="profile-submissions">0</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Smooth scrolling for navigation links
@@ -1431,6 +1863,155 @@ document.getElementById('thoughtForm').addEventListener('submit', function(e) {
 
         console.log('🚀 Express Your Thoughts website loaded successfully!');
         console.log('💡 Ready to collect amazing thoughts and ideas!');
+        // ===== AUTHENTICATION SYSTEM =====
+        
+        // Check if user is logged in on page load
+        window.addEventListener('load', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                updateAuthUI(JSON.parse(currentUser));
+            }
+        });
+
+        // Open/Close Modals
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function openSignupModal() {
+            document.getElementById('signupModal').style.display = 'block';
+        }
+
+        function closeSignupModal() {
+            document.getElementById('signupModal').style.display = 'none';
+        }
+
+        function openDashboard() {
+            document.getElementById('dashboardModal').style.display = 'block';
+        }
+
+        function closeDashboard() {
+            document.getElementById('dashboardModal').style.display = 'none';
+        }
+
+        // Switch between login and signup
+        function switchToSignup() {
+            closeLoginModal();
+            openSignupModal();
+        }
+
+        function switchToLogin() {
+            closeSignupModal();
+            openLoginModal();
+        }
+
+        // Handle Signup
+        function handleSignup(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+
+            // Validate passwords match
+            if (password !== confirm) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            // Get existing users or create new array
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // Check if user already exists
+            if (users.find(u => u.email === email)) {
+                alert('Email already registered! Please login.');
+                switchToLogin();
+                return;
+            }
+
+            // Create new user
+            const newUser = {
+                name: name,
+                email: email,
+                password: password,
+                joinedDate: new Date().toLocaleDateString(),
+                submissions: []
+            };
+
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+
+            alert('Account created successfully! Welcome aboard! 🎉');
+            closeSignupModal();
+            updateAuthUI(newUser);
+            openDashboard();
+        }
+
+        // Handle Login
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                alert('Login successful! Welcome back! 👋');
+                closeLoginModal();
+                updateAuthUI(user);
+                openDashboard();
+            } else {
+                alert('Invalid email or password. Please try again.');
+            }
+        }
+
+        // Handle Logout
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('currentUser');
+                location.reload();
+            }
+        }
+
+        // Update UI based on auth state
+        function updateAuthUI(user) {
+            const authButtons = document.querySelector('.auth-buttons');
+            authButtons.innerHTML = `
+                <button class="btn-login" onclick="openDashboard()">Dashboard</button>
+                <button class="btn-signup" onclick="handleLogout()">Logout</button>
+            `;
+
+            // Update dashboard user info
+            document.getElementById('dashboard-username').textContent = user.name;
+            document.getElementById('profile-name').textContent = user.name;
+            document.getElementById('profile-email').textContent = user.email;
+            document.getElementById('profile-joined').textContent = user.joinedDate;
+            document.getElementById('profile-submissions').textContent = user.submissions.length;
+        }
+
+        // Dashboard Tab Switching
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+        }
     </script>
 </body>
 </html>
