@@ -482,6 +482,10 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
+        .team-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
 
         .gallery-item {
             position: relative;
@@ -690,6 +694,76 @@
             font-weight: bold;
             font-size: 1rem;
         }
+        /* Team Section */
+        .team-section {
+            background: white;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .team-member {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .team-photo {
+            margin-bottom: 1.5rem;
+        }
+
+        .team-photo img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover .team-photo img {
+            transform: scale(1.1);
+        }
+
+        .team-info {
+            padding: 0 1rem;
+        }
+
+        .team-name {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .team-position {
+            font-size: 1rem;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-description {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+        }
         /* Footer */
         footer {
             background: #333;
@@ -789,7 +863,10 @@
                 <li><a href="#submit">Submit</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#rules">Rules</a></li>
+                <li><a href="#Winners">Winners</a></li>
+                <li><a href="#team">Team</a></li>
                 <li><a href="#social">Social</a></li>
+                
             </ul>
         </div>
     </nav>
@@ -1074,6 +1151,83 @@
                 </div>
             </div>
         </div>
+    </section>
+    <!-- Meet My Team Section -->
+    <section id="team" class="section team-section">
+        <h2>👥 Meet My Team</h2>
+        <p style="text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 3rem;">
+            The amazing people behind Express Your Thoughts who make it all possible!
+        </p>
+        
+        <div class="team-grid">
+            <!-- Team Member 1 -->
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://via.placeholder.com/250x250/667eea/ffffff?text=Member+1" alt="Team Member 1">
+                </div>
+                <div class="team-info">
+                    <h3 class="team-name">John Doe</h3>
+                    <p class="team-position">Co-Founder & CEO</p>
+                    <p class="team-description">
+                        Leads the vision and strategy of Express Your Thoughts with passion for innovation.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://via.placeholder.com/250x250/764ba2/ffffff?text=Member+2" alt="Team Member 2">
+                </div>
+                <div class="team-info">
+                    <h3 class="team-name">Sarah Smith</h3>
+                    <p class="team-position">Creative Director</p>
+                    <p class="team-description">
+                        Brings creativity and design expertise to make every idea shine beautifully.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Team Member 3 -->
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://via.placeholder.com/250x250/f093fb/ffffff?text=Member+3" alt="Team Member 3">
+                </div>
+                <div class="team-info">
+                    <h3 class="team-name">Mike Johnson</h3>
+                    <p class="team-position">Technical Lead</p>
+                    <p class="team-description">
+                        Ensures our platform runs smoothly and securely for all our users.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Team Member 4 -->
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://via.placeholder.com/250x250/f5576c/ffffff?text=Member+4" alt="Team Member 4">
+                </div>
+                <div class="team-info">
+                    <h3 class="team-name">Emily Davis</h3>
+                    <p class="team-position">Community Manager</p>
+                    <p class="team-description">
+                        Connects with our community and ensures everyone feels heard and valued.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Update Instructions (HTML comment - won't show on website) -->
+        <!--
+        TO UPDATE TEAM MEMBERS:
+        1. Upload team photos to "images" folder (e.g., team1.jpg, team2.jpg, etc.)
+        2. Replace placeholder URLs with: "images/team1.jpg", etc.
+        3. Update team member names
+        4. Update their positions/titles
+        5. Update descriptions about each team member
+        
+        Photo size recommendation: 250x250 pixels (square)
+        -->
     </section>
     <!-- Social Media Section -->
     <section id="social" class="social-section section">
