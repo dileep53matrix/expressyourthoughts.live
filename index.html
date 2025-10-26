@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -873,7 +878,7 @@
         }
 
         .btn-login, .btn-signup {
-            padding: 8px 20px;
+            padding: 10px 24px;
             border: none;
             border-radius: 25px;
             font-weight: 600;
@@ -891,22 +896,24 @@
         .btn-login:hover {
             background: #667eea;
             color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
 
         .btn-signup {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: 2px solid transparent;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
 
         .btn-signup:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
 
         .btn-logout {
-            padding: 8px 20px;
-            background: #f44336;
+            padding: 10px 24px;
+            background: linear-gradient(135deg, #f5576c, #f093fb);
             color: white;
             border: none;
             border-radius: 25px;
@@ -916,18 +923,49 @@
         }
 
         .btn-logout:hover {
-            background: #d32f2f;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
         }
 
-        /* Auth Modals */
+        /* Enhanced Auth Modals */
         .auth-modal-content {
-            max-width: 450px;
+            max-width: 500px;
+            padding: 0;
+            overflow: hidden;
         }
 
-        .auth-modal-content h2 {
-            color: #667eea;
-            margin-bottom: 2rem;
+        .auth-modal-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+
+        .auth-logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .auth-modal-header h2 {
+            color: white;
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+
+        .auth-modal-header p {
+            color: rgba(255,255,255,0.9);
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .auth-modal-content form {
+            padding: 2rem;
         }
 
         .auth-modal-content .form-group {
@@ -935,31 +973,212 @@
             text-align: left;
         }
 
+        .label-icon {
+            font-size: 1.1rem;
+            margin-right: 0.5rem;
+        }
+
         .auth-modal-content label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
             color: #555;
+            font-size: 0.95rem;
         }
 
-        .auth-modal-content input {
+        .auth-modal-content input[type="email"],
+        .auth-modal-content input[type="password"],
+        .auth-modal-content input[type="text"],
+        .auth-modal-content input[type="tel"] {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 16px;
             border: 2px solid #e1e5e9;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 1rem;
             transition: all 0.3s ease;
+            background: #f8f9fa;
         }
 
         .auth-modal-content input:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            background: white;
+        }
+
+        /* Password Input with Toggle */
+        .password-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-input-wrapper input {
+            padding-right: 50px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            transition: transform 0.2s;
+        }
+
+        .toggle-password:hover {
+            transform: scale(1.2);
+        }
+
+        /* Password Strength Indicator */
+        .password-strength {
+            height: 4px;
+            background: #e1e5e9;
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .strength-weak { width: 33%; background: #f44336; }
+        .strength-medium { width: 66%; background: #ff9800; }
+        .strength-strong { width: 100%; background: #4caf50; }
+
+        .password-hint {
+            display: block;
+            color: #888;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        /* Form Options */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        /* Checkbox Styling */
+        .checkbox-label {
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+            font-weight: normal;
+            font-size: 0.95rem;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* Auth Buttons */
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .btn-google {
+            width: 100%;
+            padding: 14px;
+            background: white;
+            color: #555;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-google:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .google-icon {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #4285f4, #34a853, #fbbc05, #ea4335);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Divider */
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e5e9;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 1rem;
+            position: relative;
+            color: #888;
+            font-size: 0.9rem;
+            font-weight: 600;
         }
 
         /* Dashboard Modal */
         .dashboard-modal-content {
-            max-width: 900px;
+            max-width: 1000px;
             max-height: 85vh;
             overflow-y: auto;
         }
@@ -969,28 +1188,35 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            padding-bottom: 1.5rem;
             border-bottom: 2px solid #e1e5e9;
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            padding: 2rem;
+            border-radius: 15px;
         }
 
         .dashboard-header h2 {
             color: #667eea;
             margin: 0;
+            font-size: 2rem;
         }
 
         /* Dashboard Tabs */
         .dashboard-tabs {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             margin-bottom: 2rem;
-            border-bottom: 2px solid #e1e5e9;
+            background: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 12px;
         }
 
         .tab-btn {
-            padding: 12px 24px;
+            flex: 1;
+            padding: 12px 20px;
             background: transparent;
             border: none;
-            border-bottom: 3px solid transparent;
+            border-radius: 8px;
             font-size: 1rem;
             font-weight: 600;
             color: #888;
@@ -1000,112 +1226,143 @@
 
         .tab-btn:hover {
             color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
         }
 
         .tab-btn.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
+            color: white;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
         .tab-content {
             display: none;
+            animation: fadeIn 0.3s ease;
         }
 
         .tab-content.active {
             display: block;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Opportunity Cards */
         .opportunity-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
         }
 
         .opportunity-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
             position: relative;
+            border: 2px solid transparent;
         }
 
         .opportunity-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: #667eea;
         }
 
         .opportunity-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            padding: 5px 12px;
-            border-radius: 15px;
+            top: 20px;
+            right: 20px;
+            padding: 6px 14px;
+            border-radius: 20px;
             font-size: 0.8rem;
             font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .opportunity-badge.hackathon {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
         .opportunity-badge.internship {
             background: linear-gradient(135deg, #f093fb, #f5576c);
             color: white;
+            box-shadow: 0 4px 12px rgba(240, 147, 251, 0.3);
         }
 
         .opportunity-card h4 {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: #333;
             margin-bottom: 1rem;
-            padding-right: 100px;
+            padding-right: 110px;
+            line-height: 1.3;
         }
 
         .opportunity-desc {
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 1rem;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
         }
 
         .opportunity-details {
-            background: rgba(255,255,255,0.7);
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #f5f7fa, #e8ecf1);
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
         }
 
         .opportunity-details p {
-            margin: 0.5rem 0;
+            margin: 0.75rem 0;
             color: #555;
             font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .opportunity-details strong {
+            margin-right: 0.5rem;
+            min-width: 100px;
         }
 
         .opportunity-card .btn {
             width: 100%;
             text-align: center;
             text-decoration: none;
+            padding: 12px;
+            font-size: 1rem;
         }
 
         /* Profile Info */
         .profile-info {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 2rem;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
 
         .profile-info p {
-            font-size: 1.1rem;
-            margin: 1rem 0;
+            font-size: 1.15rem;
+            margin: 1.25rem 0;
             color: #555;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 10px;
         }
 
         .profile-info strong {
             color: #667eea;
             display: inline-block;
-            min-width: 150px;
+            min-width: 180px;
+            font-weight: 600;
         }
 
         /* Submissions List */
@@ -1567,23 +1824,52 @@
             </button>
         </div>
     </div>
-    <!-- Login Modal -->
+   <!-- Login Modal -->
     <div id="loginModal" class="modal auth-modal">
         <div class="modal-content auth-modal-content">
             <span class="close" onclick="closeLoginModal()">&times;</span>
-            <h2>🔐 Login to Your Account</h2>
+            <div class="auth-modal-header">
+                <div class="auth-logo">🚀</div>
+                <h2>Welcome Back!</h2>
+                <p>Login to access your dashboard and opportunities</p>
+            </div>
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="form-group">
-                    <label for="login-email">Email Address</label>
-                    <input type="email" id="login-email" required placeholder="your@email.com">
+                    <label for="login-email">
+                        <span class="label-icon">📧</span> Email Address
+                    </label>
+                    <input type="email" id="login-email" required placeholder="your@email.com" autocomplete="email">
                 </div>
                 <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" required placeholder="Enter your password">
+                    <label for="login-password">
+                        <span class="label-icon">🔒</span> Password
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="login-password" required placeholder="Enter your password" autocomplete="current-password">
+                        <button type="button" class="toggle-password" onclick="togglePassword('login-password')">👁️</button>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
-                <p style="text-align: center; margin-top: 1rem;">
-                    Don't have an account? <a href="#" onclick="switchToSignup()" style="color: #667eea; font-weight: bold;">Sign Up</a>
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember-me"> Remember me
+                    </label>
+                    <a href="#" onclick="openForgotPassword()" class="forgot-password">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary btn-auth">
+                    <span class="btn-text">Login</span>
+                    <span class="btn-loading" style="display: none;">⏳ Logging in...</span>
+                </button>
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+                <button type="button" class="btn btn-google" onclick="loginWithGoogle()">
+                    <span class="google-icon">G</span> Continue with Google
+                </button>
+                <p style="text-align: right; margin-top: 0.5rem;">
+                    <a href="#" onclick="event.preventDefault(); resetPassword();" style="color: #667eea; font-size: 0.9rem;">Forgot Password?</a>
+                </p>
+                <p style="text-align: center; margin-top: 1.5rem; color: #666;">
+                    Don't have an account? <a href="#" onclick="switchToSignup()" style="color: #667eea; font-weight: bold;">Sign Up Free</a>
                 </p>
             </form>
         </div>
@@ -1593,41 +1879,135 @@
     <div id="signupModal" class="modal auth-modal">
         <div class="modal-content auth-modal-content">
             <span class="close" onclick="closeSignupModal()">&times;</span>
-            <h2>✨ Create Your Account</h2>
+            <div class="auth-modal-header">
+                <div class="auth-logo">✨</div>
+                <h2>Join Express Your Thoughts</h2>
+                <p>Create your free account and start your journey</p>
+            </div>
             <form id="signupForm" onsubmit="handleSignup(event)">
                 <div class="form-group">
-                    <label for="signup-name">Full Name</label>
-                    <input type="text" id="signup-name" required placeholder="John Doe">
+                    <label for="signup-name">
+                        <span class="label-icon">👤</span> Full Name
+                    </label>
+                    <input type="text" id="signup-name" required placeholder="John Doe" autocomplete="name">
                 </div>
                 <div class="form-group">
-                    <label for="signup-email">Email Address</label>
-                    <input type="email" id="signup-email" required placeholder="your@email.com">
+                    <label for="signup-email">
+                        <span class="label-icon">📧</span> Email Address
+                    </label>
+                    <input type="email" id="signup-email" required placeholder="your@email.com" autocomplete="email">
                 </div>
                 <div class="form-group">
-                    <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" required placeholder="Create a password" minlength="6">
+                    <label for="signup-phone">
+                        <span class="label-icon">📱</span> Phone Number (Optional)
+                    </label>
+                    <input type="tel" id="signup-phone" placeholder="+91 98765 43210" autocomplete="tel">
                 </div>
                 <div class="form-group">
-                    <label for="signup-confirm">Confirm Password</label>
-                    <input type="password" id="signup-confirm" required placeholder="Confirm your password">
+                    <label for="signup-password">
+                        <span class="label-icon">🔒</span> Password
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="signup-password" required placeholder="Create a strong password" minlength="8" autocomplete="new-password">
+                        <button type="button" class="toggle-password" onclick="togglePassword('signup-password')">👁️</button>
+                    </div>
+                    <div class="password-strength" id="password-strength">
+                        <div class="strength-bar"></div>
+                    </div>
+                    <small class="password-hint">Use 8+ characters with letters, numbers & symbols</small>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
-                <p style="text-align: center; margin-top: 1rem;">
+                <div class="form-group">
+                    <label for="signup-confirm">
+                        <span class="label-icon">✓</span> Confirm Password
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="signup-confirm" required placeholder="Confirm your password" autocomplete="new-password">
+                        <button type="button" class="toggle-password" onclick="togglePassword('signup-confirm')">👁️</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="terms-accept" required>
+                        <span>I agree to the <a href="#" onclick="showTerms()" style="color: #667eea;">Terms & Conditions</a> and <a href="#" onclick="showPrivacy()" style="color: #667eea;">Privacy Policy</a></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="newsletter-accept">
+                        <span>Send me updates about new contests and opportunities</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-auth">
+                    <span class="btn-text">Create Account</span>
+                    <span class="btn-loading" style="display: none;">⏳ Creating account...</span>
+                </button>
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+                <button type="button" class="btn btn-google" onclick="signupWithGoogle()">
+                    <span class="google-icon">G</span> Sign up with Google
+                </button>
+                <p style="text-align: center; margin-top: 1.5rem; color: #666;">
                     Already have an account? <a href="#" onclick="switchToLogin()" style="color: #667eea; font-weight: bold;">Login</a>
                 </p>
             </form>
         </div>
     </div>
 
-    <!-- User Dashboard Modal -->
-    <div id="dashboardModal" class="modal dashboard-modal">
-        <div class="modal-content dashboard-modal-content">
-            <span class="close" onclick="closeDashboard()">&times;</span>
-            
-            <div class="dashboard-header">
-                <h2>🎯 Welcome, <span id="dashboard-username">User</span>!</h2>
-                <button class="btn-logout" onclick="handleLogout()">Logout</button>
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close" onclick="closeForgotPassword()">&times;</span>
+            <div class="auth-modal-header">
+                <div class="auth-logo">🔑</div>
+                <h2>Reset Your Password</h2>
+                <p>Enter your email and we'll send you reset instructions</p>
             </div>
+            <form id="forgotPasswordForm" onsubmit="handleForgotPassword(event)">
+                <div class="form-group">
+                    <label for="forgot-email">
+                        <span class="label-icon">📧</span> Email Address
+                    </label>
+                    <input type="email" id="forgot-email" required placeholder="your@email.com" autocomplete="email">
+                </div>
+                <button type="submit" class="btn btn-primary btn-auth">
+                    <span class="btn-text">Send Reset Link</span>
+                    <span class="btn-loading" style="display: none;">⏳ Sending...</span>
+                </button>
+                <p style="text-align: center; margin-top: 1.5rem; color: #666;">
+                    <a href="#" onclick="backToLogin()" style="color: #667eea; font-weight: bold;">← Back to Login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Email Verification Notice -->
+    <div id="verificationModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close" onclick="closeVerification()">&times;</span>
+            <div class="auth-modal-header">
+                <div class="auth-logo">📧</div>
+                <h2>Verify Your Email</h2>
+                <p>We've sent a verification link to your email</p>
+            </div>
+            <div style="padding: 2rem; text-align: center;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">📬</div>
+                <p style="font-size: 1.1rem; color: #555; line-height: 1.8; margin-bottom: 1.5rem;">
+                    Please check your inbox at <strong id="verification-email">your@email.com</strong> 
+                    and click the verification link to activate your account.
+                </p>
+                <p style="color: #888; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    Didn't receive the email? Check your spam folder or click below to resend.
+                </p>
+                <button class="btn btn-primary" onclick="resendVerificationEmail()">
+                    Resend Verification Email
+                </button>
+                <p style="margin-top: 1.5rem;">
+                    <a href="#" onclick="closeVerification()" style="color: #667eea;">I'll verify later</a>
+                </p>
+            </div>
+        </div>
+    </div>
 
             <!-- Dashboard Tabs -->
             <div class="dashboard-tabs">
@@ -1774,17 +2154,57 @@
             }
         }
 
-        // Simple form submission with success message
-document.getElementById('thoughtForm').addEventListener('submit', function(e) {
-    const submitButton = this.querySelector('button[type="submit"]');
-    submitButton.innerHTML = 'Sending... ⏳';
-    submitButton.disabled = true;
-    
-    // Form will submit to Web3Forms, then show success
-    setTimeout(() => {
-        showSuccessModal();
-    }, 1000);
-});
+ // Save thought submission to Firebase
+        document.getElementById('thoughtForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            
+            submitButton.innerHTML = 'Sending... ⏳';
+            submitButton.disabled = true;
+            
+            try {
+                const formData = new FormData(this);
+                const data = {
+                    name: formData.get('name'),
+                    email: formData.get('_replyto'),
+                    category: formData.get('category'),
+                    title: formData.get('title'),
+                    thoughts: formData.get('message'),
+                    impact: formData.get('impact'),
+                    submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    userId: currentUser ? currentUser.uid : null,
+                    userEmail: formData.get('_replyto')
+                };
+
+                // Save to Firestore
+                await db.collection('submissions').add(data);
+
+                // Also send email via Web3Forms
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    showSuccessModal();
+                    this.reset();
+                } else {
+                    throw new Error('Email submission failed');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showErrorModal();
+            } finally {
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            }
+        });
         
         // Send confirmation email to user
         async function sendConfirmationEmail(userEmail, userName) {
@@ -1863,13 +2283,43 @@ document.getElementById('thoughtForm').addEventListener('submit', function(e) {
 
         console.log('🚀 Express Your Thoughts website loaded successfully!');
         console.log('💡 Ready to collect amazing thoughts and ideas!');
-        // ===== AUTHENTICATION SYSTEM =====
+  // ===== FIREBASE CONFIGURATION =====
+        // IMPORTANT: Replace this with YOUR Firebase config!
+        const firebaseConfig = {
+            apiKey: "AIzaSyAq1ebAz6h5WdmPuWejBOI569FsV2TtRl0",
+            authDomain: "express-your-thoughts-465a3.firebaseapp.com",
+            projectId: "express-your-thoughts-465a3",
+            storageBucket: "express-your-thoughts-465a3.firebasestorage.app",
+            messagingSenderId: "887321510949",
+            appId: "1:887321510949:web:8b48e64ebe198507f12bcc"
+            measurementId: "G-KBCBY7GYW5"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // ===== AUTHENTICATION SYSTEM WITH FIREBASE =====
         
-        // Check if user is logged in on page load
-        window.addEventListener('load', function() {
-            const currentUser = localStorage.getItem('currentUser');
-            if (currentUser) {
-                updateAuthUI(JSON.parse(currentUser));
+        let currentUser = null;
+
+        // Check authentication state on page load
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    updateAuthUI({
+                        name: userData.name,
+                        email: user.email,
+                        joinedDate: userData.joinedDate,
+                        uid: user.uid
+                    });
+                }
+            } else {
+                currentUser = null;
             }
         });
 
@@ -1891,6 +2341,12 @@ document.getElementById('thoughtForm').addEventListener('submit', function(e) {
         }
 
         function openDashboard() {
+            if (!currentUser) {
+                alert('Please login first!');
+                openLoginModal();
+                return;
+            }
+            loadUserSubmissions();
             document.getElementById('dashboardModal').style.display = 'block';
         }
 
@@ -1898,7 +2354,6 @@ document.getElementById('thoughtForm').addEventListener('submit', function(e) {
             document.getElementById('dashboardModal').style.display = 'none';
         }
 
-        // Switch between login and signup
         function switchToSignup() {
             closeLoginModal();
             openSignupModal();
@@ -1909,8 +2364,8 @@ document.getElementById('thoughtForm').addEventListener('submit', function(e) {
             openLoginModal();
         }
 
-        // Handle Signup
-        function handleSignup(event) {
+        // Handle Signup with Firebase
+        async function handleSignup(event) {
             event.preventDefault();
             
             const name = document.getElementById('signup-name').value;
@@ -1918,84 +2373,185 @@ document.getElementById('thoughtForm').addEventListener('submit', function(e) {
             const password = document.getElementById('signup-password').value;
             const confirm = document.getElementById('signup-confirm').value;
 
-            // Validate passwords match
             if (password !== confirm) {
                 alert('Passwords do not match!');
                 return;
             }
 
-            // Get existing users or create new array
-            let users = JSON.parse(localStorage.getItem('users')) || [];
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = 'Creating Account... ⏳';
+            submitBtn.disabled = true;
 
-            // Check if user already exists
-            if (users.find(u => u.email === email)) {
-                alert('Email already registered! Please login.');
-                switchToLogin();
-                return;
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                await user.sendEmailVerification();
+
+                await db.collection('users').doc(user.uid).set({
+                    name: name,
+                    email: email,
+                    joinedDate: new Date().toLocaleDateString(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                alert('Account created successfully! 🎉\n\nPlease check your email to verify your account.');
+                closeSignupModal();
+                document.getElementById('signupForm').reset();
+                
+            } catch (error) {
+                console.error('Signup error:', error);
+                if (error.code === 'auth/email-already-in-use') {
+                    alert('This email is already registered. Please login instead.');
+                } else if (error.code === 'auth/weak-password') {
+                    alert('Password should be at least 6 characters long.');
+                } else if (error.code === 'auth/invalid-email') {
+                    alert('Please enter a valid email address.');
+                } else {
+                    alert('Error creating account: ' + error.message);
+                }
+            } finally {
+                submitBtn.innerHTML = 'Sign Up';
+                submitBtn.disabled = false;
             }
-
-            // Create new user
-            const newUser = {
-                name: name,
-                email: email,
-                password: password,
-                joinedDate: new Date().toLocaleDateString(),
-                submissions: []
-            };
-
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem('currentUser', JSON.stringify(newUser));
-
-            alert('Account created successfully! Welcome aboard! 🎉');
-            closeSignupModal();
-            updateAuthUI(newUser);
-            openDashboard();
         }
 
-        // Handle Login
-        function handleLogin(event) {
+        // Handle Login with Firebase
+        async function handleLogin(event) {
             event.preventDefault();
             
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
 
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const user = users.find(u => u.email === email && u.password === password);
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = 'Logging in... ⏳';
+            submitBtn.disabled = true;
 
-            if (user) {
-                localStorage.setItem('currentUser', JSON.stringify(user));
+            try {
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                if (!user.emailVerified) {
+                    alert('⚠️ Please verify your email first!\n\nCheck your inbox for the verification link.');
+                    await auth.signOut();
+                    return;
+                }
+
                 alert('Login successful! Welcome back! 👋');
                 closeLoginModal();
-                updateAuthUI(user);
+                document.getElementById('loginForm').reset();
                 openDashboard();
-            } else {
-                alert('Invalid email or password. Please try again.');
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                if (error.code === 'auth/user-not-found') {
+                    alert('No account found with this email. Please sign up first.');
+                } else if (error.code === 'auth/wrong-password') {
+                    alert('Incorrect password. Please try again.');
+                } else if (error.code === 'auth/invalid-email') {
+                    alert('Please enter a valid email address.');
+                } else {
+                    alert('Error logging in: ' + error.message);
+                }
+            } finally {
+                submitBtn.innerHTML = 'Login';
+                submitBtn.disabled = false;
             }
         }
 
         // Handle Logout
-        function handleLogout() {
+        async function handleLogout() {
             if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('currentUser');
-                location.reload();
+                try {
+                    await auth.signOut();
+                    location.reload();
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    alert('Error logging out. Please try again.');
+                }
+            }
+        }
+
+        // Password Reset
+        async function resetPassword() {
+            const email = document.getElementById('login-email').value;
+            
+            if (!email) {
+                alert('Please enter your email address first.');
+                return;
+            }
+
+            try {
+                await auth.sendPasswordResetEmail(email);
+                alert('Password reset email sent! Check your inbox. 📧');
+            } catch (error) {
+                console.error('Password reset error:', error);
+                alert('Error sending reset email: ' + error.message);
             }
         }
 
         // Update UI based on auth state
-        function updateAuthUI(user) {
+        async function updateAuthUI(userData) {
             const authButtons = document.querySelector('.auth-buttons');
             authButtons.innerHTML = `
+                <span style="color: #667eea; font-weight: 600; margin-right: 1rem;">Hello, ${userData.name.split(' ')[0]}!</span>
                 <button class="btn-login" onclick="openDashboard()">Dashboard</button>
-                <button class="btn-signup" onclick="handleLogout()">Logout</button>
+                <button class="btn-logout" onclick="handleLogout()">Logout</button>
             `;
 
-            // Update dashboard user info
-            document.getElementById('dashboard-username').textContent = user.name;
-            document.getElementById('profile-name').textContent = user.name;
-            document.getElementById('profile-email').textContent = user.email;
-            document.getElementById('profile-joined').textContent = user.joinedDate;
-            document.getElementById('profile-submissions').textContent = user.submissions.length;
+            document.getElementById('dashboard-username').textContent = userData.name;
+            document.getElementById('profile-name').textContent = userData.name;
+            document.getElementById('profile-email').textContent = userData.email;
+            document.getElementById('profile-joined').textContent = userData.joinedDate;
+
+            const submissions = await db.collection('submissions')
+                .where('userId', '==', userData.uid)
+                .get();
+            document.getElementById('profile-submissions').textContent = submissions.size;
+        }
+
+        // Load User Submissions
+        async function loadUserSubmissions() {
+            if (!currentUser) return;
+
+            const submissionsList = document.getElementById('user-submissions');
+            submissionsList.innerHTML = '<p style="text-align: center;">Loading submissions... ⏳</p>';
+
+            try {
+                const submissions = await db.collection('submissions')
+                    .where('userId', '==', currentUser.uid)
+                    .orderBy('submittedAt', 'desc')
+                    .get();
+
+                if (submissions.empty) {
+                    submissionsList.innerHTML = `
+                        <p style="text-align: center; color: #888; padding: 2rem;">
+                            You haven't submitted any thoughts yet.<br>
+                            <a href="#submit" onclick="closeDashboard()" style="color: #667eea; font-weight: bold;">Submit your first thought!</a>
+                        </p>
+                    `;
+                    return;
+                }
+
+                let html = '<div style="display: grid; gap: 1rem;">';
+                submissions.forEach(doc => {
+                    const data = doc.data();
+                    const date = data.submittedAt ? data.submittedAt.toDate().toLocaleDateString() : 'Recent';
+                    html += `
+                        <div style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 1.5rem; border-radius: 15px;">
+                            <h4 style="color: #667eea; margin-bottom: 0.5rem;">${data.title || 'Untitled'}</h4>
+                            <p style="color: #888; font-size: 0.9rem; margin-bottom: 0.5rem;">📅 ${date} | 📂 ${data.category || 'General'}</p>
+                            <p style="color: #555; line-height: 1.6;">${data.thoughts ? data.thoughts.substring(0, 150) + '...' : ''}</p>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                submissionsList.innerHTML = html;
+
+            } catch (error) {
+                console.error('Error loading submissions:', error);
+                submissionsList.innerHTML = '<p style="text-align: center; color: #f44336;">Error loading submissions.</p>';
+            }
         }
 
         // Dashboard Tab Switching
