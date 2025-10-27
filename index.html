@@ -2149,58 +2149,135 @@
                 particlesContainer.appendChild(particle);
             }
         }
-
- // Save thought submission to Firebase
+        // Form submission with email backend
         document.getElementById('thoughtForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const submitButton = this.querySelector('button[type="submit"]');
             const originalText = submitButton.innerHTML;
             
+            // Show loading state
             submitButton.innerHTML = 'Sending... ⏳';
             submitButton.disabled = true;
             
             try {
+                // Get form data
                 const formData = new FormData(this);
-                const data = {
-                    name: formData.get('name'),
-                    email: formData.get('_replyto'),
-                    category: formData.get('category'),
-                    title: formData.get('title'),
-                    thoughts: formData.get('message'),
-                    impact: formData.get('impact'),
-                    submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    userId: currentUser ? currentUser.uid : null,
-                    userEmail: formData.get('_replyto')
-                };
-
-                // Save to Firestore
-                await db.collection('submissions').add(data);
-
-                // Also send email via Web3Forms
-                const response = await fetch(this.action, {
+                
+                // Add timestamp and additional info
+                formData.append('submission_time', new Date().toLocaleString());
+                
+                // Check if user is logged in
+                const currentUser = localStorage.getItem('currentUser');
+                if (currentUser) {
+                    const user = JSON.parse(currentUser);
+                    formData.append('user_id', user.id);
+                    formData.append('user_name', user.name);
+                    formData.append('user_email', user.email);
+                }
+                
+                // Send to Web3Forms (replace YOUR-ACCESS-KEY with your actual key)
+                const response = await fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
+                    body: formData
                 });
-
-                if (response.ok) {
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // If user is logged in, save submission to their profile
+                    if (currentUser) {
+                        const user = JSON.parse(currentUser);
+                        if (!user.submissions) user.submissions = [];
+                        
+                        user.submissions.push({
+                            id: 'sub_' + Date.now(),
+                            title: formData.get('title'),
+                            category: formData.get('category'),
+                            thoughts: formData.get('message'),
+                            impact: formData.get('impact'),
+                            submittedAt: new Date().toLocaleDateString(),
+                            status: 'Under Review'
+                        });
+                        
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+                        
+                        // Update in users array
+                        let users = JSON.parse(localStorage.getItem('users')) || [];
+                        const userIndex = users.findIndex(u => u.id === user.id);
+                        if (userIndex !== -1) {
+                            users[userIndex] = user;
+                            localStorage.setItem('users', JSON.stringify(users));
+                        }
+                    }
+                    
                     showSuccessModal();
                     this.reset();
                 } else {
-                    throw new Error('Email submission failed');
+                    throw new Error('Submission failed');
                 }
                 
             } catch (error) {
                 console.error('Error:', error);
                 showErrorModal();
             } finally {
+                // Reset button
                 submitButton.innerHTML = originalText;
                 submitButton.disabled = false;
             }
         });
+
+ // // Save thought submission to Firebase
+ //        document.getElementById('thoughtForm').addEventListener('submit', async function(e) {
+ //            e.preventDefault();
+            
+ //            const submitButton = this.querySelector('button[type="submit"]');
+ //            const originalText = submitButton.innerHTML;
+            
+ //            submitButton.innerHTML = 'Sending... ⏳';
+ //            submitButton.disabled = true;
+            
+ //            try {
+ //                const formData = new FormData(this);
+ //                const data = {
+ //                    name: formData.get('name'),
+ //                    email: formData.get('_replyto'),
+ //                    category: formData.get('category'),
+ //                    title: formData.get('title'),
+ //                    thoughts: formData.get('message'),
+ //                    impact: formData.get('impact'),
+ //                    submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+ //                    userId: currentUser ? currentUser.uid : null,
+ //                    userEmail: formData.get('_replyto')
+ //                };
+
+ //                // Save to Firestore
+ //                await db.collection('submissions').add(data);
+
+ //                // Also send email via Web3Forms
+ //                const response = await fetch(this.action, {
+ //                    method: 'POST',
+ //                    body: formData,
+ //                    headers: {
+ //                        'Accept': 'application/json'
+ //                    }
+ //                });
+
+ //                if (response.ok) {
+ //                    showSuccessModal();
+ //                    this.reset();
+ //                } else {
+ //                    throw new Error('Email submission failed');
+ //                }
+                
+ //            } catch (error) {
+ //                console.error('Error:', error);
+ //                showErrorModal();
+ //            } finally {
+ //                submitButton.innerHTML = originalText;
+ //                submitButton.disabled = false;
+ //            }
+ //        });
         
         // Send confirmation email to user
         async function sendConfirmationEmail(userEmail, userName) {
