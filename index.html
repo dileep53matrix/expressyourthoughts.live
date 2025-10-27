@@ -1,10 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-</head>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1377,6 +1372,82 @@
             color: #4CAF50;
             margin-bottom: 1rem;
         }
+        /* Force hide all modals by default */
+        #loginModal,
+        #signupModal,
+        #dashboardModal,
+        #forgotPasswordModal,
+        #verificationModal,
+        #successModal,
+        #errorModal {
+            display: none !important;
+        }
+        
+        /* Show only when has inline style display:block */
+        .modal[style*="display: block"],
+        .modal[style*="display:block"] {
+            display: block !important;
+        }
+
+        /* Submissions Grid */
+        .submissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .submission-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-left: 4px solid #667eea;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .submission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .submission-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .submission-card h4 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 0.75rem;
+            padding-right: 120px;
+        }
+
+        .submission-category {
+            color: #667eea;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .submission-date {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .submission-excerpt {
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
@@ -2005,6 +2076,15 @@
             </div>
         </div>
     </div>
+    <!-- User Dashboard Modal -->
+    <div id="dashboardModal" class="modal dashboard-modal">
+        <div class="modal-content dashboard-modal-content">
+            <span class="close" onclick="closeDashboard()">&times;</span>
+            
+            <div class="dashboard-header">
+                <h2>🎯 Welcome, <span id="dashboard-username">User</span>!</h2>
+                <button class="btn-logout" onclick="handleLogout()">Logout</button>
+            </div>
             <!-- Dashboard Tabs -->
             <div class="dashboard-tabs">
                 <button class="tab-btn active" onclick="showTab('opportunities')">Opportunities</button>
@@ -2368,10 +2448,27 @@
             
         };
 
+        // // Initialize Firebase
+        // firebase.initializeApp(firebaseConfig);
+        // const auth = firebase.auth();
+        // const db = firebase.firestore();
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+
+        // Add Firebase scripts dynamically
+        const script1 = document.createElement('script');
+        script1.src = 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js';
+        document.head.appendChild(script1);
+
+        const script2 = document.createElement('script');
+        script2.src = 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js';
+        document.head.appendChild(script2);
+
+        const script3 = document.createElement('script');
+        script3.src = 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js';
+        document.head.appendChild(script3);
 
         // ===== AUTHENTICATION SYSTEM WITH FIREBASE =====
         
@@ -2626,6 +2723,148 @@
                 submissionsList.innerHTML = '<p style="text-align: center; color: #f44336;">Error loading submissions.</p>';
             }
         }
+        // Password Toggle
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = event.target;
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                button.textContent = '👁️';
+            }
+        }
+
+        // Forgot Password Modal
+        function openForgotPassword() {
+            closeLoginModal();
+            document.getElementById('forgotPasswordModal').style.display = 'block';
+        }
+
+        function closeForgotPassword() {
+            document.getElementById('forgotPasswordModal').style.display = 'none';
+        }
+
+        function backToLogin() {
+            closeForgotPassword();
+            openLoginModal();
+        }
+
+        // Verification Modal
+        function closeVerification() {
+            document.getElementById('verificationModal').style.display = 'none';
+        }
+
+        function resendVerificationEmail() {
+            if (currentUser) {
+                currentUser.sendEmailVerification()
+                    .then(() => alert('Verification email sent! Check your inbox.'))
+                    .catch(err => alert('Error: ' + err.message));
+            }
+        }
+
+        // Google Login
+        function loginWithGoogle() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(result => {
+                    const user = result.user;
+                    // Save user data to Firestore if new user
+                    return db.collection('users').doc(user.uid).set({
+                        name: user.displayName,
+                        email: user.email,
+                        joinedDate: new Date().toLocaleDateString(),
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }, { merge: true });
+                })
+                .then(() => {
+                    alert('Login successful! 👋');
+                    closeLoginModal();
+                    openDashboard();
+                })
+                .catch(error => {
+                    console.error('Google login error:', error);
+                    alert('Error: ' + error.message);
+                });
+        }
+
+        function signupWithGoogle() {
+            loginWithGoogle();
+        }
+
+        // Handle Forgot Password
+        async function handleForgotPassword(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('forgot-email').value;
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            
+            submitBtn.innerHTML = '⏳ Sending...';
+            submitBtn.disabled = true;
+
+            try {
+                await auth.sendPasswordResetEmail(email);
+                alert('Password reset email sent! Check your inbox. 📧');
+                closeForgotPassword();
+                document.getElementById('forgotPasswordForm').reset();
+            } catch (error) {
+                console.error('Password reset error:', error);
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.innerHTML = 'Send Reset Link';
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Show Terms & Privacy
+        function showTerms() {
+            alert('📜 Terms & Conditions\n\n1. Use platform responsibly\n2. Original ideas only\n3. Respect other users\n4. Follow contest rules');
+        }
+
+        function showPrivacy() {
+            alert('🔒 Privacy Policy\n\n• We protect your data\n• No sharing with third parties\n• Secure authentication\n• Email communications opt-in');
+        }
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            const modals = ['loginModal', 'signupModal', 'dashboardModal', 'forgotPasswordModal', 'verificationModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (modal && e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Password Strength Indicator
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('signup-password');
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    const password = this.value;
+                    const strengthBar = document.querySelector('.strength-bar');
+                    
+                    if (!strengthBar) return;
+                    
+                    let strength = 0;
+                    if (password.length >= 8) strength++;
+                    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+                    if (/[0-9]/.test(password)) strength++;
+                    if (/[^a-zA-Z0-9]/.test(password)) strength++;
+                    
+                    strengthBar.className = 'strength-bar';
+                    if (strength <= 1) {
+                        strengthBar.classList.add('strength-weak');
+                    } else if (strength <= 3) {
+                        strengthBar.classList.add('strength-medium');
+                    } else {
+                        strengthBar.classList.add('strength-strong');
+                    }
+                });
+            }
+        });
 
         // Dashboard Tab Switching
         function showTab(tabName) {
