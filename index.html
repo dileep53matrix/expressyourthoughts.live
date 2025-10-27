@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -852,7 +852,22 @@
             backdrop-filter: blur(5px);
         }
 
-        .modal-content {
+      
+     
+
+           .modal-content {
+               /* Allow scrolling inside auth modals on small screens or long forms */
+.auth-modal .modal-content {
+    max-height: 90vh; /* Limit modal height to screen height */
+    overflow-y: auto; /* Enable vertical scrolling inside modal */
+    position: relative;
+}
+
+/* Prevent background scrolling when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
             background-color: white;
             margin: 5% auto;
             padding: 2rem;
@@ -861,8 +876,10 @@
             max-width: 500px;
             text-align: center;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
         }
-
         .close {
             color: #aaa;
             float: right;
@@ -932,11 +949,13 @@
             box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
         }
 
-        /* Enhanced Auth Modals */
+       /* Enhanced Auth Modals */
         .auth-modal-content {
             max-width: 500px;
             padding: 0;
             overflow: hidden;
+            max-height: 95vh;
+            overflow-y: auto;
         }
 
         .auth-modal-header {
@@ -1563,7 +1582,7 @@
     <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
         Submit My Thoughts ✨
     </button>
-     <input type="hidden" name="replyto" value="email">
+     
 
 </form>
         </div>
@@ -2405,21 +2424,28 @@
             document.getElementById('errorModal').style.display = 'block';
         }
 
-    document.querySelectorAll('.close').forEach(closeBtn => {
-            closeBtn.addEventListener('click', function() {
-                const successModal = document.getElementById('successModal');
-                const errorModal = document.getElementById('errorModal');
-                const dashboardModal = document.getElementById('dashboardModal');
-                const loginModal = document.getElementById('loginModal');
-                const signupModal = document.getElementById('signupModal');
-                
-                if (successModal) successModal.style.cssText = 'display: none !important';
-                if (errorModal) errorModal.style.cssText = 'display: none !important';
-                if (dashboardModal) dashboardModal.style.cssText = 'display: none !important';
-                if (loginModal) loginModal.style.cssText = 'display: none !important';
-                if (signupModal) signupModal.style.cssText = 'display: none !important';
-            });
-        });
+  document.querySelectorAll('.close').forEach(closeBtn => {
+    closeBtn.addEventListener('click', function() {
+        const successModal = document.getElementById('successModal');
+        const errorModal = document.getElementById('errorModal');
+        const dashboardModal = document.getElementById('dashboardModal');
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const forgotModal = document.getElementById('forgotPasswordModal');
+        const verifyModal = document.getElementById('verificationModal');
+        
+        if (successModal) successModal.style.cssText = 'display: none !important';
+        if (errorModal) errorModal.style.cssText = 'display: none !important';
+        if (dashboardModal) dashboardModal.style.cssText = 'display: none !important';
+        if (loginModal) loginModal.style.cssText = 'display: none !important';
+        if (signupModal) signupModal.style.cssText = 'display: none !important';
+        if (forgotModal) forgotModal.style.cssText = 'display: none !important';
+        if (verifyModal) verifyModal.style.cssText = 'display: none !important';
+        
+        // Remove modal-open class from body
+        document.body.classList.remove('modal-open');
+    });
+});
 
         window.addEventListener('click', function(e) {
             const successModal = document.getElementById('successModal');
@@ -2506,35 +2532,40 @@
             });
 
             // Make auth functions global
-            window.openLoginModal = function() {
-                document.getElementById('loginModal').style.cssText = 'display: block !important';
-            };
+           window.openLoginModal = function() {
+    document.getElementById('loginModal').style.cssText = 'display: block !important';
+    document.body.classList.add('modal-open');
+};
 
-            window.closeLoginModal = function() {
-                document.getElementById('loginModal').style.cssText = 'display: none !important';
-            };
+           window.closeLoginModal = function() {
+    document.getElementById('loginModal').style.cssText = 'display: none !important';
+    document.body.classList.remove('modal-open');
+};
+           window.openSignupModal = function() {
+    document.getElementById('signupModal').style.cssText = 'display: block !important';
+    document.body.classList.add('modal-open');
+};
 
-            window.openSignupModal = function() {
-                document.getElementById('signupModal').style.cssText = 'display: block !important';
-            };
+           window.closeSignupModal = function() {
+    document.getElementById('signupModal').style.cssText = 'display: none !important';
+    document.body.classList.remove('modal-open');
+};
 
-            window.closeSignupModal = function() {
-                document.getElementById('signupModal').style.cssText = 'display: none !important';
-            };
+         window.openDashboard = function() {
+    if (!currentUser) {
+        alert('Please login first!');
+        openLoginModal();
+        return;
+    }
+    loadUserSubmissions();
+    document.getElementById('dashboardModal').style.cssText = 'display: block !important';
+    document.body.classList.add('modal-open');
+};
 
-            window.openDashboard = function() {
-                if (!currentUser) {
-                    alert('Please login first!');
-                    openLoginModal();
-                    return;
-                }
-                loadUserSubmissions();
-                document.getElementById('dashboardModal').style.cssText = 'display: block !important';
-            };
-
-            window.closeDashboard = function() {
-                document.getElementById('dashboardModal').style.cssText = 'display: none !important';
-            };
+           window.closeDashboard = function() {
+    document.getElementById('dashboardModal').style.cssText = 'display: none !important';
+    document.body.classList.remove('modal-open');
+};
 
             window.switchToSignup = function() {
                 closeLoginModal();
@@ -2742,23 +2773,26 @@
                 }
             };
 
-            window.openForgotPassword = function() {
-                closeLoginModal();
-                document.getElementById('forgotPasswordModal').style.cssText = 'display: block !important';
-            };
+           window.openForgotPassword = function() {
+    closeLoginModal();
+    document.getElementById('forgotPasswordModal').style.cssText = 'display: block !important';
+    document.body.classList.add('modal-open');
+};
 
-            window.closeForgotPassword = function() {
-                document.getElementById('forgotPasswordModal').style.cssText = 'display: none !important';
-            };
+           window.closeForgotPassword = function() {
+    document.getElementById('forgotPasswordModal').style.cssText = 'display: none !important';
+    document.body.classList.remove('modal-open');
+};
 
             window.backToLogin = function() {
                 closeForgotPassword();
                 openLoginModal();
             };
 
-            window.closeVerification = function() {
-                document.getElementById('verificationModal').style.cssText = 'display: none !important';
-            };
+          window.closeVerification = function() {
+    document.getElementById('verificationModal').style.cssText = 'display: none !important';
+    document.body.classList.remove('modal-open');
+};
 
             window.resendVerificationEmail = function() {
                 if (currentUser) {
