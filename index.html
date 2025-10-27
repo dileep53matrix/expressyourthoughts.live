@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Firebase SDKs - MUST BE FIRST -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <title>Express Your Thoughts | Share Your Ideas & Win Cash Prizes</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Express Your Thoughts | Share Your Ideas & Win Cash Prizes</title>
@@ -1372,15 +1382,18 @@
             color: #4CAF50;
             margin-bottom: 1rem;
         }
-        /* Force hide all modals by default */
+     /* Force hide all modals by default */
         #loginModal,
         #signupModal,
         #dashboardModal,
         #forgotPasswordModal,
-        #verificationModal,
+        #verificationModal {
+            display: none !important;
+        }
+        
         #successModal,
         #errorModal {
-            display: none !important;
+            display: none;
         }
         
         /* Show only when has inline style display:block */
@@ -2384,17 +2397,27 @@
 
         // Modal functionality
         function showSuccessModal() {
-            document.getElementById('successModal').style.display = 'block';
+            const modal = document.getElementById('successModal');
+            modal.style.cssText = 'display: block !important';
         }
         
         function showErrorModal() {
             document.getElementById('errorModal').style.display = 'block';
         }
 
-        document.querySelectorAll('.close').forEach(closeBtn => {
+    document.querySelectorAll('.close').forEach(closeBtn => {
             closeBtn.addEventListener('click', function() {
-                document.getElementById('successModal').style.display = 'none';
-                document.getElementById('errorModal').style.display = 'none';
+                const successModal = document.getElementById('successModal');
+                const errorModal = document.getElementById('errorModal');
+                const dashboardModal = document.getElementById('dashboardModal');
+                const loginModal = document.getElementById('loginModal');
+                const signupModal = document.getElementById('signupModal');
+                
+                if (successModal) successModal.style.cssText = 'display: none !important';
+                if (errorModal) errorModal.style.cssText = 'display: none !important';
+                if (dashboardModal) dashboardModal.style.cssText = 'display: none !important';
+                if (loginModal) loginModal.style.cssText = 'display: none !important';
+                if (signupModal) signupModal.style.cssText = 'display: none !important';
             });
         });
 
@@ -2439,435 +2462,388 @@
         console.log('🚀 Express Your Thoughts website loaded successfully!');
         console.log('💡 Ready to collect amazing thoughts and ideas!');
   // ===== FIREBASE CONFIGURATION =====
-        // IMPORTANT: Replace this with YOUR Firebase config!
-        const firebaseConfig = {
-            apiKey: "AIzaSyAq1ebAz6h5WdmPuWejBOI569FsV2TtRl0",
-            authDomain: "express-your-thoughts-465a3.firebaseapp.com",
-            projectId: "express-your-thoughts-465a3",
-            storageBucket: "express-your-thoughts-465a3.firebasestorage.app",
-            messagingSenderId: "887321510949",
-            appId: "1:887321510949:web:8b48e64ebe198507f12bcc"
-            
-        };
-
-        // // Initialize Firebase
-        // firebase.initializeApp(firebaseConfig);
-        // const auth = firebase.auth();
-        // const db = firebase.firestore();
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Add Firebase scripts dynamically
-        const script1 = document.createElement('script');
-        script1.src = 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js';
-        document.head.appendChild(script1);
-
-        const script2 = document.createElement('script');
-        script2.src = 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js';
-        document.head.appendChild(script2);
-
-        const script3 = document.createElement('script');
-        script3.src = 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js';
-        document.head.appendChild(script3);
-
-        // ===== AUTHENTICATION SYSTEM WITH FIREBASE =====
-        
-        let currentUser = null;
-
-        // Check authentication state on page load
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                currentUser = user;
-                const userDoc = await db.collection('users').doc(user.uid).get();
-                if (userDoc.exists) {
-                    const userData = userDoc.data();
-                    updateAuthUI({
-                        name: userData.name,
-                        email: user.email,
-                        joinedDate: userData.joinedDate,
-                        uid: user.uid
-                    });
-                }
-            } else {
-                currentUser = null;
-            }
-        });
-
-        // Open/Close Modals
-        function openLoginModal() {
-            document.getElementById('loginModal').style.display = 'block';
-        }
-
-        function closeLoginModal() {
-            document.getElementById('loginModal').style.display = 'none';
-        }
-
-        function openSignupModal() {
-            document.getElementById('signupModal').style.display = 'block';
-        }
-
-        function closeSignupModal() {
-            document.getElementById('signupModal').style.display = 'none';
-        }
-
-        function openDashboard() {
-            if (!currentUser) {
-                alert('Please login first!');
-                openLoginModal();
-                return;
-            }
-            loadUserSubmissions();
-            document.getElementById('dashboardModal').style.display = 'block';
-        }
-
-        function closeDashboard() {
-            document.getElementById('dashboardModal').style.display = 'none';
-        }
-
-        function switchToSignup() {
-            closeLoginModal();
-            openSignupModal();
-        }
-
-        function switchToLogin() {
-            closeSignupModal();
-            openLoginModal();
-        }
-
-        // Handle Signup with Firebase
-        async function handleSignup(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirm = document.getElementById('signup-confirm').value;
-
-            if (password !== confirm) {
-                alert('Passwords do not match!');
+        // Wait for Firebase to load
+        window.addEventListener('load', function() {
+            // Check if Firebase is loaded
+            if (typeof firebase === 'undefined') {
+                console.error('Firebase not loaded!');
                 return;
             }
 
-            const submitBtn = event.target.querySelector('button[type="submit"]');
-            submitBtn.innerHTML = 'Creating Account... ⏳';
-            submitBtn.disabled = true;
+            const firebaseConfig = {
+                apiKey: "AIzaSyAq1ebAz6h5WdmPuWejBOI569FsV2TtRl0",
+                authDomain: "express-your-thoughts-465a3.firebaseapp.com",
+                projectId: "express-your-thoughts-465a3",
+                storageBucket: "express-your-thoughts-465a3.firebasestorage.app",
+                messagingSenderId: "887321510949",
+                appId: "1:887321510949:web:8b48e64ebe198507f12bcc"
+            };
 
-            try {
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                const user = userCredential.user;
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            const auth = firebase.auth();
+            const db = firebase.firestore();
 
-                await user.sendEmailVerification();
+            let currentUser = null;
 
-                await db.collection('users').doc(user.uid).set({
-                    name: name,
-                    email: email,
-                    joinedDate: new Date().toLocaleDateString(),
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-
-                alert('Account created successfully! 🎉\n\nPlease check your email to verify your account.');
-                closeSignupModal();
-                document.getElementById('signupForm').reset();
-                
-            } catch (error) {
-                console.error('Signup error:', error);
-                if (error.code === 'auth/email-already-in-use') {
-                    alert('This email is already registered. Please login instead.');
-                } else if (error.code === 'auth/weak-password') {
-                    alert('Password should be at least 6 characters long.');
-                } else if (error.code === 'auth/invalid-email') {
-                    alert('Please enter a valid email address.');
+            // Check authentication state on page load
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    const userDoc = await db.collection('users').doc(user.uid).get();
+                    if (userDoc.exists) {
+                        const userData = userDoc.data();
+                        updateAuthUI({
+                            name: userData.name,
+                            email: user.email,
+                            joinedDate: userData.joinedDate,
+                            uid: user.uid
+                        });
+                    }
                 } else {
-                    alert('Error creating account: ' + error.message);
-                }
-            } finally {
-                submitBtn.innerHTML = 'Sign Up';
-                submitBtn.disabled = false;
-            }
-        }
-
-        // Handle Login with Firebase
-        async function handleLogin(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-
-            const submitBtn = event.target.querySelector('button[type="submit"]');
-            submitBtn.innerHTML = 'Logging in... ⏳';
-            submitBtn.disabled = true;
-
-            try {
-                const userCredential = await auth.signInWithEmailAndPassword(email, password);
-                const user = userCredential.user;
-
-                if (!user.emailVerified) {
-                    alert('⚠️ Please verify your email first!\n\nCheck your inbox for the verification link.');
-                    await auth.signOut();
-                    return;
-                }
-
-                alert('Login successful! Welcome back! 👋');
-                closeLoginModal();
-                document.getElementById('loginForm').reset();
-                openDashboard();
-                
-            } catch (error) {
-                console.error('Login error:', error);
-                if (error.code === 'auth/user-not-found') {
-                    alert('No account found with this email. Please sign up first.');
-                } else if (error.code === 'auth/wrong-password') {
-                    alert('Incorrect password. Please try again.');
-                } else if (error.code === 'auth/invalid-email') {
-                    alert('Please enter a valid email address.');
-                } else {
-                    alert('Error logging in: ' + error.message);
-                }
-            } finally {
-                submitBtn.innerHTML = 'Login';
-                submitBtn.disabled = false;
-            }
-        }
-
-        // Handle Logout
-        async function handleLogout() {
-            if (confirm('Are you sure you want to logout?')) {
-                try {
-                    await auth.signOut();
-                    location.reload();
-                } catch (error) {
-                    console.error('Logout error:', error);
-                    alert('Error logging out. Please try again.');
-                }
-            }
-        }
-
-        // Password Reset
-        async function resetPassword() {
-            const email = document.getElementById('login-email').value;
-            
-            if (!email) {
-                alert('Please enter your email address first.');
-                return;
-            }
-
-            try {
-                await auth.sendPasswordResetEmail(email);
-                alert('Password reset email sent! Check your inbox. 📧');
-            } catch (error) {
-                console.error('Password reset error:', error);
-                alert('Error sending reset email: ' + error.message);
-            }
-        }
-
-        // Update UI based on auth state
-        async function updateAuthUI(userData) {
-            const authButtons = document.querySelector('.auth-buttons');
-            authButtons.innerHTML = `
-                <span style="color: #667eea; font-weight: 600; margin-right: 1rem;">Hello, ${userData.name.split(' ')[0]}!</span>
-                <button class="btn-login" onclick="openDashboard()">Dashboard</button>
-                <button class="btn-logout" onclick="handleLogout()">Logout</button>
-            `;
-
-            document.getElementById('dashboard-username').textContent = userData.name;
-            document.getElementById('profile-name').textContent = userData.name;
-            document.getElementById('profile-email').textContent = userData.email;
-            document.getElementById('profile-joined').textContent = userData.joinedDate;
-
-            const submissions = await db.collection('submissions')
-                .where('userId', '==', userData.uid)
-                .get();
-            document.getElementById('profile-submissions').textContent = submissions.size;
-        }
-
-        // Load User Submissions
-        async function loadUserSubmissions() {
-            if (!currentUser) return;
-
-            const submissionsList = document.getElementById('user-submissions');
-            submissionsList.innerHTML = '<p style="text-align: center;">Loading submissions... ⏳</p>';
-
-            try {
-                const submissions = await db.collection('submissions')
-                    .where('userId', '==', currentUser.uid)
-                    .orderBy('submittedAt', 'desc')
-                    .get();
-
-                if (submissions.empty) {
-                    submissionsList.innerHTML = `
-                        <p style="text-align: center; color: #888; padding: 2rem;">
-                            You haven't submitted any thoughts yet.<br>
-                            <a href="#submit" onclick="closeDashboard()" style="color: #667eea; font-weight: bold;">Submit your first thought!</a>
-                        </p>
-                    `;
-                    return;
-                }
-
-                let html = '<div style="display: grid; gap: 1rem;">';
-                submissions.forEach(doc => {
-                    const data = doc.data();
-                    const date = data.submittedAt ? data.submittedAt.toDate().toLocaleDateString() : 'Recent';
-                    html += `
-                        <div style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 1.5rem; border-radius: 15px;">
-                            <h4 style="color: #667eea; margin-bottom: 0.5rem;">${data.title || 'Untitled'}</h4>
-                            <p style="color: #888; font-size: 0.9rem; margin-bottom: 0.5rem;">📅 ${date} | 📂 ${data.category || 'General'}</p>
-                            <p style="color: #555; line-height: 1.6;">${data.thoughts ? data.thoughts.substring(0, 150) + '...' : ''}</p>
-                        </div>
-                    `;
-                });
-                html += '</div>';
-                submissionsList.innerHTML = html;
-
-            } catch (error) {
-                console.error('Error loading submissions:', error);
-                submissionsList.innerHTML = '<p style="text-align: center; color: #f44336;">Error loading submissions.</p>';
-            }
-        }
-        // Password Toggle
-        function togglePassword(inputId) {
-            const input = document.getElementById(inputId);
-            const button = event.target;
-            
-            if (input.type === 'password') {
-                input.type = 'text';
-                button.textContent = '🙈';
-            } else {
-                input.type = 'password';
-                button.textContent = '👁️';
-            }
-        }
-
-        // Forgot Password Modal
-        function openForgotPassword() {
-            closeLoginModal();
-            document.getElementById('forgotPasswordModal').style.display = 'block';
-        }
-
-        function closeForgotPassword() {
-            document.getElementById('forgotPasswordModal').style.display = 'none';
-        }
-
-        function backToLogin() {
-            closeForgotPassword();
-            openLoginModal();
-        }
-
-        // Verification Modal
-        function closeVerification() {
-            document.getElementById('verificationModal').style.display = 'none';
-        }
-
-        function resendVerificationEmail() {
-            if (currentUser) {
-                currentUser.sendEmailVerification()
-                    .then(() => alert('Verification email sent! Check your inbox.'))
-                    .catch(err => alert('Error: ' + err.message));
-            }
-        }
-
-        // Google Login
-        function loginWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then(result => {
-                    const user = result.user;
-                    // Save user data to Firestore if new user
-                    return db.collection('users').doc(user.uid).set({
-                        name: user.displayName,
-                        email: user.email,
-                        joinedDate: new Date().toLocaleDateString(),
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    }, { merge: true });
-                })
-                .then(() => {
-                    alert('Login successful! 👋');
-                    closeLoginModal();
-                    openDashboard();
-                })
-                .catch(error => {
-                    console.error('Google login error:', error);
-                    alert('Error: ' + error.message);
-                });
-        }
-
-        function signupWithGoogle() {
-            loginWithGoogle();
-        }
-
-        // Handle Forgot Password
-        async function handleForgotPassword(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('forgot-email').value;
-            const submitBtn = event.target.querySelector('button[type="submit"]');
-            
-            submitBtn.innerHTML = '⏳ Sending...';
-            submitBtn.disabled = true;
-
-            try {
-                await auth.sendPasswordResetEmail(email);
-                alert('Password reset email sent! Check your inbox. 📧');
-                closeForgotPassword();
-                document.getElementById('forgotPasswordForm').reset();
-            } catch (error) {
-                console.error('Password reset error:', error);
-                alert('Error: ' + error.message);
-            } finally {
-                submitBtn.innerHTML = 'Send Reset Link';
-                submitBtn.disabled = false;
-            }
-        }
-
-        // Show Terms & Privacy
-        function showTerms() {
-            alert('📜 Terms & Conditions\n\n1. Use platform responsibly\n2. Original ideas only\n3. Respect other users\n4. Follow contest rules');
-        }
-
-        function showPrivacy() {
-            alert('🔒 Privacy Policy\n\n• We protect your data\n• No sharing with third parties\n• Secure authentication\n• Email communications opt-in');
-        }
-
-        // Close modals when clicking outside
-        window.addEventListener('click', function(e) {
-            const modals = ['loginModal', 'signupModal', 'dashboardModal', 'forgotPasswordModal', 'verificationModal'];
-            modals.forEach(modalId => {
-                const modal = document.getElementById(modalId);
-                if (modal && e.target === modal) {
-                    modal.style.display = 'none';
+                    currentUser = null;
                 }
             });
-        });
 
-        // Password Strength Indicator
-        document.addEventListener('DOMContentLoaded', function() {
-            const passwordInput = document.getElementById('signup-password');
-            if (passwordInput) {
-                passwordInput.addEventListener('input', function() {
-                    const password = this.value;
-                    const strengthBar = document.querySelector('.strength-bar');
+            // Make auth functions global
+            window.openLoginModal = function() {
+                document.getElementById('loginModal').style.cssText = 'display: block !important';
+            };
+
+            window.closeLoginModal = function() {
+                document.getElementById('loginModal').style.cssText = 'display: none !important';
+            };
+
+            window.openSignupModal = function() {
+                document.getElementById('signupModal').style.cssText = 'display: block !important';
+            };
+
+            window.closeSignupModal = function() {
+                document.getElementById('signupModal').style.cssText = 'display: none !important';
+            };
+
+            window.openDashboard = function() {
+                if (!currentUser) {
+                    alert('Please login first!');
+                    openLoginModal();
+                    return;
+                }
+                loadUserSubmissions();
+                document.getElementById('dashboardModal').style.cssText = 'display: block !important';
+            };
+
+            window.closeDashboard = function() {
+                document.getElementById('dashboardModal').style.cssText = 'display: none !important';
+            };
+
+            window.switchToSignup = function() {
+                closeLoginModal();
+                openSignupModal();
+            };
+
+            window.switchToLogin = function() {
+                closeSignupModal();
+                openLoginModal();
+            };
+
+            // Handle Signup with Firebase
+            window.handleSignup = async function(event) {
+                event.preventDefault();
+                
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirm = document.getElementById('signup-confirm').value;
+
+                if (password !== confirm) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+
+                const submitBtn = event.target.querySelector('button[type="submit"]');
+                const btnText = submitBtn.querySelector('.btn-text');
+                const btnLoading = submitBtn.querySelector('.btn-loading');
+                
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+                submitBtn.disabled = true;
+
+                try {
+                    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                    const user = userCredential.user;
+
+                    await user.sendEmailVerification();
+
+                    await db.collection('users').doc(user.uid).set({
+                        name: name,
+                        email: email,
+                        joinedDate: new Date().toLocaleDateString(),
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    alert('Account created successfully! 🎉\n\nPlease check your email to verify your account.');
+                    closeSignupModal();
+                    document.getElementById('signupForm').reset();
                     
-                    if (!strengthBar) return;
-                    
-                    let strength = 0;
-                    if (password.length >= 8) strength++;
-                    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
-                    if (/[0-9]/.test(password)) strength++;
-                    if (/[^a-zA-Z0-9]/.test(password)) strength++;
-                    
-                    strengthBar.className = 'strength-bar';
-                    if (strength <= 1) {
-                        strengthBar.classList.add('strength-weak');
-                    } else if (strength <= 3) {
-                        strengthBar.classList.add('strength-medium');
+                } catch (error) {
+                    console.error('Signup error:', error);
+                    if (error.code === 'auth/email-already-in-use') {
+                        alert('This email is already registered. Please login instead.');
+                    } else if (error.code === 'auth/weak-password') {
+                        alert('Password should be at least 6 characters long.');
+                    } else if (error.code === 'auth/invalid-email') {
+                        alert('Please enter a valid email address.');
                     } else {
-                        strengthBar.classList.add('strength-strong');
+                        alert('Error creating account: ' + error.message);
                     }
-                });
-            }
-        });
+                } finally {
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
+                }
+            };
 
+            // Handle Login with Firebase
+            window.handleLogin = async function(event) {
+                event.preventDefault();
+                
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+
+                const submitBtn = event.target.querySelector('button[type="submit"]');
+                const btnText = submitBtn.querySelector('.btn-text');
+                const btnLoading = submitBtn.querySelector('.btn-loading');
+                
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+                submitBtn.disabled = true;
+
+                try {
+                    const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                    const user = userCredential.user;
+
+                    if (!user.emailVerified) {
+                        alert('⚠️ Please verify your email first!\n\nCheck your inbox for the verification link.');
+                        await auth.signOut();
+                        return;
+                    }
+
+                    alert('Login successful! Welcome back! 👋');
+                    closeLoginModal();
+                    document.getElementById('loginForm').reset();
+                    openDashboard();
+                    
+                } catch (error) {
+                    console.error('Login error:', error);
+                    if (error.code === 'auth/user-not-found') {
+                        alert('No account found with this email. Please sign up first.');
+                    } else if (error.code === 'auth/wrong-password') {
+                        alert('Incorrect password. Please try again.');
+                    } else if (error.code === 'auth/invalid-email') {
+                        alert('Please enter a valid email address.');
+                    } else {
+                        alert('Error logging in: ' + error.message);
+                    }
+                } finally {
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
+                }
+            };
+
+            // Handle Logout
+            window.handleLogout = async function() {
+                if (confirm('Are you sure you want to logout?')) {
+                    try {
+                        await auth.signOut();
+                        location.reload();
+                    } catch (error) {
+                        console.error('Logout error:', error);
+                        alert('Error logging out. Please try again.');
+                    }
+                }
+            };
+
+            // Update UI based on auth state
+            async function updateAuthUI(userData) {
+                const authButtons = document.querySelector('.auth-buttons');
+                authButtons.innerHTML = `
+                    <span style="color: #667eea; font-weight: 600; margin-right: 1rem;">Hello, ${userData.name.split(' ')[0]}!</span>
+                    <button class="btn-login" onclick="openDashboard()">Dashboard</button>
+                    <button class="btn-logout" onclick="handleLogout()">Logout</button>
+                `;
+
+                document.getElementById('dashboard-username').textContent = userData.name;
+                document.getElementById('profile-name').textContent = userData.name;
+                document.getElementById('profile-email').textContent = userData.email;
+                document.getElementById('profile-joined').textContent = userData.joinedDate;
+
+                const submissions = await db.collection('submissions')
+                    .where('userId', '==', userData.uid)
+                    .get();
+                document.getElementById('profile-submissions').textContent = submissions.size;
+            }
+
+            // Load User Submissions
+            async function loadUserSubmissions() {
+                if (!currentUser) return;
+
+                const submissionsList = document.getElementById('user-submissions');
+                submissionsList.innerHTML = '<p style="text-align: center;">Loading submissions... ⏳</p>';
+
+                try {
+                    const submissions = await db.collection('submissions')
+                        .where('userId', '==', currentUser.uid)
+                        .orderBy('submittedAt', 'desc')
+                        .get();
+
+                    if (submissions.empty) {
+                        submissionsList.innerHTML = `
+                            <p style="text-align: center; color: #888; padding: 2rem;">
+                                You haven't submitted any thoughts yet.<br>
+                                <a href="#submit" onclick="closeDashboard()" style="color: #667eea; font-weight: bold;">Submit your first thought!</a>
+                            </p>
+                        `;
+                        return;
+                    }
+
+                    let html = '<div style="display: grid; gap: 1rem;">';
+                    submissions.forEach(doc => {
+                        const data = doc.data();
+                        const date = data.submittedAt ? data.submittedAt.toDate().toLocaleDateString() : 'Recent';
+                        html += `
+                            <div style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 1.5rem; border-radius: 15px;">
+                                <h4 style="color: #667eea; margin-bottom: 0.5rem;">${data.title || 'Untitled'}</h4>
+                                <p style="color: #888; font-size: 0.9rem; margin-bottom: 0.5rem;">📅 ${date} | 📂 ${data.category || 'General'}</p>
+                                <p style="color: #555; line-height: 1.6;">${data.thoughts ? data.thoughts.substring(0, 150) + '...' : ''}</p>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                    submissionsList.innerHTML = html;
+
+                } catch (error) {
+                    console.error('Error loading submissions:', error);
+                    submissionsList.innerHTML = '<p style="text-align: center; color: #f44336;">Error loading submissions.</p>';
+                }
+            }
+
+            // Other auth helper functions...
+            window.togglePassword = function(inputId) {
+                const input = document.getElementById(inputId);
+                const button = event.target;
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    button.textContent = '🙈';
+                } else {
+                    input.type = 'password';
+                    button.textContent = '👁️';
+                }
+            };
+
+            window.openForgotPassword = function() {
+                closeLoginModal();
+                document.getElementById('forgotPasswordModal').style.cssText = 'display: block !important';
+            };
+
+            window.closeForgotPassword = function() {
+                document.getElementById('forgotPasswordModal').style.cssText = 'display: none !important';
+            };
+
+            window.backToLogin = function() {
+                closeForgotPassword();
+                openLoginModal();
+            };
+
+            window.closeVerification = function() {
+                document.getElementById('verificationModal').style.cssText = 'display: none !important';
+            };
+
+            window.resendVerificationEmail = function() {
+                if (currentUser) {
+                    currentUser.sendEmailVerification()
+                        .then(() => alert('Verification email sent! Check your inbox.'))
+                        .catch(err => alert('Error: ' + err.message));
+                }
+            };
+
+            window.loginWithGoogle = function() {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                auth.signInWithPopup(provider)
+                    .then(result => {
+                        const user = result.user;
+                        return db.collection('users').doc(user.uid).set({
+                            name: user.displayName,
+                            email: user.email,
+                            joinedDate: new Date().toLocaleDateString(),
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }, { merge: true });
+                    })
+                    .then(() => {
+                        alert('Login successful! 👋');
+                        closeLoginModal();
+                        openDashboard();
+                    })
+                    .catch(error => {
+                        console.error('Google login error:', error);
+                        alert('Error: ' + error.message);
+                    });
+            };
+
+            window.signupWithGoogle = function() {
+                loginWithGoogle();
+            };
+
+            window.handleForgotPassword = async function(event) {
+                event.preventDefault();
+                
+                const email = document.getElementById('forgot-email').value;
+                const submitBtn = event.target.querySelector('button[type="submit"]');
+                const btnText = submitBtn.querySelector('.btn-text');
+                const btnLoading = submitBtn.querySelector('.btn-loading');
+                
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+                submitBtn.disabled = true;
+
+                try {
+                    await auth.sendPasswordResetEmail(email);
+                    alert('Password reset email sent! Check your inbox. 📧');
+                    closeForgotPassword();
+                    document.getElementById('forgotPasswordForm').reset();
+                } catch (error) {
+                    console.error('Password reset error:', error);
+                    alert('Error: ' + error.message);
+                } finally {
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
+                }
+            };
+
+            window.showTerms = function() {
+                alert('📜 Terms & Conditions\n\n1. Use platform responsibly\n2. Original ideas only\n3. Respect other users\n4. Follow contest rules');
+            };
+
+            window.showPrivacy = function() {
+                alert('🔒 Privacy Policy\n\n• We protect your data\n• No sharing with third parties\n• Secure authentication\n• Email communications opt-in');
+            };
+
+            window.showTab = function(tabName) {
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                document.getElementById(tabName + '-tab').classList.add('active');
+                event.target.classList.add('active');
+            };
+
+            console.log('✅ Firebase initialized successfully!');
+        });
         // Dashboard Tab Switching
         function showTab(tabName) {
             // Hide all tabs
