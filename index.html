@@ -2509,9 +2509,14 @@ const firebaseConfig = {
         alert('Firebase initialization failed. Please refresh the page.');
     }
 
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    let currentUser = null;
+    firebase.auth();
+window.db = firebase.firestore();
+window.currentUser = null;
+
+const auth = window.auth;
+const db = window.db;
+let currentUser = window.currentUser;
+
 
     // Check authentication state
     auth.onAuthStateChanged(async (user) => {
