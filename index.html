@@ -2500,7 +2500,7 @@ const firebaseConfig = {
         appId: "1:887321510949:web:8b48e64ebe198507f12bcc"
     };
 
-    // Initialize Firebase immediately
+// Initialize Firebase immediately
     try {
         firebase.initializeApp(firebaseConfig);
         console.log('✅ Firebase initialized successfully!');
@@ -2508,21 +2508,23 @@ const firebaseConfig = {
         console.error('❌ Firebase initialization error:', error);
         alert('Firebase initialization failed. Please refresh the page.');
     }
-// ✅ Correct Firebase global initialization
-const auth = firebase.auth();
-const db = firebase.firestore();
-let currentUser = null;
 
-// Make available globally (for other functions)
-window.auth = auth;
-window.db = db;
-window.currentUser = currentUser;
+    // ✅ Make Firebase available globally
+    window.auth = firebase.auth();
+    window.db = firebase.firestore();
+    window.currentUser = null;
+    
+    // Also create local references
+    const auth = window.auth;
+    const db = window.db;
+    let currentUser = window.currentUser;
 
 
     // Check authentication state
     auth.onAuthStateChanged(async (user) => {
         if (user) {
             currentUser = user;
+            window.currentUser = user;
             try {
                 const userDoc = await db.collection('users').doc(user.uid).get();
                 if (userDoc.exists) {
@@ -2616,7 +2618,7 @@ window.currentUser = currentUser;
         submitBtn.disabled = true;
 
         try {
-            const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
 
             const user = userCredential.user;
 
