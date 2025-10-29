@@ -1505,6 +1505,22 @@ body.modal-open {
 .profile-info button:hover {
     transform: translateY(-1px);
 }
+              /* Force modal to be visible for testing */
+        #editProfileModal {
+            display: none; /* This will be overridden by JavaScript */
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        /* Test class to force show modal */
+        .modal-force-show {
+            display: block !important;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
@@ -1529,7 +1545,13 @@ body.modal-open {
             </div>
     </nav>
 
-  
+      </nav>
+
+    <!-- Test buttons -->
+    <div style="position: fixed; top: 100px; right: 20px; z-index: 10000; background: white; padding: 10px; border-radius: 5px;">
+        <button onclick="showModalTest()" style="background: blue; color: white; padding: 10px; margin: 5px;">Test Show Modal</button>
+        <button onclick="hideModalTest()" style="background: red; color: white; padding: 10px; margin: 5px;">Test Hide Modal</button>
+    </div>
 
     <!-- Temporary debug button - add this right after </nav> -->
     <div style="position: fixed; bottom: 20px; right: 20px; z-index: 10000;">
@@ -3283,29 +3305,71 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
     }
       // ===== SIMPLE TEST FUNCTION =====
     function testEditButton() {
+        console.log("=== EDIT BUTTON DEBUG ===");
         alert("Edit button clicked! If you see this, the button is working.");
-        console.log("Edit button clicked - basic test");
         
         // Check if user is logged in
         if (!currentUser) {
-            alert("Please login first!");
+            alert("❌ No user logged in");
+            console.log("❌ currentUser is null");
+            return;
+        }
+        console.log("✅ User is logged in:", currentUser.email);
+        
+        // Check if modal exists
+        const modal = document.getElementById('editProfileModal');
+        console.log("Edit profile modal found:", modal);
+        
+        if (!modal) {
+            alert("❌ Edit profile modal not found! Check the HTML.");
+            console.log("❌ Modal element not found");
             return;
         }
         
-        // Try to open edit profile
-        openEditProfile();
+        // Check if database is available
+        if (!database) {
+            alert("❌ Database not available");
+            console.log("❌ database is null");
+            return;
+        }
+        console.log("✅ Database is available");
+        
+        // Try to open the modal directly
+        console.log("✅ Trying to open modal directly...");
+        modal.style.display = 'block';
+        document.body.classList.add('modal-open');
+        
+        console.log("✅ Modal should be visible now");
+        alert("Modal should be open now! Check your screen.");
     }
-      // ===== CHECK IF FUNCTIONS ARE LOADED =====
-    console.log("=== CHECKING FUNCTIONS ===");
-    console.log("openEditProfile function exists:", typeof openEditProfile);
-    console.log("currentUser:", currentUser);
-    console.log("auth:", auth);
+      // ===== TEST FUNCTIONS FOR MODAL =====
+    function showModalTest() {
+        console.log("=== MANUAL MODAL TEST ===");
+        const modal = document.getElementById('editProfileModal');
+        console.log("Modal element:", modal);
+        
+        if (modal) {
+            modal.style.display = 'block';
+            modal.style.cssText = 'display: block !important';
+            document.body.classList.add('modal-open');
+            console.log("✅ Modal should be visible");
+            alert("Modal should be visible now! Look for a popup window.");
+        } else {
+            alert("❌ Modal not found in HTML");
+        }
+    }
     
-    // Make functions global
-    window.openEditProfile = openEditProfile;
-    window.testEditButton = testEditButton;
+    function hideModalTest() {
+        const modal = document.getElementById('editProfileModal');
+        if (modal) {
+            modal.style.display = 'none';
+            document.body.classList.remove('modal-open');
+            console.log("✅ Modal hidden");
+        }
+    }
 
     console.log('✅ All authentication functions loaded!');
+
 </script>
 
 </body>
