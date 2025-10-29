@@ -3303,45 +3303,45 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
     } else {
         initializeFirebase();
     }
-      // ===== SIMPLE TEST FUNCTION =====
-    function testEditButton() {
-        console.log("=== EDIT BUTTON DEBUG ===");
-        alert("Edit button clicked! If you see this, the button is working.");
+      e modal found:", modal);
+    //     // ===== SIMPLE TEST FUNCTION =====
+    // function testEditButton() {
+    //     console.log("=== EDIT BUTTON DEBUG ===");
+    //     alert("Edit button clicked! If you see this, the button is working.");
         
-        // Check if user is logged in
-        if (!currentUser) {
-            alert("❌ No user logged in");
-            console.log("❌ currentUser is null");
-            return;
-        }
-        console.log("✅ User is logged in:", currentUser.email);
+    //     // Check if user is logged in
+    //     if (!currentUser) {
+    //         alert("❌ No user logged in");
+    //         console.log("❌ currentUser is null");
+    //         return;
+    //     }
+    //     console.log("✅ User is logged in:", currentUser.email);
         
-        // Check if modal exists
-        const modal = document.getElementById('editProfileModal');
-        console.log("Edit profile modal found:", modal);
+    //     // Check if modal exists
+    //     const modal = document.getElementById('editProfileModal');
+    //     console.log("Edit profil
+    //     if (!modal) {
+    //         alert("❌ Edit profile modal not found! Check the HTML.");
+    //         console.log("❌ Modal element not found");
+    //         return;
+    //     }
         
-        if (!modal) {
-            alert("❌ Edit profile modal not found! Check the HTML.");
-            console.log("❌ Modal element not found");
-            return;
-        }
+    //     // Check if database is available
+    //     if (!database) {
+    //         alert("❌ Database not available");
+    //         console.log("❌ database is null");
+    //         return;
+    //     }
+    //     console.log("✅ Database is available");
         
-        // Check if database is available
-        if (!database) {
-            alert("❌ Database not available");
-            console.log("❌ database is null");
-            return;
-        }
-        console.log("✅ Database is available");
+    //     // Try to open the modal directly
+    //     console.log("✅ Trying to open modal directly...");
+    //     modal.style.display = 'block';
+    //     document.body.classList.add('modal-open');
         
-        // Try to open the modal directly
-        console.log("✅ Trying to open modal directly...");
-        modal.style.display = 'block';
-        document.body.classList.add('modal-open');
-        
-        console.log("✅ Modal should be visible now");
-        alert("Modal should be open now! Check your screen.");
-    }
+    //     console.log("✅ Modal should be visible now");
+    //     alert("Modal should be open now! Check your screen.");
+    // }
       // ===== TEST FUNCTIONS FOR MODAL =====
     function showModalTest() {
         console.log("=== MANUAL MODAL TEST ===");
