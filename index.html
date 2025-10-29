@@ -1477,6 +1477,34 @@ body.modal-open {
             line-height: 1.6;
             font-size: 0.95rem;
         }
+      /* Edit Profile Modal Styles */
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+#edit-email:disabled {
+    background: #f8f9fa !important;
+    color: #6c757d !important;
+    border-color: #e9ecef !important;
+}
+
+.profile-info button {
+    transition: all 0.3s ease;
+}
+
+.profile-info button:hover {
+    transform: translateY(-1px);
+}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
@@ -2116,6 +2144,50 @@ body.modal-open {
             </div>
         </div>
     </div>
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close" onclick="closeEditProfile()">&times;</span>
+            <div class="auth-modal-header">
+                <div class="auth-logo">👤</div>
+                <h2>Edit Your Profile</h2>
+                <p>Update your personal information</p>
+            </div>
+            <form id="editProfileForm" onsubmit="handleProfileUpdate(event)">
+                <div class="form-group">
+                    <label for="edit-name">
+                        <span class="label-icon">👤</span> Full Name
+                    </label>
+                    <input type="text" id="edit-name" required placeholder="Your full name" autocomplete="name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-phone">
+                        <span class="label-icon">📱</span> Phone Number (Optional)
+                    </label>
+                    <input type="tel" id="edit-phone" placeholder="+91 98765 43210" autocomplete="tel">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-email">
+                        <span class="label-icon">📧</span> Email Address
+                    </label>
+                    <input type="email" id="edit-email" disabled style="background: #f5f5f5; color: #666;">
+                    <small style="color: #888;">Email cannot be changed</small>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-auth">
+                    <span class="btn-text">Update Profile</span>
+                    <span class="btn-loading" style="display: none;">⏳ Updating...</span>
+                </button>
+                
+                <button type="button" class="btn btn-secondary" onclick="closeEditProfile()" style="margin-top: 1rem; width: 100%;">
+                    Cancel
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- User Dashboard Modal -->
     <div id="dashboardModal" class="modal dashboard-modal">
         <div class="modal-content dashboard-modal-content">
@@ -2214,8 +2286,11 @@ body.modal-open {
             <div id="profile-tab" class="tab-content">
                 <h3>👤 Your Profile</h3>
                 <div class="profile-info">
-                    <p><strong>Name:</strong> <span id="profile-name">-</span></p>
+                    <p><strong>Name:</strong> <span id="profile-name">-</span> 
+                       <button onclick="openEditProfile()" class="btn-login" style="margin-left: 10px; padding: 5px 10px; font-size: 0.8rem;">Edit</button>
+                    </p>
                     <p><strong>Email:</strong> <span id="profile-email">-</span></p>
+                    <p><strong>Phone:</strong> <span id="profile-phone">Not set</span></p>
                     <p><strong>Member Since:</strong> <span id="profile-joined">-</span></p>
                     <p><strong>Total Submissions:</strong> <span id="profile-submissions">0</span></p>
                 </div>
@@ -2566,10 +2641,13 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
                             });
                         }
                         
-                        const userData = snapshot.val() || {
+                                              const userData = snapshot.val() || {
                             name: user.displayName || 'User',
                             email: user.email,
-                            joinedDate: new Date().toLocaleDateString()
+                            phone: '',
+                            joinedDate: new Date().toLocaleDateString(),
+                            createdAt: new Date().toISOString(),
+                            emailVerified: user.emailVerified
                         };
                         
                         updateAuthUI({
@@ -2658,11 +2736,12 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
             // Send email verification
             await user.sendEmailVerification();
 
-            // Save user data to Realtime Database
+                    // Save user data to Realtime Database
             if (database) {
                 await database.ref('users/' + user.uid).set({
                     name: name,
                     email: email,
+                    phone: '', // Add empty phone field
                     joinedDate: new Date().toLocaleDateString(),
                     createdAt: new Date().toISOString(),
                     emailVerified: false
@@ -3022,6 +3101,118 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
 
         document.getElementById(tabName + '-tab').classList.add('active');
         event.target.classList.add('active');
+    }
+      // ===== PROFILE EDITING FUNCTIONS =====
+    function openEditProfile() {
+        if (!currentUser) {
+            alert('Please login first!');
+            return;
+        }
+        
+        // Load current user data
+        loadUserProfileData();
+        
+        // Show edit profile modal
+        document.getElementById('editProfileModal').style.cssText = 'display: block !important';
+        document.body.classList.add('modal-open');
+    }
+
+    function closeEditProfile() {
+        document.getElementById('editProfileModal').style.cssText = 'display: none !important';
+        document.body.classList.remove('modal-open');
+    }
+
+    async function loadUserProfileData() {
+        if (!currentUser || !database) return;
+        
+        try {
+            const userRef = database.ref('users/' + currentUser.uid);
+            userRef.once('value', (snapshot) => {
+                const userData = snapshot.val();
+                
+                // Fill the form with current data
+                document.getElementById('edit-name').value = userData?.name || currentUser.displayName || '';
+                document.getElementById('edit-phone').value = userData?.phone || '';
+                document.getElementById('edit-email').value = currentUser.email || '';
+                
+                // Also update profile display
+                updateProfileDisplay(userData);
+            });
+        } catch (error) {
+            console.error('Error loading profile data:', error);
+        }
+    }
+
+    async function handleProfileUpdate(event) {
+        event.preventDefault();
+        
+        if (!currentUser || !database) {
+            alert('Database not available. Please try again.');
+            return;
+        }
+        
+        const name = document.getElementById('edit-name').value.trim();
+        const phone = document.getElementById('edit-phone').value.trim();
+        
+        if (!name) {
+            alert('Please enter your name.');
+            return;
+        }
+
+        const submitBtn = event.target.querySelector('button[type="submit"]');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline';
+        submitBtn.disabled = true;
+
+        try {
+            // Update in Realtime Database
+            await database.ref('users/' + currentUser.uid).update({
+                name: name,
+                phone: phone,
+                updatedAt: new Date().toISOString()
+            });
+            
+            // Also update Firebase Auth display name
+            await currentUser.updateProfile({
+                displayName: name
+            });
+            
+            alert('✅ Profile updated successfully!');
+            closeEditProfile();
+            
+            // Refresh the profile display
+            const updatedData = {
+                name: name,
+                phone: phone,
+                email: currentUser.email
+            };
+            updateProfileDisplay(updatedData);
+            updateAuthUI(updatedData);
+            
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            alert('Error updating profile: ' + error.message);
+        } finally {
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+            submitBtn.disabled = false;
+        }
+    }
+
+    function updateProfileDisplay(userData) {
+        // Update profile tab
+        const profileName = document.getElementById('profile-name');
+        const profileEmail = document.getElementById('profile-email');
+        const profilePhone = document.getElementById('profile-phone');
+        const dashboardUsername = document.getElementById('dashboard-username');
+        
+        if (profileName) profileName.textContent = userData?.name || 'User';
+        if (profileEmail) profileEmail.textContent = userData?.email || 'No email';
+        if (profilePhone) profilePhone.textContent = userData?.phone || 'Not set';
+        if (dashboardUsername) dashboardUsername.textContent = userData?.name || 'User';
     }
 
     // ===== UPDATE FORM SUBMISSION TO USE REALTIME DATABASE =====
