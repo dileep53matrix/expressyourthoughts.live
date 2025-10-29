@@ -2513,11 +2513,6 @@ const firebaseConfig = {
 window.db = firebase.firestore();
 window.currentUser = null;
 
-const auth = window.auth;
-const db = window.db;
-let currentUser = window.currentUser;
-
-
     // Check authentication state
     auth.onAuthStateChanged(async (user) => {
         if (user) {
@@ -2615,7 +2610,8 @@ let currentUser = window.currentUser;
         submitBtn.disabled = true;
 
         try {
-            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+
             const user = userCredential.user;
 
             await user.sendEmailVerification();
