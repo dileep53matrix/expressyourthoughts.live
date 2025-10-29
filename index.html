@@ -1529,7 +1529,7 @@ body.modal-open {
             </div>
     </nav>
 
-    </nav>
+  
 
     <!-- Temporary debug button - add this right after </nav> -->
     <div style="position: fixed; bottom: 20px; right: 20px; z-index: 10000;">
@@ -2287,7 +2287,7 @@ body.modal-open {
                 <h3>👤 Your Profile</h3>
                 <div class="profile-info">
                     <p><strong>Name:</strong> <span id="profile-name">-</span> 
-                       <button onclick="openEditProfile()" class="btn-login" style="margin-left: 10px; padding: 5px 10px; font-size: 0.8rem;">Edit</button>
+                           <button onclick="testEditButton()" class="btn-login" style="margin-left: 10px; padding: 5px 10px; font-size: 0.8rem;">Edit</button>
                     </p>
                     <p><strong>Email:</strong> <span id="profile-email">-</span></p>
                     <p><strong>Phone:</strong> <span id="profile-phone">Not set</span></p>
@@ -3281,6 +3281,29 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
     } else {
         initializeFirebase();
     }
+      // ===== SIMPLE TEST FUNCTION =====
+    function testEditButton() {
+        alert("Edit button clicked! If you see this, the button is working.");
+        console.log("Edit button clicked - basic test");
+        
+        // Check if user is logged in
+        if (!currentUser) {
+            alert("Please login first!");
+            return;
+        }
+        
+        // Try to open edit profile
+        openEditProfile();
+    }
+      // ===== CHECK IF FUNCTIONS ARE LOADED =====
+    console.log("=== CHECKING FUNCTIONS ===");
+    console.log("openEditProfile function exists:", typeof openEditProfile);
+    console.log("currentUser:", currentUser);
+    console.log("auth:", auth);
+    
+    // Make functions global
+    window.openEditProfile = openEditProfile;
+    window.testEditButton = testEditButton;
 
     console.log('✅ All authentication functions loaded!');
 </script>
