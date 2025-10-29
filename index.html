@@ -2764,78 +2764,78 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
         }
     }
 
-      async function handleLogin(event) {
-        event.preventDefault();
+    //   async function handleLogin(event) {
+    //     event.preventDefault();
         
-        if (!auth) {
-            alert('Authentication service is not available. Please refresh the page and try again.');
-            return;
-        }
+    //     if (!auth) {
+    //         alert('Authentication service is not available. Please refresh the page and try again.');
+    //         return;
+    //     }
         
-        const email = document.getElementById('login-email').value.trim();
-        const password = document.getElementById('login-password').value;
+    //     const email = document.getElementById('login-email').value.trim();
+    //     const password = document.getElementById('login-password').value;
 
-        if (!email || !password) {
-            alert('Please enter both email and password.');
-            return;
-        }
+    //     if (!email || !password) {
+    //         alert('Please enter both email and password.');
+    //         return;
+    //     }
 
-        const submitBtn = event.target.querySelector('button[type="submit"]');
-        const btnText = submitBtn.querySelector('.btn-text');
-        const btnLoading = submitBtn.querySelector('.btn-loading');
+    //     const submitBtn = event.target.querySelector('button[type="submit"]');
+    //     const btnText = submitBtn.querySelector('.btn-text');
+    //     const btnLoading = submitBtn.querySelector('.btn-loading');
         
-        btnText.style.display = 'none';
-        btnLoading.style.display = 'inline';
-        submitBtn.disabled = true;
+    //     btnText.style.display = 'none';
+    //     btnLoading.style.display = 'inline';
+    //     submitBtn.disabled = true;
 
-        try {
-            const userCredential = await auth.signInWithEmailAndPassword(email, password);
-            const user = userCredential.user;
+    //     try {
+    //         const userCredential = await auth.signInWithEmailAndPassword(email, password);
+    //         const user = userCredential.user;
 
-            // REMOVED the email verification check that was logging users out
-            // if (!user.emailVerified) {
-            //     alert('⚠️ Please verify your email first!\n\nCheck your inbox for the verification link.');
-            //     await auth.signOut();
-            //     return;
-            // }
+    //         // REMOVED the email verification check that was logging users out
+    //         // if (!user.emailVerified) {
+    //         //     alert('⚠️ Please verify your email first!\n\nCheck your inbox for the verification link.');
+    //         //     await auth.signOut();
+    //         //     return;
+    //         // }
 
-            console.log('✅ Login successful, user:', user.email);
+    //         console.log('✅ Login successful, user:', user.email);
             
-            // Close modal and reset form
-            closeLoginModal();
-            document.getElementById('loginForm').reset();
+    //         // Close modal and reset form
+    //         closeLoginModal();
+    //         document.getElementById('loginForm').reset();
             
-            // Let the auth state listener handle the UI update
-            // Don't force open dashboard immediately
+    //         // Let the auth state listener handle the UI update
+    //         // Don't force open dashboard immediately
             
-        } catch (error) {
-            console.error('Login error:', error);
-            let errorMessage = 'Login failed. ';
+    //     } catch (error) {
+    //         console.error('Login error:', error);
+    //         let errorMessage = 'Login failed. ';
             
-            switch(error.code) {
-                case 'auth/user-not-found':
-                    errorMessage += 'No account found with this email. Please sign up first.';
-                    break;
-                case 'auth/wrong-password':
-                    errorMessage += 'Incorrect password. Please try again.';
-                    break;
-                case 'auth/invalid-email':
-                    errorMessage += 'Please enter a valid email address.';
-                    break;
-                case 'auth/too-many-requests':
-                    errorMessage += 'Too many failed attempts. Please try again later.';
-                    break;
-                default:
-                    errorMessage += error.message;
-            }
+    //         switch(error.code) {
+    //             case 'auth/user-not-found':
+    //                 errorMessage += 'No account found with this email. Please sign up first.';
+    //                 break;
+    //             case 'auth/wrong-password':
+    //                 errorMessage += 'Incorrect password. Please try again.';
+    //                 break;
+    //             case 'auth/invalid-email':
+    //                 errorMessage += 'Please enter a valid email address.';
+    //                 break;
+    //             case 'auth/too-many-requests':
+    //                 errorMessage += 'Too many failed attempts. Please try again later.';
+    //                 break;
+    //             default:
+    //                 errorMessage += error.message;
+    //         }
             
-            alert(errorMessage);
-        } finally {
-            btnText.style.display = 'inline';
-            btnLoading.style.display = 'none';
-            submitBtn.disabled = false;
-        }
-    }
+    //         alert(errorMessage);
+    //     } finally {
+    //         btnText.style.display = 'inline';
+    //         btnLoading.style.display = 'none';
+    //         submitBtn.disabled = false;
+    //     }
+    // }
 
       async function loginWithGoogle() {
         if (!auth) {
