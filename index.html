@@ -2672,16 +2672,20 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
     }
 
     // ===== UPDATE AUTH UI =====
-    function updateAuthUI(userData) {
+        function updateAuthUI(userData) {
         const authButtons = document.querySelector('.auth-buttons');
         if (!authButtons) return;
 
         if (userData) {
+            // Use the actual name from userData, not just displayName
+            const userName = userData.name || currentUser?.displayName || userData.email.split('@')[0] || 'User';
+            
             authButtons.innerHTML = `
-                <span style="color: #667eea; font-weight: 600; margin-right: 1rem;">Hello, ${userData.name.split(' ')[0]}!</span>
+                <span style="color: #667eea; font-weight: 600; margin-right: 1rem;">Hello, ${userName.split(' ')[0]}!</span>
                 <button class="btn-login" onclick="openDashboard()">Dashboard</button>
                 <button class="btn-logout" onclick="handleLogout()">Logout</button>
             `;
+            console.log('✅ Auth UI updated with name:', userName);
         } else {
             authButtons.innerHTML = `
                 <button class="btn-login" onclick="openLoginModal()">Login</button>
@@ -2937,14 +2941,77 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
 
     // ===== DASHBOARD FUNCTIONS =====
     function openDashboard() {
+        console.log('🎯 TRYING TO OPEN DASHBOARD...');
+        console.log('Current User:', currentUser);
+        console.log('Auth Current User:', auth?.currentUser);
+        
+        if (!currentUser && auth?.currentUser) {
+            currentUser = auth.currentUser;
+            window.currentUser = auth.currentUser;
+            console.log('✅ User set from auth:', currentUser.email);
+        }
+        
         if (!currentUser) {
+            console.log('❌ No user found');
             alert('Please login first!');
             openLoginModal();
             return;
         }
+        
+        console.log('✅ User confirmed:', currentUser.email);
+        console.log('User display name:', currentUser.displayName);
+        
+        // Get the dashboard modal
+        const dashboardModal = document.getElementById('dashboardModal');
+        console.log('Dashboard modal found:', dashboardModal);
+        
+        if (!dashboardModal) {
+            console.log('❌ Dashboard modal not found in HTML');
+            alert('Dashboard not available. Please refresh the page.');
+            return;
+        }
+        
+        // Load user submissions
         loadUserSubmissions();
-        document.getElementById('dashboardModal').style.cssText = 'display: block !important';
+        
+        // Update user info in dashboard - FIXED VERSION
+        const dashboardUsername = document.getElementById('dashboard-username');
+        const profileName = document.getElementById('profile-name');
+        const profileEmail = document.getElementById('profile-email');
+        const profilePhone = document.getElementById('profile-phone');
+        
+        // Get user data from database to get the actual name
+        if (database && currentUser) {
+            const userRef = database.ref('users/' + currentUser.uid);
+            userRef.once('value', (snapshot) => {
+                const userData = snapshot.val();
+                console.log('User data from database:', userData);
+                
+                // Use database name first, then displayName, then fallback
+                const userName = userData?.name || currentUser.displayName || currentUser.email.split('@')[0] || 'User';
+                
+                if (dashboardUsername) dashboardUsername.textContent = userName;
+                if (profileName) profileName.textContent = userName;
+                if (profileEmail) profileEmail.textContent = currentUser.email;
+                if (profilePhone) profilePhone.textContent = userData?.phone || 'Not set';
+                
+                console.log('✅ Dashboard updated with name:', userName);
+            });
+        } else {
+            // Fallback if database not available
+            const userName = currentUser.displayName || currentUser.email.split('@')[0] || 'User';
+            if (dashboardUsername) dashboardUsername.textContent = userName;
+            if (profileName) profileName.textContent = userName;
+            if (profileEmail) profileEmail.textContent = currentUser.email;
+            if (profilePhone) profilePhone.textContent = 'Not set';
+        }
+        
+        // SHOW THE DASHBOARD
+        dashboardModal.style.display = 'block';
+        dashboardModal.style.cssText = 'display: block !important';
         document.body.classList.add('modal-open');
+        
+        console.log('✅ Dashboard should be visible now!');
     }
 
     function closeDashboard() {
@@ -3066,16 +3133,21 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
         }
     }
 
-    function updateProfileDisplay(userData) {
+       function updateProfileDisplay(userData) {
         const profileName = document.getElementById('profile-name');
         const profileEmail = document.getElementById('profile-email');
         const profilePhone = document.getElementById('profile-phone');
         const dashboardUsername = document.getElementById('dashboard-username');
         
-        if (profileName) profileName.textContent = userData?.name || 'User';
-        if (profileEmail) profileEmail.textContent = userData?.email || 'No email';
+        // Use database name first, then fallbacks
+        const userName = userData?.name || currentUser?.displayName || userData?.email?.split('@')[0] || 'User';
+        
+        if (profileName) profileName.textContent = userName;
+        if (profileEmail) profileEmail.textContent = userData?.email || currentUser?.email || 'No email';
         if (profilePhone) profilePhone.textContent = userData?.phone || 'Not set';
-        if (dashboardUsername) dashboardUsername.textContent = userData?.name || 'User';
+        if (dashboardUsername) dashboardUsername.textContent = userName;
+        
+        console.log('✅ Profile display updated with name:', userName);
     }
 
     // ===== SUBMISSIONS FUNCTIONS =====
