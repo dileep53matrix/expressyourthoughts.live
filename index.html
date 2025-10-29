@@ -1543,22 +1543,9 @@ body.modal-open {
                 <button class="btn-login" onclick="openLoginModal()">Login</button>
                 <button class="btn-signup" onclick="openSignupModal()">Sign Up</button>
             </div>
-    </nav>
+     </nav>
 
-      </nav>
-
-    <!-- Test buttons -->
-    <div style="position: fixed; top: 100px; right: 20px; z-index: 10000; background: white; padding: 10px; border-radius: 5px;">
-        <button onclick="showModalTest()" style="background: blue; color: white; padding: 10px; margin: 5px;">Test Show Modal</button>
-        <button onclick="hideModalTest()" style="background: red; color: white; padding: 10px; margin: 5px;">Test Hide Modal</button>
-    </div>
-
-    <!-- Temporary debug button - add this right after </nav> -->
-    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 10000;">
-        <button onclick="debugAuth()" style="background: red; color: white; padding: 10px; border: none; border-radius: 5px;">
-            Debug Auth
-        </button>
-    </div>
+    <
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -2309,7 +2296,7 @@ body.modal-open {
                 <h3>👤 Your Profile</h3>
                 <div class="profile-info">
                     <p><strong>Name:</strong> <span id="profile-name">-</span> 
-                           <button onclick="testEditButton()" class="btn-login" style="margin-left: 10px; padding: 5px 10px; font-size: 0.8rem;">Edit</button>
+                          <button onclick="openEditProfile()" class="btn-login" style="margin-left: 10px; padding: 5px 10px; font-size: 0.8rem;">Edit</button>
                     </p>
                     <p><strong>Email:</strong> <span id="profile-email">-</span></p>
                     <p><strong>Phone:</strong> <span id="profile-phone">Not set</span></p>
@@ -3304,69 +3291,45 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
         initializeFirebase();
     }
       e modal found:", modal);
-    //     // ===== SIMPLE TEST FUNCTION =====
-    // function testEditButton() {
-    //     console.log("=== EDIT BUTTON DEBUG ===");
-    //     alert("Edit button clicked! If you see this, the button is working.");
+        // ===== SIMPLE TEST FUNCTION =====
+    function testEditButton() {
+        console.log("=== EDIT BUTTON DEBUG ===");
+        alert("Edit button clicked! If you see this, the button is working.");
         
-    //     // Check if user is logged in
-    //     if (!currentUser) {
-    //         alert("❌ No user logged in");
-    //         console.log("❌ currentUser is null");
-    //         return;
-    //     }
-    //     console.log("✅ User is logged in:", currentUser.email);
-        
-    //     // Check if modal exists
-    //     const modal = document.getElementById('editProfileModal');
-    //     console.log("Edit profil
-    //     if (!modal) {
-    //         alert("❌ Edit profile modal not found! Check the HTML.");
-    //         console.log("❌ Modal element not found");
-    //         return;
-    //     }
-        
-    //     // Check if database is available
-    //     if (!database) {
-    //         alert("❌ Database not available");
-    //         console.log("❌ database is null");
-    //         return;
-    //     }
-    //     console.log("✅ Database is available");
-        
-    //     // Try to open the modal directly
-    //     console.log("✅ Trying to open modal directly...");
-    //     modal.style.display = 'block';
-    //     document.body.classList.add('modal-open');
-        
-    //     console.log("✅ Modal should be visible now");
-    //     alert("Modal should be open now! Check your screen.");
-    // }
-      // ===== TEST FUNCTIONS FOR MODAL =====
-    function showModalTest() {
-        console.log("=== MANUAL MODAL TEST ===");
-        const modal = document.getElementById('editProfileModal');
-        console.log("Modal element:", modal);
-        
-        if (modal) {
-            modal.style.display = 'block';
-            modal.style.cssText = 'display: block !important';
-            document.body.classList.add('modal-open');
-            console.log("✅ Modal should be visible");
-            alert("Modal should be visible now! Look for a popup window.");
-        } else {
-            alert("❌ Modal not found in HTML");
+        // Check if user is logged in
+        if (!currentUser) {
+            alert("❌ No user logged in");
+            console.log("❌ currentUser is null");
+            return;
         }
+        console.log("✅ User is logged in:", currentUser.email);
+        
+        // Check if modal exists
+        const modal = document.getElementById('editProfileModal');
+        console.log("Edit profil
+        if (!modal) {
+            alert("❌ Edit profile modal not found! Check the HTML.");
+            console.log("❌ Modal element not found");
+            return;
+        }
+        
+        // Check if database is available
+        if (!database) {
+            alert("❌ Database not available");
+            console.log("❌ database is null");
+            return;
+        }
+        console.log("✅ Database is available");
+        
+        // Try to open the modal directly
+        console.log("✅ Trying to open modal directly...");
+        modal.style.display = 'block';
+        document.body.classList.add('modal-open');
+        
+        console.log("✅ Modal should be visible now");
+        alert("Modal should be open now! Check your screen.");
     }
     
-    function hideModalTest() {
-        const modal = document.getElementById('editProfileModal');
-        if (modal) {
-            modal.style.display = 'none';
-            document.body.classList.remove('modal-open');
-            console.log("✅ Modal hidden");
-        }
-    }
 
     console.log('✅ All authentication functions loaded!');
 
