@@ -2837,7 +2837,7 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
     //     }
     // }
 
-      async function loginWithGoogle() {
+       async function loginWithGoogle() {
         if (!auth) {
             alert('Authentication service is not available. Please refresh the page and try again.');
             return;
@@ -2868,12 +2868,14 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
             closeLoginModal();
             closeSignupModal();
             
-            // Wait a bit for auth state to update, then open dashboard
+            // Set current user immediately
+            currentUser = user;
+            window.currentUser = user;
+            
+            // Open dashboard immediately
             setTimeout(() => {
-                if (currentUser) {
-                    openDashboard();
-                }
-            }, 1000);
+                openDashboard();
+            }, 500);
             
         } catch (error) {
             console.error('Google login error:', error);
