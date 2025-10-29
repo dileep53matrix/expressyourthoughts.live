@@ -2618,10 +2618,12 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
     }
 
     // ===== AUTH STATE LISTENER =====
-    function setupAuthListener() {
+       function setupAuthListener() {
         if (!auth) return;
         
         auth.onAuthStateChanged(async (user) => {
+            console.log('🔄 Auth state changed:', user ? user.email : 'No user');
+            
             if (user) {
                 currentUser = user;
                 window.currentUser = user;
@@ -2767,7 +2769,7 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
         }
     }
 
-    async function handleLogin(event) {
+      async function handleLogin(event) {
         event.preventDefault();
         
         if (!auth) {
@@ -2795,19 +2797,21 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
             const userCredential = await auth.signInWithEmailAndPassword(email, password);
             const user = userCredential.user;
 
-            if (!user.emailVerified) {
-                alert('⚠️ Please verify your email first!\n\nCheck your inbox for the verification link.');
-                await auth.signOut();
-                return;
-            }
+            // REMOVED the email verification check that was logging users out
+            // if (!user.emailVerified) {
+            //     alert('⚠️ Please verify your email first!\n\nCheck your inbox for the verification link.');
+            //     await auth.signOut();
+            //     return;
+            // }
 
-            alert('✅ Login successful! Welcome back! 👋');
+            console.log('✅ Login successful, user:', user.email);
+            
+            // Close modal and reset form
             closeLoginModal();
             document.getElementById('loginForm').reset();
             
-            setTimeout(() => {
-                openDashboard();
-            }, 500);
+            // Let the auth state listener handle the UI update
+            // Don't force open dashboard immediately
             
         } catch (error) {
             console.error('Login error:', error);
@@ -2838,7 +2842,7 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
         }
     }
 
-    async function loginWithGoogle() {
+       async function loginWithGoogle() {
         if (!auth) {
             alert('Authentication service is not available. Please refresh the page and try again.');
             return;
@@ -2860,13 +2864,13 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
                 }, { merge: true });
             }
             
-            alert('✅ Login successful! 👋');
+            console.log('✅ Google login successful:', user.email);
+            
+            // Close modals but don't force dashboard open
             closeLoginModal();
             closeSignupModal();
             
-            setTimeout(() => {
-                openDashboard();
-            }, 1000);
+            // Let auth state listener handle the UI update
             
         } catch (error) {
             console.error('Google login error:', error);
