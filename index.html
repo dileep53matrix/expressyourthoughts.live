@@ -2508,10 +2508,16 @@ const firebaseConfig = {
         console.error('❌ Firebase initialization error:', error);
         alert('Firebase initialization failed. Please refresh the page.');
     }
+// ✅ Correct Firebase global initialization
+const auth = firebase.auth();
+const db = firebase.firestore();
+let currentUser = null;
 
-    firebase.auth();
-window.db = firebase.firestore();
-window.currentUser = null;
+// Make available globally (for other functions)
+window.auth = auth;
+window.db = db;
+window.currentUser = currentUser;
+
 
     // Check authentication state
     auth.onAuthStateChanged(async (user) => {
