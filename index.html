@@ -2485,12 +2485,11 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
         console.log('💡 Ready to collect amazing thoughts and ideas!');
     </script>
 
-    <!-- ========== FIXED FIREBASE & AUTH CODE ========== -->
-    <script>
-    // ===== FIREBASE INITIALIZATION =====
-  
-const firebaseConfig = {
-   apiKey: "AIzaSyAq1ebAz6h5WdmPuWejBOI569FsV2TtRl0",
+<!-- ========== FIXED FIREBASE & AUTH CODE ========== -->
+<script>
+    // ===== FIREBASE CONFIGURATION =====
+    const firebaseConfig = {
+        apiKey: "AIzaSyAq1ebAz6h5WdmPuWejBOI569FsV2TtRl0",
         authDomain: "express-your-thoughts-465a3.firebaseapp.com",
         projectId: "express-your-thoughts-465a3",
         storageBucket: "express-your-thoughts-465a3.appspot.com",
@@ -2498,94 +2497,143 @@ const firebaseConfig = {
         appId: "1:887321510949:web:8b48e64ebe198507f12bcc"
     };
 
-// Initialize Firebase immediately
-    try {
-        firebase.initializeApp(firebaseConfig);
-        console.log('✅ Firebase initialized successfully!');
-    } catch (error) {
-        console.error('❌ Firebase initialization error:', error);
-        alert('Firebase initialization failed. Please refresh the page.');
+    // ===== GLOBAL VARIABLES =====
+    let auth = null;
+    let db = null;
+    let currentUser = null;
+
+    // ===== INITIALIZE FIREBASE =====
+    function initializeFirebase() {
+        try {
+            // Check if Firebase is already initialized
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            
+            // Initialize services
+            auth = firebase.auth();
+            db = firebase.firestore();
+            
+            // Make available globally
+            window.auth = auth;
+            window.db = db;
+            
+            console.log('✅ Firebase initialized successfully!');
+            
+            // Set up auth state listener
+            setupAuthListener();
+            
+        } catch (error) {
+            console.error('❌ Firebase initialization error:', error);
+            // Fallback: Show alert but don't break the site
+            setTimeout(() => {
+                if (!auth) {
+                    console.warn('Firebase auth not available - using fallback mode');
+                }
+            }, 2000);
+        }
     }
 
-    // ✅ Make Firebase available globally
-    window.auth = firebase.auth();
-    window.db = firebase.firestore();
-    window.currentUser = null;
-    
-    // Also create local references
-    const auth = window.auth;
-    const db = window.db;
-    let currentUser = window.currentUser;
-
-
-    // Check authentication state
-    auth.onAuthStateChanged(async (user) => {
-        if (user) {
-            currentUser = user;
-            window.currentUser = user;
-            try {
-                const userDoc = await db.collection('users').doc(user.uid).get();
-                if (userDoc.exists) {
-                    const userData = userDoc.data();
+    // ===== AUTH STATE LISTENER =====
+    function setupAuthListener() {
+        if (!auth) {
+            console.warn('Auth not available for listener');
+            return;
+        }
+        
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                window.currentUser = user;
+                console.log('👤 User logged in:', user.email);
+                
+                try {
+                    const userDoc = await db.collection('users').doc(user.uid).get();
+                    if (userDoc.exists) {
+                        const userData = userDoc.data();
+                        updateAuthUI({
+                            name: userData.name || user.displayName || 'User',
+                            email: user.email,
+                            joinedDate: userData.joinedDate || new Date().toLocaleDateString(),
+                            uid: user.uid
+                        });
+                    } else {
+                        // Create user document if it doesn't exist
+                        await db.collection('users').doc(user.uid).set({
+                            name: user.displayName || 'User',
+                            email: user.email,
+                            joinedDate: new Date().toLocaleDateString(),
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            emailVerified: user.emailVerified
+                        });
+                        updateAuthUI({
+                            name: user.displayName || 'User',
+                            email: user.email,
+                            joinedDate: new Date().toLocaleDateString(),
+                            uid: user.uid
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error loading user data:', error);
+                    // Fallback UI update
                     updateAuthUI({
-                        name: userData.name,
+                        name: user.displayName || 'User',
                         email: user.email,
-                        joinedDate: userData.joinedDate,
+                        joinedDate: new Date().toLocaleDateString(),
                         uid: user.uid
                     });
                 }
-            } catch (error) {
-                console.error('Error loading user data:', error);
+            } else {
+                currentUser = null;
+                window.currentUser = null;
+                console.log('👤 User logged out');
+                updateAuthUI(null);
             }
-        } else {
-            currentUser = null;
-            const authButtons = document.querySelector('.auth-buttons');
-            if (authButtons) {
-                authButtons.innerHTML = `
-                    <button class="btn-login" onclick="openLoginModal()">Login</button>
-                    <button class="btn-signup" onclick="openSignupModal()">Sign Up</button>
-                `;
-            }
-        }
-    });
+        });
+    }
 
-    // Update UI when user is logged in
-    async function updateAuthUI(userData) {
+    // ===== UPDATE UI BASED ON AUTH STATE =====
+    function updateAuthUI(userData) {
         const authButtons = document.querySelector('.auth-buttons');
-        if (authButtons) {
+        if (!authButtons) return;
+
+        if (userData) {
             authButtons.innerHTML = `
                 <span style="color: #667eea; font-weight: 600; margin-right: 1rem;">Hello, ${userData.name.split(' ')[0]}!</span>
                 <button class="btn-login" onclick="openDashboard()">Dashboard</button>
                 <button class="btn-logout" onclick="handleLogout()">Logout</button>
             `;
-        }
+            
+            // Update dashboard info if available
+            const dashboardUsername = document.getElementById('dashboard-username');
+            if (dashboardUsername) dashboardUsername.textContent = userData.name;
+            
+            const profileName = document.getElementById('profile-name');
+            if (profileName) profileName.textContent = userData.name;
+            
+            const profileEmail = document.getElementById('profile-email');
+            if (profileEmail) profileEmail.textContent = userData.email;
+            
+            const profileJoined = document.getElementById('profile-joined');
+            if (profileJoined) profileJoined.textContent = userData.joinedDate;
 
-        const dashboardUsername = document.getElementById('dashboard-username');
-        if (dashboardUsername) dashboardUsername.textContent = userData.name;
-        
-        const profileName = document.getElementById('profile-name');
-        if (profileName) profileName.textContent = userData.name;
-        
-        const profileEmail = document.getElementById('profile-email');
-        if (profileEmail) profileEmail.textContent = userData.email;
-        
-        const profileJoined = document.getElementById('profile-joined');
-        if (profileJoined) profileJoined.textContent = userData.joinedDate;
-
-        try {
-            const submissions = await db.collection('submissions')
-                .where('userId', '==', userData.uid)
-                .get();
-            const profileSubmissions = document.getElementById('profile-submissions');
-            if (profileSubmissions) profileSubmissions.textContent = submissions.size;
-        } catch (error) {
-            console.error('Error counting submissions:', error);
+        } else {
+            authButtons.innerHTML = `
+                <button class="btn-login" onclick="openLoginModal()">Login</button>
+                <button class="btn-signup" onclick="openSignupModal()">Sign Up</button>
+            `;
         }
     }
 
-    // Signup Handler
+    // ===== AUTH HANDLERS =====
     async function handleSignup(event) {
         event.preventDefault();
+        
+        // Check if Firebase auth is available
+        if (!auth) {
+            alert('Authentication service is not available. Please refresh the page and try again.');
+            return;
+        }
         
         const name = document.getElementById('signup-name').value.trim();
         const email = document.getElementById('signup-email').value.trim();
@@ -2617,18 +2665,21 @@ const firebaseConfig = {
 
         try {
             const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-
             const user = userCredential.user;
 
+            // Send email verification
             await user.sendEmailVerification();
 
-            await db.collection('users').doc(user.uid).set({
-                name: name,
-                email: email,
-                joinedDate: new Date().toLocaleDateString(),
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                emailVerified: false
-            });
+            // Save user data to Firestore
+            if (db) {
+                await db.collection('users').doc(user.uid).set({
+                    name: name,
+                    email: email,
+                    joinedDate: new Date().toLocaleDateString(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    emailVerified: false
+                });
+            }
 
             alert('🎉 Account created successfully!\n\nPlease check your email to verify your account.');
             closeSignupModal();
@@ -2660,9 +2711,14 @@ const firebaseConfig = {
         }
     }
 
-    // Login Handler
     async function handleLogin(event) {
         event.preventDefault();
+        
+        // Check if Firebase auth is available
+        if (!auth) {
+            alert('Authentication service is not available. Please refresh the page and try again.');
+            return;
+        }
         
         const email = document.getElementById('login-email').value.trim();
         const password = document.getElementById('login-password').value;
@@ -2727,13 +2783,17 @@ const firebaseConfig = {
         }
     }
 
-    // Logout Handler
     async function handleLogout() {
+        if (!auth) {
+            alert('Authentication service not available.');
+            return;
+        }
+        
         if (confirm('Are you sure you want to logout?')) {
             try {
                 await auth.signOut();
                 alert('Logged out successfully!');
-                location.reload();
+                // Don't reload - let the auth state listener handle UI update
             } catch (error) {
                 console.error('Logout error:', error);
                 alert('Error logging out. Please try again.');
@@ -2741,20 +2801,26 @@ const firebaseConfig = {
         }
     }
 
-    // Google Login
     async function loginWithGoogle() {
+        if (!auth) {
+            alert('Authentication service is not available. Please refresh the page and try again.');
+            return;
+        }
+        
         const provider = new firebase.auth.GoogleAuthProvider();
         try {
             const result = await auth.signInWithPopup(provider);
             const user = result.user;
             
-            await db.collection('users').doc(user.uid).set({
-                name: user.displayName,
-                email: user.email,
-                joinedDate: new Date().toLocaleDateString(),
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                emailVerified: true
-            }, { merge: true });
+            if (db) {
+                await db.collection('users').doc(user.uid).set({
+                    name: user.displayName,
+                    email: user.email,
+                    joinedDate: new Date().toLocaleDateString(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    emailVerified: true
+                }, { merge: true });
+            }
             
             alert('✅ Login successful! 👋');
             closeLoginModal();
@@ -2774,7 +2840,7 @@ const firebaseConfig = {
         loginWithGoogle();
     }
 
-    // Modal Functions
+    // ===== MODAL FUNCTIONS =====
     function openLoginModal() {
         document.getElementById('loginModal').style.cssText = 'display: block !important';
         document.body.classList.add('modal-open');
@@ -2821,9 +2887,15 @@ const firebaseConfig = {
         openLoginModal();
     }
 
-    // Load User Submissions
+    // ===== LOAD USER SUBMISSIONS =====
     async function loadUserSubmissions() {
-        if (!currentUser) return;
+        if (!currentUser || !db) {
+            const submissionsList = document.getElementById('user-submissions');
+            if (submissionsList) {
+                submissionsList.innerHTML = '<p style="text-align: center; color: #888;">Database not available</p>';
+            }
+            return;
+        }
 
         const submissionsList = document.getElementById('user-submissions');
         if (!submissionsList) return;
@@ -2867,7 +2939,7 @@ const firebaseConfig = {
         }
     }
 
-    // Helper Functions
+    // ===== HELPER FUNCTIONS =====
     function togglePassword(inputId) {
         const input = document.getElementById(inputId);
         const button = event.target;
@@ -2893,8 +2965,21 @@ const firebaseConfig = {
         event.target.classList.add('active');
     }
 
+    // ===== INITIALIZE WHEN PAGE LOADS =====
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 DOM loaded - initializing Firebase...');
+        initializeFirebase();
+    });
+
+    // Fallback initialization if DOMContentLoaded already fired
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeFirebase);
+    } else {
+        initializeFirebase();
+    }
+
     console.log('✅ All authentication functions loaded!');
-    </script>
+</script>
 
 </body>
 </html>
