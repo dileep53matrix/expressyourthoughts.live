@@ -1763,7 +1763,14 @@ body.modal-open {
             </div>
      </nav>
 
-    <
+        
+
+    <!-- Test Auth Button -->
+    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 10000;">
+        <button onclick="testAuth()" style="background: green; color: white; padding: 10px; border: none; border-radius: 5px;">
+            Test Auth
+        </button>
+    </div>
 
     <!-- Hero Section -->
       <!-- Hero Section with Image Slideshow -->
@@ -3839,6 +3846,19 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
     } else {
         initializeFirebase();
     }
+      // ===== TEST FUNCTION =====
+    function testAuth() {
+        console.log('=== AUTH TEST ===');
+        console.log('Auth:', auth);
+        console.log('Database:', database);
+        console.log('Current User:', currentUser);
+        console.log('Firebase:', typeof firebase);
+        
+        alert('Check browser console for auth status');
+    }
+
+    console.log('✅ Auth system loaded!');
+
 
     console.log('✅ All authentication functions loaded!');
 
