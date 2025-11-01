@@ -3001,7 +3001,7 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
 
 // ===== GLOBAL VARIABLES =====
 let auth = null;
-let database = null;
+let firestore = null;  // Changed from database
 let currentUser = null;
 
 // ===== INITIALIZE FIREBASE =====
@@ -3011,18 +3011,18 @@ function initializeFirebase() {
             firebase.initializeApp(firebaseConfig);
         }
         
-        // Check if database function exists
-        if (typeof firebase.database === 'function') {
+        // Use Firestore
+        if (typeof firebase.firestore === 'function') {
             auth = firebase.auth();
-            database = firebase.database();
+            firestore = firebase.firestore();  // Firestore instead of database
             
             window.auth = auth;
-            window.database = database;
+            window.firestore = firestore;
             
             console.log('✅ Firebase initialized successfully!');
             setupAuthListener();
         } else {
-            console.error('❌ firebase.database is not available - check imports');
+            console.error('❌ firebase.firestore is not available - check imports');
         }
         
     } catch (error) {
@@ -3041,9 +3041,9 @@ function setupAuthListener() {
             console.log('👤 User logged in:', user.email);
             
             try {
-                const userRef = database.ref('users/' + user.uid);
-                userRef.once('value', (snapshot) => {
-                    if (!snapshot.exists()) {
+                const userRef = firestore.collection('users').doc(user.uid);  // Firestore syntax
+                userRef.get().then((doc) => {
+                    if (!doc.exists) {
                         userRef.set({
                             name: user.displayName || 'User',
                             email: user.email,
@@ -3054,7 +3054,7 @@ function setupAuthListener() {
                         });
                     }
                     
-                    const userData = snapshot.val() || {
+                    const userData = doc.data() || {
                         name: user.displayName || 'User',
                         email: user.email,
                         phone: '',
