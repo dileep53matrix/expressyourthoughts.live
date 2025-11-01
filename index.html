@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Firebase SDKs (v9 compat) -->
+  <!-- Firebase SDKs (v9 compat) for Realtime Database -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
 
     <title>Express Your Thoughts | Share Your Ideas & Win Cash Prizes</title>
@@ -3008,14 +3008,15 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
     let auth = null;
     let database = null;
     let currentUser = null;
-
-    // ===== INITIALIZE FIREBASE =====
-    function initializeFirebase() {
-        try {
-            if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
-            }
-            
+// ===== INITIALIZE FIREBASE =====
+function initializeFirebase() {
+    try {
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        
+        // Check if database function exists
+        if (typeof firebase.database === 'function') {
             auth = firebase.auth();
             database = firebase.database();
             
@@ -3024,18 +3025,14 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
             
             console.log('✅ Firebase initialized successfully!');
             setupAuthListener();
-            
-        } catch (error) {
-            console.error('❌ Firebase initialization error:', error);
+        } else {
+            console.error('❌ firebase.database is not available - check imports');
         }
-    }
-
-    // ===== AUTH STATE LISTENER =====
-       function setupAuthListener() {
-        if (!auth) return;
         
-        auth.onAuthStateChanged(async (user) => {
-            console.log('🔄 Auth state changed:', user ? user.email : 'No user');
+    } catch (error) {
+        console.error('❌ Firebase initialization error:', error);
+    }
+}
             
             if (user) {
                 currentUser = user;
@@ -3835,11 +3832,7 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
         initScrollAnimations();
     });
 
-    // ===== INITIALIZE =====
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('🚀 DOM loaded - initializing Firebase...');
-        initializeFirebase();
-    });
+   
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initializeFirebase);
