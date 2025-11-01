@@ -3069,12 +3069,13 @@ function initializeFirebase() {
                 }
             } else {
                 currentUser = null;
-                window.currentUser = null;
-                console.log('👤 User logged out');
-                updateAuthUI(null);
-           }
-        });
-    }
+        window.currentUser = null;
+        console.log('👤 User logged out');
+        updateAuthUI(null);
+      }
+    }); // closes auth.onAuthStateChanged
+  } // closes initializeFirebase function
+
 // ===== MODAL FUNCTIONS =====
 function openLoginModal() {
     console.log('Opening login modal...');
