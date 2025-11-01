@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Firebase SDKs (v9 compat) for Realtime Database -->
-<!-- Firebase SDKs (v9 compat) for Firestore -->
+<!-- CHANGE FROM FIRESTORE TO REALTIME DATABASE -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
 
     <title>Express Your Thoughts | Share Your Ideas & Win Cash Prizes</title>
@@ -3001,7 +3000,7 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
 
 // ===== GLOBAL VARIABLES =====
 let auth = null;
-let firestore = null;  // Changed from database
+let database = null;  // Changed from firestore
 let currentUser = null;
 
 // ===== INITIALIZE FIREBASE =====
@@ -3011,18 +3010,18 @@ function initializeFirebase() {
             firebase.initializeApp(firebaseConfig);
         }
         
-        // Use Firestore
-        if (typeof firebase.firestore === 'function') {
+        // Use Realtime Database instead of Firestore
+        if (typeof firebase.database === 'function') {
             auth = firebase.auth();
-            firestore = firebase.firestore();  // Firestore instead of database
+            database = firebase.database();  // Realtime Database
             
             window.auth = auth;
-            window.firestore = firestore;
+            window.database = database;
             
             console.log('✅ Firebase initialized successfully!');
             setupAuthListener();
         } else {
-            console.error('❌ firebase.firestore is not available - check imports');
+            console.error('❌ firebase.database is not available - check imports');
         }
         
     } catch (error) {
@@ -3041,9 +3040,10 @@ function setupAuthListener() {
             console.log('👤 User logged in:', user.email);
             
             try {
-                const userRef = firestore.collection('users').doc(user.uid);  // Firestore syntax
-                userRef.get().then((doc) => {
-                    if (!doc.exists) {
+                // USE REALTIME DATABASE SYNTAX
+                const userRef = database.ref('users/' + user.uid);
+                userRef.once('value').then((snapshot) => {
+                    if (!snapshot.exists()) {
                         userRef.set({
                             name: user.displayName || 'User',
                             email: user.email,
@@ -3054,7 +3054,7 @@ function setupAuthListener() {
                         });
                     }
                     
-                    const userData = doc.data() || {
+                    const userData = snapshot.val() || {
                         name: user.displayName || 'User',
                         email: user.email,
                         phone: '',
