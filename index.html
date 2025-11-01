@@ -3094,6 +3094,30 @@ function openSignupModal() {
     // Example: document.getElementById('signupModal').style.display = 'block';
     alert('Signup modal would open here - add your modal code');
 }
+  // ===== TEMPORARY TEST - PASTE THIS RIGHT AFTER YOUR MODAL FUNCTIONS =====
+console.log('✅ Modal functions defined:');
+console.log('openLoginModal:', typeof openLoginModal);
+console.log('openSignupModal:', typeof openSignupModal);
+
+// Test if buttons exist and can be clicked
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔍 Looking for auth buttons...');
+    
+    // Find all buttons that might be login/signup
+    const allButtons = document.querySelectorAll('button, a, input[type="button"]');
+    allButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            console.log('🟡 Button clicked:', this.textContent || this.value, this);
+        });
+    });
+    
+    // Specifically look for login/signup buttons
+    const loginBtns = document.querySelectorAll('[onclick*="login"], [onclick*="Login"]');
+    const signupBtns = document.querySelectorAll('[onclick*="signup"], [onclick*="Signup"]');
+    
+    console.log('Login buttons found:', loginBtns.length);
+    console.log('Signup buttons found:', signupBtns.length);
+});
     // ===== UPDATE AUTH UI =====
         function updateAuthUI(userData) {
         const authButtons = document.querySelector('.auth-buttons');
