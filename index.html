@@ -2048,7 +2048,7 @@ body.modal-open {
                 
                 <!-- Photo 2 -->
                 <div class="gallery-item">
-                    <img src="pic.omp.jpg" alt="Gallery Photo 2">
+                    <img src="https://via.placeholder.com/400x300/f5576c/ffffff?text=Photo+4" alt="Gallery Photo 2">
                     <div class="gallery-caption">Community Events</div>
                 </div>
                 
@@ -2999,10 +2999,11 @@ console.log('🚀 Express Your Thoughts website loaded successfully!');
         databaseURL: "https://express-your-thoughts-465a3-default-rtdb.firebaseio.com/"
     };
 
-    // ===== GLOBAL VARIABLES =====
-    let auth = null;
-    let database = null;
-    let currentUser = null;
+// ===== GLOBAL VARIABLES =====
+let auth = null;
+let database = null;
+let currentUser = null;
+
 // ===== INITIALIZE FIREBASE =====
 function initializeFirebase() {
     try {
@@ -3028,53 +3029,58 @@ function initializeFirebase() {
         console.error('❌ Firebase initialization error:', error);
     }
 }
+
+// ===== AUTH STATE LISTENER =====
+function setupAuthListener() {
+    if (!auth) return;
+    
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            currentUser = user;
+            window.currentUser = user;
+            console.log('👤 User logged in:', user.email);
             
-            if (user) {
-                currentUser = user;
-                window.currentUser = user;
-                console.log('👤 User logged in:', user.email);
-                
-                try {
-                    const userRef = database.ref('users/' + user.uid);
-                    userRef.once('value', (snapshot) => {
-                        if (!snapshot.exists()) {
-                            userRef.set({
-                                name: user.displayName || 'User',
-                                email: user.email,
-                                phone: '',
-                                joinedDate: new Date().toLocaleDateString(),
-                                createdAt: new Date().toISOString(),
-                                emailVerified: user.emailVerified
-                            });
-                        }
-                        
-                        const userData = snapshot.val() || {
+            try {
+                const userRef = database.ref('users/' + user.uid);
+                userRef.once('value', (snapshot) => {
+                    if (!snapshot.exists()) {
+                        userRef.set({
                             name: user.displayName || 'User',
                             email: user.email,
                             phone: '',
-                            joinedDate: new Date().toLocaleDateString()
-                        };
-                        
-                        updateAuthUI(userData);
-                    });
+                            joinedDate: new Date().toLocaleDateString(),
+                            createdAt: new Date().toISOString(),
+                            emailVerified: user.emailVerified
+                        });
+                    }
                     
-                } catch (error) {
-                    console.error('Error loading user data:', error);
-                    updateAuthUI({
+                    const userData = snapshot.val() || {
                         name: user.displayName || 'User',
                         email: user.email,
-                        joinedDate: new Date().toLocaleDateString(),
-                        uid: user.uid
-                    });
-                }
-            } else {
-                currentUser = null;
-        window.currentUser = null;
-        console.log('👤 User logged out');
-        updateAuthUI(null);
-      }
-    }); // closes auth.onAuthStateChanged
- // closes initializeFirebase function
+                        phone: '',
+                        joinedDate: new Date().toLocaleDateString()
+                    };
+                    
+                    updateAuthUI(userData);
+                });
+                
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                updateAuthUI({
+                    name: user.displayName || 'User',
+                    email: user.email,
+                    joinedDate: new Date().toLocaleDateString(),
+                    uid: user.uid
+                });
+            }
+        } else {
+            currentUser = null;
+            window.currentUser = null;
+            console.log('👤 User logged out');
+            updateAuthUI(null);
+        }
+    });
+}
 
 // ===== MODAL FUNCTIONS =====
 function openLoginModal() {
