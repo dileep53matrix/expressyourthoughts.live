@@ -3289,104 +3289,136 @@ document.addEventListener('DOMContentLoaded', function() {
     //         submitBtn.disabled = false;
     //     }
     // }
-
-       async function loginWithGoogle() {
-        if (!auth) {
-            alert('Authentication service is not available. Please refresh the page and try again.');
-            return;
+async function loginWithEmail(email, password) {
+    if (!auth) {
+        alert('Authentication service is not available. Please refresh the page and try again.');
+        return;
+    }
+    
+    try {
+        const result = await auth.signInWithEmailAndPassword(email, password);
+        const user = result.user;
+        
+        if (database) {
+            // ✅ CORRECT: No {merge: true} parameter
+            await database.ref('users/' + user.uid).update({
+                lastLogin: new Date().toISOString()
+            });
         }
         
-        const provider = new firebase.auth.GoogleAuthProvider();
-        try {
-            const result = await auth.signInWithPopup(provider);
-            const user = result.user;
-            
-            if (database) {
-                await database.ref('users/' + user.uid).set({
-                    name: user.displayName,
-                    email: user.email,
-                    phone: '',
-                    joinedDate: new Date().toLocaleDateString(),
-                    createdAt: new Date().toISOString(),
-                    emailVerified: true
-                }, { merge: true });
-            }
-            
-            console.log('✅ Google login successful:', user.email);
-            
-            // Show success message
-            alert('✅ Login successful! Welcome ' + user.displayName + '! 👋');
-            
-            // Close modals
-            closeLoginModal();
-            closeSignupModal();
-            
-            // Set current user immediately
-            currentUser = user;
-            window.currentUser = user;
-            
-            // Open dashboard immediately
-            setTimeout(() => {
-                openDashboard();
-            }, 500);
-            
-        } catch (error) {
-            console.error('Google login error:', error);
-            alert('Error: ' + error.message);
-        }
-    }
-
-    function signupWithGoogle() {
-        loginWithGoogle();
-    }
-
-    async function handleLogout() {
-        if (!auth) {
-            alert('Authentication service not available.');
-            return;
-        }
+        console.log('✅ Email login successful:', user.email);
+        alert('✅ Login successful! Welcome back! 👋');
         
-        if (confirm('Are you sure you want to logout?')) {
-            try {
-                await auth.signOut();
-                alert('Logged out successfully!');
-            } catch (error) {
-                console.error('Logout error:', error);
-                alert('Error logging out. Please try again.');
-            }
-        }
-    }
-
-    // ===== MODAL FUNCTIONS =====
-    function openLoginModal() {
-        document.getElementById('loginModal').style.cssText = 'display: block !important';
-        document.body.classList.add('modal-open');
-    }
-
-    function closeLoginModal() {
-        document.getElementById('loginModal').style.cssText = 'display: none !important';
-        document.body.classList.remove('modal-open');
-    }
-
-    function openSignupModal() {
-        document.getElementById('signupModal').style.cssText = 'display: block !important';
-        document.body.classList.add('modal-open');
-    }
-
-    function closeSignupModal() {
-        document.getElementById('signupModal').style.cssText = 'display: none !important';
-        document.body.classList.remove('modal-open');
-    }
-
-    function switchToSignup() {
         closeLoginModal();
-        openSignupModal();
+        currentUser = user;
+        window.currentUser = user;
+        
+        setTimeout(() => {
+            openDashboard();
+        }, 500);
+        
+    } catch (error) {
+        console.error('Email login error:', error);
+        alert('Error: ' + error.message);
     }
+}
 
-    function switchToLogin() {
-        closeSignupModal();
-        openLoginModal();
+// ===== EMAIL SIGNUP FUNCTION =====
+async function signupWithEmail(email, password, name) {
+    if (!auth) {
+        alert('Authentication service is not available. Please refresh the page and try again.');
+        return;
     }
+    
+    try {
+        const result = await auth.createUserWithEmailAndPassword(email, password);
+        const user = result.user;
+        
+        // Update profile name
+        await user.updateProfile({
+            displayName: name
+        });
+        
+        if (database) {
+            // ✅ CORRECT: No {merge: true} parameter
+            await database.ref('users/' + user.uid).set({
+                name: name,
+                email: email,
+                phone: '',
+                joinedDate: new Date().toLocaleDateString(),
+                createdAt: new Date().toISOString(),
+                emailVerified: false
+            });
+        }
+        
+        console.log('✅ Email signup successful:', email);
+        alert('✅ Account created successfully! Welcome ' + name + '! 🎉');
+        
+        closeSignupModal();
+        currentUser = user;
+        window.currentUser = user;
+        
+        setTimeout(() => {
+            openDashboard();
+        }, 500);
+        
+    } catch (error) {
+        console.error('Email signup error:', error);
+        alert('Error: ' + error.message);
+    }
+}
+
+function signupWithGoogle() {
+    loginWithGoogle();
+}
+
+async function handleLogout() {
+    if (!auth) {
+        alert('Authentication service not available.');
+        return;
+    }
+    
+    if (confirm('Are you sure you want to logout?')) {
+        try {
+            await auth.signOut();
+            alert('Logged out successfully!');
+        } catch (error) {
+            console.error('Logout error:', error);
+            alert('Error logging out. Please try again.');
+        }
+    }
+}
+
+// ===== MODAL FUNCTIONS =====
+function openLoginModal() {
+    document.getElementById('loginModal').style.cssText = 'display: block !important';
+    document.body.classList.add('modal-open');
+}
+
+function closeLoginModal() {
+    document.getElementById('loginModal').style.cssText = 'display: none !important';
+    document.body.classList.remove('modal-open');
+}
+
+function openSignupModal() {
+    document.getElementById('signupModal').style.cssText = 'display: block !important';
+    document.body.classList.add('modal-open');
+}
+
+function closeSignupModal() {
+    document.getElementById('signupModal').style.cssText = 'display: none !important';
+    document.body.classList.remove('modal-open');
+}
+
+function switchToSignup() {
+    closeLoginModal();
+    openSignupModal();
+}
+
+function switchToLogin() {
+    closeSignupModal();
+    openLoginModal();
+}
 
     // ===== DASHBOARD FUNCTIONS =====
     function openDashboard() {
