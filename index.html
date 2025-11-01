@@ -3368,6 +3368,202 @@ async function signupWithEmail(email, password, name) {
     }
 }
 
+// ===== SIGNUP FORM HANDLER =====
+function handleSignup(event) {
+    event.preventDefault(); // Stop page from refreshing
+    
+    console.log('📝 Signup form submitted...');
+    
+    // Get form values
+    const name = document.getElementById('signup-name').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    const confirmPassword = document.getElementById('signup-confirm').value;
+    const phone = document.getElementById('signup-phone').value;
+    const termsAccepted = document.getElementById('terms-accept').checked;
+    
+    // Validation
+    if (!name || !email || !password || !confirmPassword) {
+        alert('❌ Please fill all required fields');
+        return;
+    }
+    
+    if (password !== confirmPassword) {
+        alert('❌ Passwords do not match');
+        return;
+    }
+    
+    if (password.length < 8) {
+        alert('❌ Password must be at least 8 characters long');
+        return;
+    }
+    
+    if (!termsAccepted) {
+        alert('❌ Please accept the Terms & Conditions');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = event.target.querySelector('.btn-auth');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'inline';
+    submitBtn.disabled = true;
+    
+    console.log('🔄 Creating account...', { name, email });
+    
+    // Call the signup function
+    signupWithEmail(email, password, name)
+        .finally(() => {
+            // Reset button state
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+            submitBtn.disabled = false;
+        });
+}
+
+// ===== SIGNUP WITH EMAIL =====
+async function signupWithEmail(email, password, name) {
+    if (!auth) {
+        alert('Authentication service is not available. Please refresh the page and try again.');
+        return;
+    }
+    
+    try {
+        const result = await auth.createUserWithEmailAndPassword(email, password);
+        const user = result.user;
+        
+        // Update profile name
+        await user.updateProfile({
+            displayName: name
+        });
+        
+        // Get phone number from form
+        const phone = document.getElementById('signup-phone').value;
+        
+        if (database) {
+            await database.ref('users/' + user.uid).set({
+                name: name,
+                email: email,
+                phone: phone || '', // Include phone number
+                joinedDate: new Date().toLocaleDateString(),
+                createdAt: new Date().toISOString(),
+                emailVerified: false
+            });
+        }
+        
+        console.log('✅ Email signup successful:', email);
+        alert('✅ Account created successfully! Welcome ' + name + '! 🎉');
+        
+        closeSignupModal();
+        currentUser = user;
+        window.currentUser = user;
+        
+        setTimeout(() => {
+            openDashboard();
+        }, 500);
+        
+    } catch (error) {
+        console.error('Email signup error:', error);
+        alert('Error: ' + error.message);
+    }
+}
+
+// ===== PASSWORD TOGGLE FUNCTION =====
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const toggleBtn = input.parentNode.querySelector('.toggle-password');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        toggleBtn.textContent = '🙈';
+    } else {
+        input.type = 'password';
+        toggleBtn.textContent = '👁️';
+    }
+}
+
+// ===== FORGOT PASSWORD HANDLER =====
+function handleForgotPassword(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('forgot-email').value;
+    
+    if (!email) {
+        alert('❌ Please enter your email address');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = event.target.querySelector('.btn-auth');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'inline';
+    submitBtn.disabled = true;
+    
+    auth.sendPasswordResetEmail(email)
+        .then(() => {
+            alert('✅ Password reset email sent! Check your inbox.');
+            closeForgotPassword();
+        })
+        .catch((error) => {
+            console.error('Password reset error:', error);
+            alert('❌ Error: ' + error.message);
+        })
+        .finally(() => {
+            // Reset button state
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+            submitBtn.disabled = false;
+        });
+}
+
+// ===== FORGOT PASSWORD MODAL FUNCTIONS =====
+function openForgotPassword() {
+    document.getElementById('forgotPasswordModal').style.cssText = 'display: block !important';
+    document.body.classList.add('modal-open');
+}
+
+function closeForgotPassword() {
+    document.getElementById('forgotPasswordModal').style.cssText = 'display: none !important';
+    document.body.classList.remove('modal-open');
+}
+
+function backToLogin() {
+    closeForgotPassword();
+    openLoginModal();
+}
+
+// ===== VERIFICATION MODAL FUNCTIONS =====
+function showVerificationModal(email) {
+    document.getElementById('verification-email').textContent = email;
+    document.getElementById('verificationModal').style.cssText = 'display: block !important';
+    document.body.classList.add('modal-open');
+}
+
+function closeVerification() {
+    document.getElementById('verificationModal').style.cssText = 'display: none !important';
+    document.body.classList.remove('modal-open');
+}
+
+function resendVerificationEmail() {
+    if (currentUser) {
+        currentUser.sendEmailVerification()
+            .then(() => {
+                alert('✅ Verification email sent!');
+            })
+            .catch((error) => {
+                alert('❌ Error sending verification: ' + error.message);
+            });
+    }
+}
+
+
+
 function signupWithGoogle() {
     loginWithGoogle();
 }
