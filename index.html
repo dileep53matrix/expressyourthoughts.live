@@ -782,6 +782,132 @@
             font-weight: 700;
         }
 
+        /* Exclusive Content Styles */
+        .exclusive-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .exclusive-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .exclusive-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .content-item {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .content-item video,
+        .content-item img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .payment-modal {
+            z-index: 13000;
+        }
+
+        .payment-form {
+            padding: 2rem;
+        }
+
+        .price-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        /* Math Puzzle Game Styles */
+        .math-puzzle-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 80px 0;
+        }
+
+        .puzzle-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .puzzle-question {
+            font-size: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .puzzle-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .puzzle-btn {
+            padding: 1.5rem;
+            font-size: 1.3rem;
+            border: 3px solid #667eea;
+            border-radius: 12px;
+            background: white;
+            color: #667eea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .puzzle-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .puzzle-btn.correct {
+            background: #4caf50;
+            border-color: #4caf50;
+            color: white;
+        }
+
+        .puzzle-btn.wrong {
+            background: #f44336;
+            border-color: #f44336;
+            color: white;
+        }
+
+        .puzzle-score {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .puzzle-controls {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
         .team-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -2384,6 +2510,25 @@ body.modal-open {
         Photo size recommendation: 250x250 pixels (square)
         -->
     </section>
+    <!-- Math Puzzle Game Section -->
+    <section class="math-puzzle-section">
+        <div class="section">
+            <h2>🧮 Fun Math Challenge</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Test your math skills and have fun!</p>
+            <div class="puzzle-container">
+                <div class="puzzle-score">Score: <span id="puzzle-score">0</span></div>
+                <div class="puzzle-question" id="puzzle-question">Loading question...</div>
+                <div class="puzzle-options" id="puzzle-options">
+                    <!-- Options will be populated by JavaScript -->
+                </div>
+                <div class="puzzle-controls">
+                    <button class="btn btn-primary" onclick="generateNewPuzzle()">New Question</button>
+                    <button class="btn btn-secondary" onclick="resetPuzzleScore()" style="margin-left: 1rem;">Reset Score</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Social Media Section -->
     <section id="social" class="social-section section">
         <h2>Follow Us & Stay Connected</h2>
@@ -2630,6 +2775,58 @@ body.modal-open {
             </div>
         </div>
     </div>
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal auth-modal payment-modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close" onclick="closePaymentModal()">&times;</span>
+            <div class="auth-modal-header">
+                <div class="auth-logo">💳</div>
+                <h2>Enroll in Exclusive Content</h2>
+                <p>Access premium courses, videos, and resources</p>
+            </div>
+            <div class="payment-form">
+                <div class="price-display">$1.00</div>
+                <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+                    One-time payment for lifetime access to exclusive content
+                </p>
+                <form id="paymentForm" onsubmit="processPayment(event)">
+                    <div class="form-group">
+                        <label for="card-name">Cardholder Name *</label>
+                        <input type="text" id="card-name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="card-number">Card Number *</label>
+                        <input type="text" id="card-number" required placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="card-expiry">Expiry Date *</label>
+                            <input type="text" id="card-expiry" required placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-cvv">CVV *</label>
+                            <input type="text" id="card-cvv" required placeholder="123" maxlength="4">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="payment-terms" required>
+                            <span>I agree to the payment terms and refund policy</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-auth">
+                        <span class="btn-text">Pay $1.00 & Enroll</span>
+                        <span class="btn-loading" style="display: none;">⏳ Processing...</span>
+                    </button>
+                    <p style="text-align: center; margin-top: 1rem; color: #888; font-size: 0.85rem;">
+                        🔒 Secure payment processing<br>
+                        <small>Note: For now, this is a demo. To connect real payments, see instructions below.</small>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Edit Profile Modal -->
     <div id="editProfileModal" class="modal auth-modal">
         <div class="modal-content auth-modal-content">
@@ -2717,6 +2914,7 @@ body.modal-open {
             <div class="dashboard-tabs">
                 <button class="tab-btn active" onclick="showTab('opportunities')">Opportunities</button>
                 <button class="tab-btn" onclick="showTab('submissions')">My Submissions</button>
+                <button class="tab-btn" onclick="showTab('exclusive')">⭐ Exclusive Content</button>
                 <button class="tab-btn" onclick="showTab('profile')">Profile</button>
             </div>
 
@@ -2728,16 +2926,14 @@ body.modal-open {
                     <!-- Hackathon 1 -->
                     <div class="opportunity-card">
                         <div class="opportunity-badge hackathon">Hackathon</div>
-                        <h4>Tech Innovation in Space Challenge 2025</h4>
-                        <p class="opportunity-desc">you will work in a team to develop and prototype a solution that uses EU space technologies, like Copernicus and Galileo, to improve consumer experiences. Win prizes up to €5000!</p>
+                        <h4>Tech Innovation Challenge 2025</h4>
+                        <p class="opportunity-desc">Build innovative solutions for real-world problems. Win prizes up to ₹1,00,000!</p>
                         <div class="opportunity-details">
-                            <p><strong>📅 Deadline:</strong> November 7, 2025</p>
-                            <p><strong>💰 Prize Pool:</strong> 1st Place: €5,000
-2nd Place: €3,000
-3rd Place: €1,000</p>
+                            <p><strong>📅 Deadline:</strong> March 15, 2025</p>
+                            <p><strong>💰 Prize Pool:</strong> ₹1,00,000</p>
                             <p><strong>📍 Mode:</strong> Online</p>
                         </div>
-                        <a href="https://www.cassini.eu/hackathons/" target="_blank" class="btn btn-primary">Join Now →</a>
+                        <a href="https://example.com/hackathon1" target="_blank" class="btn btn-primary">Join Now →</a>
                     </div>
 
                     <!-- Internship 1 -->
@@ -2797,6 +2993,13 @@ body.modal-open {
                     <p style="text-align: center; color: #888; padding: 2rem;">
                         Your submissions will appear here after you participate in contests.
                     </p>
+                </div>
+            </div>
+
+            <!-- Exclusive Content Tab -->
+            <div id="exclusive-tab" class="tab-content">
+                <div id="exclusive-content-area">
+                    <!-- Will be populated by JavaScript based on enrollment status -->
                 </div>
             </div>
 
@@ -3876,7 +4079,324 @@ function switchToLogin() {
 
         document.getElementById(tabName + '-tab').classList.add('active');
         event.target.classList.add('active');
+        
+        // Load exclusive content if that tab is opened
+        if (tabName === 'exclusive') {
+            loadExclusiveContent();
+        }
     }
+
+    // ===== EXCLUSIVE CONTENT FUNCTIONS =====
+    async function loadExclusiveContent() {
+        if (!currentUser || !database) return;
+        
+        const contentArea = document.getElementById('exclusive-content-area');
+        if (!contentArea) return;
+        
+        try {
+            const userRef = database.ref('users/' + currentUser.uid);
+            userRef.once('value', (snapshot) => {
+                const userData = snapshot.val();
+                const isEnrolled = userData?.exclusiveContentEnrolled || false;
+                
+                if (isEnrolled) {
+                    // Show enrolled content
+                    contentArea.innerHTML = `
+                        <div class="exclusive-card">
+                            <h3>🎉 Welcome to Exclusive Content!</h3>
+                            <p>You have full access to all premium courses and resources.</p>
+                        </div>
+                        <div class="exclusive-content">
+                            <div class="content-item">
+                                <h4>📹 Course Video 1</h4>
+                                <video controls>
+                                    <source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p>Introduction to Web Development</p>
+                            </div>
+                            <div class="content-item">
+                                <h4>📸 Resource Gallery</h4>
+                                <img src="https://via.placeholder.com/400x300/667eea/ffffff?text=Course+Material" alt="Course Material">
+                                <p>Downloadable resources and study materials</p>
+                            </div>
+                            <div class="content-item">
+                                <h4>📚 Course Module 2</h4>
+                                <p>Advanced topics and hands-on exercises</p>
+                                <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Access Course →</a>
+                            </div>
+                        </div>
+                        <div style="margin-top: 2rem; padding: 1.5rem; background: #f8f9fa; border-radius: 15px;">
+                            <h4>💡 How to Add Your Content:</h4>
+                            <p>1. Replace video URLs with your course videos<br>
+                               2. Upload images to your server and update image src<br>
+                               3. Add links to downloadable resources<br>
+                               4. Structure content in modules for better organization</p>
+                        </div>
+                    `;
+                } else {
+                    // Show enrollment prompt
+                    contentArea.innerHTML = `
+                        <div class="exclusive-card">
+                            <h3>⭐ Exclusive Content</h3>
+                            <p style="font-size: 1.2rem; margin: 1rem 0;">Unlock premium courses, videos, and exclusive resources</p>
+                            <div style="margin: 2rem 0;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
+                                <div class="price-display" style="color: white;">$1.00</div>
+                                <p style="font-size: 0.9rem; opacity: 0.9;">One-time payment for lifetime access</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="openPaymentModal()" style="padding: 15px 40px; font-size: 1.1rem;">
+                                Enroll Now - $1.00
+                            </button>
+                        </div>
+                        <div style="background: white; border-radius: 15px; padding: 2rem; margin-top: 2rem;">
+                            <h4 style="color: #667eea; margin-bottom: 1rem;">What You'll Get:</h4>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="padding: 0.5rem 0; color: #555;">✅ Premium video courses</li>
+                                <li style="padding: 0.5rem 0; color: #555;">✅ Exclusive study materials</li>
+                                <li style="padding: 0.5rem 0; color: #555;">✅ Downloadable resources</li>
+                                <li style="padding: 0.5rem 0; color: #555;">✅ Lifetime access</li>
+                            </ul>
+                        </div>
+                    `;
+                }
+            });
+        } catch (error) {
+            console.error('Error loading exclusive content:', error);
+            contentArea.innerHTML = '<p style="text-align: center; color: #f44336;">Error loading content. Please try again.</p>';
+        }
+    }
+
+    // ===== PAYMENT FUNCTIONS =====
+    function openPaymentModal() {
+        const modal = document.getElementById('paymentModal');
+        if (modal) {
+            modal.style.display = 'block';
+            modal.style.zIndex = '13000';
+            document.body.classList.add('modal-open');
+        }
+    }
+
+    function closePaymentModal() {
+        const modal = document.getElementById('paymentModal');
+        if (modal) {
+            modal.style.cssText = 'display: none !important';
+            document.body.classList.remove('modal-open');
+        }
+    }
+
+    async function processPayment(event) {
+        event.preventDefault();
+        
+        if (!currentUser || !database) {
+            alert('Please login first!');
+            return;
+        }
+        
+        const submitBtn = event.target.querySelector('button[type="submit"]');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline';
+        submitBtn.disabled = true;
+        
+        try {
+            // DEMO: In real implementation, you would:
+            // 1. Send payment details to your payment processor (Stripe, PayPal, etc.)
+            // 2. Verify payment on server
+            // 3. Then update user enrollment status
+            
+            // For now, simulate payment success
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate processing
+            
+            // Save payment record to database
+            const paymentData = {
+                userId: currentUser.uid,
+                amount: 1.00,
+                currency: 'USD',
+                status: 'completed',
+                timestamp: new Date().toISOString(),
+                method: 'card'
+            };
+            
+            await database.ref('payments/' + currentUser.uid).push(paymentData);
+            
+            // Update user enrollment status
+            await database.ref('users/' + currentUser.uid).update({
+                exclusiveContentEnrolled: true,
+                enrolledAt: new Date().toISOString()
+            });
+            
+            alert('✅ Payment successful! You now have access to exclusive content! 🎉');
+            closePaymentModal();
+            
+            // Reload exclusive content tab
+            loadExclusiveContent();
+            
+        } catch (error) {
+            console.error('Payment error:', error);
+            alert('❌ Payment failed. Please try again or contact support.');
+        } finally {
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+            submitBtn.disabled = false;
+        }
+    }
+
+    // ===== MATH PUZZLE GAME =====
+    let puzzleScore = 0;
+    let currentAnswer = 0;
+    let currentPuzzle = null;
+
+    function generateNewPuzzle() {
+        const num1 = Math.floor(Math.random() * 50) + 1;
+        const num2 = Math.floor(Math.random() * 50) + 1;
+        const operations = ['+', '-', '*'];
+        const op = operations[Math.floor(Math.random() * operations.length)];
+        
+        let answer;
+        switch(op) {
+            case '+':
+                answer = num1 + num2;
+                break;
+            case '-':
+                answer = num1 - num2;
+                break;
+            case '*':
+                answer = num1 * num2;
+                break;
+        }
+        
+        currentAnswer = answer;
+        currentPuzzle = { num1, num2, op, answer };
+        
+        const questionEl = document.getElementById('puzzle-question');
+        if (questionEl) {
+            questionEl.textContent = `${num1} ${op} ${num2} = ?`;
+        }
+        
+        // Generate wrong answers
+        const wrongAnswers = [];
+        while (wrongAnswers.length < 3) {
+            const wrong = answer + Math.floor(Math.random() * 20) - 10;
+            if (wrong !== answer && wrong > 0 && !wrongAnswers.includes(wrong)) {
+                wrongAnswers.push(wrong);
+            }
+        }
+        
+        // Create options array with correct and wrong answers
+        const options = [answer, ...wrongAnswers];
+        // Shuffle options
+        for (let i = options.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [options[i], options[j]] = [options[j], options[i]];
+        }
+        
+        // Display options
+        const optionsEl = document.getElementById('puzzle-options');
+        if (optionsEl) {
+            optionsEl.innerHTML = options.map(opt => 
+                `<button class="puzzle-btn" onclick="checkAnswer(${opt})">${opt}</button>`
+            ).join('');
+        }
+    }
+
+    function checkAnswer(selectedAnswer) {
+        const buttons = document.querySelectorAll('.puzzle-btn');
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const btnValue = parseInt(btn.textContent);
+            if (btnValue === currentAnswer) {
+                btn.classList.add('correct');
+            } else if (btnValue === selectedAnswer && btnValue !== currentAnswer) {
+                btn.classList.add('wrong');
+            }
+        });
+        
+        if (selectedAnswer === currentAnswer) {
+            puzzleScore++;
+            updateScore();
+            setTimeout(() => {
+                generateNewPuzzle();
+                buttons.forEach(btn => btn.disabled = false);
+            }, 1500);
+        } else {
+            setTimeout(() => {
+                generateNewPuzzle();
+                buttons.forEach(btn => {
+                    btn.disabled = false;
+                    btn.classList.remove('correct', 'wrong');
+                });
+            }, 1500);
+        }
+    }
+
+    function updateScore() {
+        const scoreEl = document.getElementById('puzzle-score');
+        if (scoreEl) {
+            scoreEl.textContent = puzzleScore;
+        }
+    }
+
+    function resetPuzzleScore() {
+        puzzleScore = 0;
+        updateScore();
+        generateNewPuzzle();
+    }
+
+    // Initialize puzzle on page load
+    if (document.getElementById('puzzle-question')) {
+        generateNewPuzzle();
+    }
+
+    // ===== PAYMENT INTEGRATION GUIDE =====
+    // 
+    // TO CONNECT REAL PAYMENTS TO YOUR BANK ACCOUNT:
+    // 
+    // 1. STRIPE (Recommended - Easiest):
+    //    - Sign up at https://stripe.com
+    //    - Get your API keys (Publishable Key & Secret Key)
+    //    - Replace the processPayment() function to use Stripe.js:
+    //    - Add Stripe.js to your HTML head: script tag with src="https://js.stripe.com/v3/"
+    //    - In processPayment() use: Stripe('YOUR_PUBLISHABLE_KEY')
+    //    - Stripe automatically deposits to your bank account (2-7 days)
+    //    - Stripe charges: 2.9% + $0.30 per transaction
+    // 
+    // 2. PAYPAL:
+    //    - Sign up at https://developer.paypal.com
+    //    - Create a PayPal Business account
+    //    - Use PayPal SDK with script tag src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID"
+    //    - Use paypal.Buttons() to create payment buttons
+    //    - PayPal deposits to your PayPal account (instant or 1-2 days to bank)
+    //    - PayPal charges: 2.9% + fixed fee per transaction
+    // 
+    // 3. RAZORPAY (For India):
+    //    - Sign up at https://razorpay.com
+    //    - Get API keys
+    //    - Use Razorpay Checkout with options object containing key, amount, currency
+    //    - Razorpay deposits to your bank (2-3 days)
+    //    - Razorpay charges: 2% per transaction
+    // 
+    // 4. MANUAL BANK TRANSFER:
+    //    - Create a backend API endpoint
+    //    - Accept payment details
+    //    - Use bank's payment gateway API (provided by your bank)
+    //    - Update database after successful payment
+    // 
+    // SECURITY NOTES:
+    // - NEVER store card details in your database
+    // - Always use HTTPS for payment pages
+    // - Verify payments on your server (not just client-side)
+    // - Use payment processor's secure tokenization
+    // - Comply with PCI DSS standards
+    // 
+    // CURRENT IMPLEMENTATION:
+    // - This is a DEMO version that simulates payment
+    // - Replace processPayment() function with real payment integration
+    // - Update the backend to verify payments server-side
+    // - Add webhook listeners for payment confirmation
+
     // ===== DASHBOARD SIZE CONTROL =====
     function minimizeDashboard() {
         const modal = document.getElementById('dashboardModal');
@@ -4289,11 +4809,6 @@ function switchToLogin() {
 
     console.log('✅ All authentication functions loaded!');
 
-
-</script>
-
-</body>
-</html>
 
 </script>
 
