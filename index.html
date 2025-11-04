@@ -742,6 +742,46 @@
             background: white;
         }
 
+        /* Testimonials */
+        .testimonials {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9eef5 100%);
+            padding: 80px 0;
+        }
+
+        .testimonials .cards {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.25rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border: 1px solid rgba(102,126,234,0.15);
+        }
+
+        .testimonial-user {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 0.75rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+        }
+
         .team-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -1249,9 +1289,55 @@ body.modal-open {
             align-items: center;
             padding: 1.5rem 2rem;
             border-bottom: 2px solid #e1e5e9;
-            background: linear-gradient(135deg, #667eea15, #764ba215);
+            background: linear-gradient(135deg, #667eea20, #764ba220);
             min-height: 80px;
             flex-shrink: 0; /* Prevent header from shrinking */
+        }
+
+        /* Dashboard visual polish */
+        .dashboard-modal .modal-content {
+            background: radial-gradient(1200px 600px at 10% -10%, #667eea10, transparent 60%),
+                        radial-gradient(1200px 600px at 110% 110%, #764ba210, transparent 60%),
+                        #ffffff;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            padding: 1rem 2rem 0 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 14px;
+            padding: 1rem 1.25rem;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .stat-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.2);
+            display: grid;
+            place-items: center;
+            font-size: 1.1rem;
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
         }
 
         .dashboard-header h2 {
@@ -1565,12 +1651,16 @@ body.modal-open {
         #editProfileModal {
             display: none; /* This will be overridden by JavaScript */
             position: fixed;
-            z-index: 10000;
+            z-index: 12000; /* Ensure above dashboard modal */
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0,0,0,0.55);
+        }
+
+        #editProfileModal .modal-content {
+            z-index: 12001; /* Keep content above overlay */
         }
         
         /* Test class to force show modal */
@@ -1825,6 +1915,45 @@ body.modal-open {
             <div class="cta-buttons">
                 <a href="#submit" class="btn btn-primary">Share Your Thoughts</a>
                 <a href="#about" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="section">
+            <h2>What Our Users Say</h2>
+            <div class="cards">
+                <div class="testimonial-card">
+                    <p>“I love how easy it is to share my ideas here. The community is super supportive!”</p>
+                    <div class="testimonial-user">
+                        <div class="avatar">A</div>
+                        <div>
+                            <strong>Ananya</strong>
+                            <div style="color:#888;font-size:0.85rem;">Student, Bengaluru</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>“Clean, inspiring and fun. I even won a small prize for my submission!”</p>
+                    <div class="testimonial-user">
+                        <div class="avatar">R</div>
+                        <div>
+                            <strong>Rohit</strong>
+                            <div style="color:#888;font-size:0.85rem;">Developer, Pune</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>“This platform helped me structure my thoughts and get great feedback.”</p>
+                    <div class="testimonial-user">
+                        <div class="avatar">S</div>
+                        <div>
+                            <strong>Sana</strong>
+                            <div style="color:#888;font-size:0.85rem;">Designer, Delhi</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -2559,6 +2688,31 @@ body.modal-open {
                     <button class="btn-logout" onclick="handleLogout()">Logout</button>
                 </div>
             </div>
+            <!-- Quick Stats -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div>
+                        <div class="stat-value" id="stat-submissions">0</div>
+                        <div class="stat-label">Your Submissions</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div>
+                        <div class="stat-value" id="stat-joined">—</div>
+                        <div class="stat-label">Member Since</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div>
+                        <div class="stat-value" id="stat-verified">—</div>
+                        <div class="stat-label">Email Status</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Dashboard Tabs -->
             <div class="dashboard-tabs">
                 <button class="tab-btn active" onclick="showTab('opportunities')">Opportunities</button>
@@ -3056,7 +3210,7 @@ function setupAuthListener() {
             try {
                 // USE REALTIME DATABASE SYNTAX
                 const userRef = database.ref('users/' + user.uid);
-                userRef.once('value').then((snapshot) => {
+            userRef.once('value').then((snapshot) => {
                     if (!snapshot.exists()) {
                         userRef.set({
                             name: user.displayName || 'User',
@@ -3068,7 +3222,7 @@ function setupAuthListener() {
                         });
                     }
                     
-                    const userData = snapshot.val() || {
+                const userData = snapshot.val() || {
                         name: user.displayName || 'User',
                         email: user.email,
                         phone: '',
@@ -3076,6 +3230,12 @@ function setupAuthListener() {
                     };
                     
                     updateAuthUI(userData);
+
+                // Update dashboard stat cards if visible
+                const joinedEl = document.getElementById('stat-joined');
+                const verifiedEl = document.getElementById('stat-verified');
+                if (joinedEl) joinedEl.textContent = userData.joinedDate || new Date().toLocaleDateString();
+                if (verifiedEl) verifiedEl.textContent = (user.emailVerified || userData.emailVerified) ? 'Verified' : 'Not Verified';
                 });
                 
             } catch (error) {
@@ -3776,6 +3936,7 @@ function switchToLogin() {
         
         loadUserProfileData();
         modal.style.display = 'block';
+        modal.style.zIndex = '12000';
         document.body.classList.add('modal-open');
     }
 
@@ -3920,10 +4081,13 @@ function switchToLogin() {
                             <a href="#submit" onclick="closeDashboard()" style="color: #667eea; font-weight: bold;">Submit your first thought!</a>
                         </p>
                     `;
+                    const statEl = document.getElementById('stat-submissions');
+                    if (statEl) statEl.textContent = '0';
                     return;
                 }
 
                 let html = '<div style="display: grid; gap: 1rem;">';
+                const keys = Object.keys(submissions);
                 Object.keys(submissions).forEach(key => {
                     const data = submissions[key];
                     const date = data.submittedAt ? new Date(data.submittedAt).toLocaleDateString() : 'Recent';
@@ -3937,6 +4101,10 @@ function switchToLogin() {
                 });
                 html += '</div>';
                 submissionsList.innerHTML = html;
+
+                // Update stats card count
+                const statEl = document.getElementById('stat-submissions');
+                if (statEl) statEl.textContent = String(keys.length);
             });
 
         } catch (error) {
@@ -4119,6 +4287,11 @@ function switchToLogin() {
 
     console.log('✅ All authentication functions loaded!');
 
+
+</script>
+
+</body>
+</html>
 
 </script>
 
