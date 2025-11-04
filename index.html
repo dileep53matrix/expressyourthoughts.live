@@ -2061,8 +2061,8 @@ body.modal-open {
                 
                 <!-- Photo 2 -->
                 <div class="gallery-item">
-                    <img src="presentation (1).png" alt="Gallery Photo 2">
-                    <div class="gallery-caption">Presentation </div>
+                    <img src="https://via.placeholder.com/400x300/f5576c/ffffff?text=Photo+4" alt="Gallery Photo 2">
+                    <div class="gallery-caption">Community Events</div>
                 </div>
                 
                 <!-- Photo 3 -->
@@ -2819,7 +2819,57 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+ // // Save thought submission to Firebase
+ //        document.getElementById('thoughtForm').addEventListener('submit', async function(e) {
+ //            e.preventDefault();
+            
+ //            const submitButton = this.querySelector('button[type="submit"]');
+ //            const originalText = submitButton.innerHTML;
+            
+ //            submitButton.innerHTML = 'Sending... ⏳';
+ //            submitButton.disabled = true;
+            
+ //            try {
+ //                const formData = new FormData(this);
+ //                const data = {
+ //                    name: formData.get('name'),
+ //                    email: formData.get('_replyto'),
+ //                    category: formData.get('category'),
+ //                    title: formData.get('title'),
+ //                    thoughts: formData.get('message'),
+ //                    impact: formData.get('impact'),
+ //                    submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+ //                    userId: currentUser ? currentUser.uid : null,
+ //                    userEmail: formData.get('_replyto')
+ //                };
 
+ //                // Save to Firestore
+ //                await db.collection('submissions').add(data);
+
+ //                // Also send email via Web3Forms
+ //                const response = await fetch(this.action, {
+ //                    method: 'POST',
+ //                    body: formData,
+ //                    headers: {
+ //                        'Accept': 'application/json'
+ //                    }
+ //                });
+
+ //                if (response.ok) {
+ //                    showSuccessModal();
+ //                    this.reset();
+ //                } else {
+ //                    throw new Error('Email submission failed');
+ //                }
+                
+ //            } catch (error) {
+ //                console.error('Error:', error);
+ //                showErrorModal();
+ //            } finally {
+ //                submitButton.innerHTML = originalText;
+ //                submitButton.disabled = false;
+ //            }
+ //        });
         
         // Send confirmation email to user
         async function sendConfirmationEmail(userEmail, userName) {
@@ -3047,121 +3097,7 @@ function setupAuthListener() {
 }
 
 // ===== MODAL FUNCTIONS =====
-// ===== GOOGLE LOGIN FUNCTION =====
-async function loginWithGoogle() {
-    console.log('🔵 Google login clicked...');
-    
-    if (!auth) {
-        alert('Authentication not available. Please refresh the page.');
-        return;
-    }
-    
-    try {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        const result = await auth.signInWithPopup(provider);
-        const user = result.user;
-        
-        console.log('✅ Google login successful:', user.email);
-        
-        if (database) {
-            const userRef = database.ref('users/' + user.uid);
-            const snapshot = await userRef.once('value');
-            
-            if (!snapshot.exists()) {
-                await userRef.set({
-                    name: user.displayName || 'User',
-                    email: user.email,
-                    phone: '',
-                    joinedDate: new Date().toLocaleDateString(),
-                    createdAt: new Date().toISOString(),
-                    authProvider: 'google'
-                });
-            }
-        }
-        
-        alert('✅ Login successful! Welcome!');
-        closeLoginModal();
-        closeSignupModal();
-        
-        currentUser = user;
-        window.currentUser = user;
-        
-        setTimeout(() => openDashboard(), 500);
-        
-    } catch (error) {
-        console.error('Google login error:', error);
-        alert('Google sign-in failed: ' + (error.code === 'auth/popup-closed-by-user' ? 'You closed the window.' : error.message));
-    }
-}
-
-// ===== MODAL FUNCTIONS =====
-function openLoginModal() {
-    console.log('📱 Opening login modal...');
-    const modal = document.getElementById('loginModal');
-    if (modal) {
-        modal.style.display = 'block';
-        document.body.classList.add('modal-open');
-    }
-}
-
-function closeLoginModal() {
-    const modal = document.getElementById('loginModal');
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.classList.remove('modal-open');
-    }
-}
-
-function openSignupModal() {
-    console.log('📱 Opening signup modal...');
-    const modal = document.getElementById('signupModal');
-    if (modal) {
-        modal.style.display = 'block';
-        document.body.classList.add('modal-open');
-    }
-}
-
-function closeSignupModal() {
-    const modal = document.getElementById('signupModal');
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.classList.remove('modal-open');
-    }
-}
-
-function switchToSignup() {
-    closeLoginModal();
-    setTimeout(() => openSignupModal(), 100);
-}
-
-function switchToLogin() {
-    closeSignupModal();
-    setTimeout(() => openLoginModal(), 100);
-}
-  // ===== TEMPORARY TEST - PASTE THIS RIGHT AFTER YOUR MODAL FUNCTIONS =====
-console.log('✅ Modal functions defined:');
-console.log('openLoginModal:', typeof openLoginModal);
-console.log('openSignupModal:', typeof openSignupModal);
-
-// Test if buttons exist and can be clicked
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔍 Looking for auth buttons...');
-    
-    // Find all buttons that might be login/signup
-    const allButtons = document.querySelectorAll('button, a, input[type="button"]');
-    allButtons.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            console.log('🟡 Button clicked:', this.textContent || this.value, this);
-        });
-    });
-    
-    // Specifically look for login/signup buttons
-    const loginBtns = document.querySelectorAll('[onclick*="login"], [onclick*="Login"]');
-    const signupBtns = document.querySelectorAll('[onclick*="signup"], [onclick*="Signup"]');
-    
-    console.log('Login buttons found:', loginBtns.length);
-    console.log('Signup buttons found:', signupBtns.length);
-});
+// (Modal functions are defined later in the file - see lines around 3602)
     // ===== UPDATE AUTH UI =====
         function updateAuthUI(userData) {
         const authButtons = document.querySelector('.auth-buttons');
@@ -3365,51 +3301,6 @@ async function loginWithEmail(email, password) {
     }
 }
 
-// ===== EMAIL SIGNUP FUNCTION =====
-async function signupWithEmail(email, password, name) {
-    if (!auth) {
-        alert('Authentication service is not available. Please refresh the page and try again.');
-        return;
-    }
-    
-    try {
-        const result = await auth.createUserWithEmailAndPassword(email, password);
-        const user = result.user;
-        
-        // Update profile name
-        await user.updateProfile({
-            displayName: name
-        });
-        
-        if (database) {
-            // ✅ CORRECT: No {merge: true} parameter
-            await database.ref('users/' + user.uid).set({
-                name: name,
-                email: email,
-                phone: '',
-                joinedDate: new Date().toLocaleDateString(),
-                createdAt: new Date().toISOString(),
-                emailVerified: false
-            });
-        }
-        
-        console.log('✅ Email signup successful:', email);
-        alert('✅ Account created successfully! Welcome ' + name + '! 🎉');
-        
-        closeSignupModal();
-        currentUser = user;
-        window.currentUser = user;
-        
-        setTimeout(() => {
-            openDashboard();
-        }, 500);
-        
-    } catch (error) {
-        console.error('Email signup error:', error);
-        alert('Error: ' + error.message);
-    }
-}
-
 // ===== SIGNUP FORM HANDLER =====
 function handleSignup(event) {
     event.preventDefault(); // Stop page from refreshing
@@ -3604,7 +3495,72 @@ function resendVerificationEmail() {
     }
 }
 
+// ===== TERMS & PRIVACY FUNCTIONS =====
+function showTerms() {
+    alert('Terms & Conditions\n\nBy using Express Your Thoughts, you agree to:\n\n1. Provide accurate information\n2. Respect other users\n3. Use the platform responsibly\n4. Follow all applicable laws\n\nFor full terms, please contact us.');
+}
 
+function showPrivacy() {
+    alert('Privacy Policy\n\nWe respect your privacy:\n\n1. Your data is securely stored\n2. We never share your information with third parties\n3. You can delete your account anytime\n4. We use industry-standard security measures\n\nFor full privacy policy, please contact us.');
+}
+
+// ===== GOOGLE AUTHENTICATION =====
+async function loginWithGoogle() {
+    if (!auth) {
+        alert('Authentication service is not available. Please refresh the page and try again.');
+        return;
+    }
+    
+    try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
+        
+        // Get user's name from Google profile
+        const userName = user.displayName || user.email.split('@')[0];
+        
+        // Save/update user data in database
+        if (database) {
+            await database.ref('users/' + user.uid).set({
+                name: userName,
+                email: user.email,
+                phone: user.phoneNumber || '',
+                joinedDate: new Date().toLocaleDateString(),
+                createdAt: new Date().toISOString(),
+                emailVerified: user.emailVerified,
+                lastLogin: new Date().toISOString()
+            });
+        }
+        
+        console.log('✅ Google login successful:', user.email);
+        alert('✅ Login successful! Welcome ' + userName + '! 👋');
+        
+        // Close any open modals
+        closeLoginModal();
+        closeSignupModal();
+        
+        currentUser = user;
+        window.currentUser = user;
+        
+        setTimeout(() => {
+            openDashboard();
+        }, 500);
+        
+    } catch (error) {
+        console.error('Google login error:', error);
+        let errorMessage = 'Login failed. ';
+        
+        if (error.code === 'auth/popup-closed-by-user') {
+            errorMessage += 'Login popup was closed. Please try again.';
+        } else if (error.code === 'auth/popup-blocked') {
+            errorMessage += 'Popup was blocked by browser. Please allow popups and try again.';
+        } else {
+            errorMessage += error.message;
+        }
+        
+        alert(errorMessage);
+    }
+}
 
 function signupWithGoogle() {
     loginWithGoogle();
@@ -4041,14 +3997,13 @@ function switchToLogin() {
     });
 
     // ===== INITIALIZE =====
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('🚀 DOM loaded - initializing Firebase...');
-        initializeFirebase();
-    });
-
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeFirebase);
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 DOM loaded - initializing Firebase...');
+            initializeFirebase();
+        });
     } else {
+        console.log('🚀 DOM already loaded - initializing Firebase...');
         initializeFirebase();
     }
 
