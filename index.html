@@ -3047,18 +3047,96 @@ function setupAuthListener() {
 }
 
 // ===== MODAL FUNCTIONS =====
+// ===== GOOGLE LOGIN FUNCTION =====
+async function loginWithGoogle() {
+    console.log('🔵 Google login clicked...');
+    
+    if (!auth) {
+        alert('Authentication not available. Please refresh the page.');
+        return;
+    }
+    
+    try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
+        
+        console.log('✅ Google login successful:', user.email);
+        
+        if (database) {
+            const userRef = database.ref('users/' + user.uid);
+            const snapshot = await userRef.once('value');
+            
+            if (!snapshot.exists()) {
+                await userRef.set({
+                    name: user.displayName || 'User',
+                    email: user.email,
+                    phone: '',
+                    joinedDate: new Date().toLocaleDateString(),
+                    createdAt: new Date().toISOString(),
+                    authProvider: 'google'
+                });
+            }
+        }
+        
+        alert('✅ Login successful! Welcome!');
+        closeLoginModal();
+        closeSignupModal();
+        
+        currentUser = user;
+        window.currentUser = user;
+        
+        setTimeout(() => openDashboard(), 500);
+        
+    } catch (error) {
+        console.error('Google login error:', error);
+        alert('Google sign-in failed: ' + (error.code === 'auth/popup-closed-by-user' ? 'You closed the window.' : error.message));
+    }
+}
+
+// ===== MODAL FUNCTIONS =====
 function openLoginModal() {
-    console.log('Opening login modal...');
-    // Add your login modal opening code here
-    // Example: document.getElementById('loginModal').style.display = 'block';
-    alert('Login modal would open here - add your modal code');
+    console.log('📱 Opening login modal...');
+    const modal = document.getElementById('loginModal');
+    if (modal) {
+        modal.style.display = 'block';
+        document.body.classList.add('modal-open');
+    }
+}
+
+function closeLoginModal() {
+    const modal = document.getElementById('loginModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.classList.remove('modal-open');
+    }
 }
 
 function openSignupModal() {
-    console.log('Opening signup modal...');
-    // Add your signup modal opening code here
-    // Example: document.getElementById('signupModal').style.display = 'block';
-    alert('Signup modal would open here - add your modal code');
+    console.log('📱 Opening signup modal...');
+    const modal = document.getElementById('signupModal');
+    if (modal) {
+        modal.style.display = 'block';
+        document.body.classList.add('modal-open');
+    }
+}
+
+function closeSignupModal() {
+    const modal = document.getElementById('signupModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.classList.remove('modal-open');
+    }
+}
+
+function switchToSignup() {
+    closeLoginModal();
+    setTimeout(() => openSignupModal(), 100);
+}
+
+function switchToLogin() {
+    closeSignupModal();
+    setTimeout(() => openLoginModal(), 100);
 }
   // ===== TEMPORARY TEST - PASTE THIS RIGHT AFTER YOUR MODAL FUNCTIONS =====
 console.log('✅ Modal functions defined:');
