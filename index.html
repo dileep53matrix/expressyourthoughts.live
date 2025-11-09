@@ -1147,6 +1147,30 @@ body.modal-open {
         .close:hover {
             color: #000;
         }
+
+        /* Make close button sticky in dashboard */
+        .dashboard-modal-content .close {
+            position: sticky;
+            top: 15px;
+            float: right;
+            z-index: 10001;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            margin: 15px 20px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-modal-content .close:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+            color: #667eea;
+        }
 /* Auth Buttons in Navigation */
         .auth-buttons {
             display: flex;
@@ -1517,7 +1541,7 @@ body.modal-open {
             border-bottom: 2px solid #e1e5e9;
             background: linear-gradient(135deg, #667eea20, #764ba220);
             min-height: 80px;
-            flex-shrink: 0; /* Prevent header from shrinking */
+            /* Allow header to scroll up naturally */
         }
 
         /* Dashboard visual polish */
@@ -1532,7 +1556,7 @@ body.modal-open {
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
             padding: 1rem 2rem;
-            flex-shrink: 0; /* Prevent stats from shrinking */
+            /* Allow stats to scroll up naturally */
         }
 
         .stat-card {
@@ -1581,7 +1605,7 @@ body.modal-open {
             background: #f8f9fa;
             padding: 0.5rem;
             border-radius: 12px;
-            flex-shrink: 0; /* Prevent tabs from shrinking */
+            /* Allow tabs to scroll up naturally */
         }
 
         .tab-btn {
@@ -1611,38 +1635,14 @@ body.modal-open {
                    .tab-content {
             display: none;
             animation: fadeIn 0.3s ease;
-            padding: 1rem 2rem;
-            flex: 1;
-            overflow-y: auto; /* Enable inner scrolling for tab content */
-            overflow-x: hidden;
-            /* Dynamic height calculation - leaves space for header, profile, stats, tabs */
-            max-height: calc(95vh - 450px);
+            padding: 1rem 2rem 2rem 2rem;
+            /* Remove overflow and max-height - let it flow naturally in main scroll */
+            overflow: visible;
             min-height: 400px;
-            /* Smooth scrolling for inner content */
-            scroll-behavior: smooth;
         }
 
         .tab-content.active {
             display: block !important;
-        }
-
-        /* Custom scrollbar for tab content */
-        .tab-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .tab-content::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .tab-content::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 10px;
-        }
-
-        .tab-content::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #764ba2, #667eea);
         }
 
         @keyframes fadeIn {
@@ -2129,7 +2129,7 @@ body.modal-open {
             padding: 2rem;
             border-radius: 20px;
             margin: 0 2rem 2rem 2rem;
-            flex-shrink: 0; /* Prevent profile card from shrinking */
+            /* Allow profile card to scroll up naturally */
         }
 
         .profile-card-content {
