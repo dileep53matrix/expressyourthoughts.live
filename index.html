@@ -1107,6 +1107,20 @@
             backdrop-filter: blur(5px);
         }
 
+        /* Dashboard modal - lower z-index so other modals can appear above */
+        .dashboard-modal {
+            z-index: 11000;
+        }
+
+        /* Modals that should appear above dashboard */
+        #newPostModal,
+        #askMentorModal,
+        #editProfileModal,
+        #globalCommunityModal,
+        #notificationsModal {
+            z-index: 13000 !important;
+        }
+
       
      
 
@@ -1486,13 +1500,16 @@ body.modal-open {
             max-height: none;
             margin: 2.5vh auto;
             border-radius: 20px;
-            overflow-y: auto; /* Enable outer scrolling for entire dashboard */
+            overflow-y: auto !important; /* Force enable scrolling for entire dashboard */
             overflow-x: hidden;
             position: relative;
             display: flex;
             flex-direction: column;
             /* Smooth scrolling */
             scroll-behavior: smooth;
+            /* Ensure scrolling works on all devices */
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
         }
 
         /* Custom scrollbar for dashboard modal */
@@ -1522,7 +1539,7 @@ body.modal-open {
             border-radius: 0;
             max-width: none;
             max-height: none;
-            overflow: hidden; /* Keep overflow hidden on outer modal */
+            overflow: visible; /* Allow scrolling to work */
         }
 
         /* Stop background scrolling when dashboard is open */
@@ -5408,7 +5425,9 @@ function switchToLogin() {
 
     function openNotifications() {
         loadNotifications();
-        document.getElementById('notificationsModal').style.display = 'block';
+        const modal = document.getElementById('notificationsModal');
+        modal.style.display = 'block';
+        modal.style.zIndex = '13000'; // Ensure it appears above dashboard
     }
 
     function closeNotifications() {
@@ -5730,7 +5749,9 @@ function switchToLogin() {
 
     function openGlobalCommunity() {
         loadGlobalCommunity();
-        document.getElementById('globalCommunityModal').style.display = 'block';
+        const modal = document.getElementById('globalCommunityModal');
+        modal.style.display = 'block';
+        modal.style.zIndex = '13000'; // Ensure it appears above dashboard
     }
 
     function closeGlobalCommunityModal() {
@@ -5904,7 +5925,9 @@ function switchToLogin() {
             alert('Please login to post');
             return;
         }
-        document.getElementById('newPostModal').style.display = 'block';
+        const modal = document.getElementById('newPostModal');
+        modal.style.display = 'block';
+        modal.style.zIndex = '13000'; // Ensure it appears above dashboard
     }
 
     function closeNewPostModal() {
@@ -6152,7 +6175,9 @@ function switchToLogin() {
             alert('Please login to ask a mentor');
             return;
         }
-        document.getElementById('askMentorModal').style.display = 'block';
+        const modal = document.getElementById('askMentorModal');
+        modal.style.display = 'block';
+        modal.style.zIndex = '13000'; // Ensure it appears above dashboard
     }
 
     function closeAskMentorModal() {
@@ -6914,7 +6939,7 @@ function switchToLogin() {
         
         loadUserProfileData();
         modal.style.display = 'block';
-        modal.style.zIndex = '12000';
+        modal.style.zIndex = '13000'; // Ensure it appears above dashboard
         document.body.classList.add('modal-open');
     }
 
@@ -7289,12 +7314,6 @@ function switchToLogin() {
 
 
     console.log('✅ All authentication functions loaded!');
-
-
-</script>
-
-</body>
-</html>
 
 
 </script>
