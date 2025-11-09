@@ -1462,11 +1462,32 @@ body.modal-open {
             max-height: none;
             margin: 2.5vh auto;
             border-radius: 20px;
-            overflow-y: auto; /* Enable scrolling for entire dashboard */
+            overflow-y: auto; /* Enable outer scrolling for entire dashboard */
             overflow-x: hidden;
             position: relative;
             display: flex;
             flex-direction: column;
+            /* Smooth scrolling */
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar for dashboard modal */
+        .dashboard-modal-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .dashboard-modal-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .dashboard-modal-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+
+        .dashboard-modal-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
         }
 
         /* Make dashboard modal full screen background */
@@ -1590,18 +1611,38 @@ body.modal-open {
                    .tab-content {
             display: none;
             animation: fadeIn 0.3s ease;
-            min-height: 400px; /* Minimum height instead of fixed */
             padding: 1rem 2rem;
             flex: 1;
+            overflow-y: auto; /* Enable inner scrolling for tab content */
+            overflow-x: hidden;
+            /* Dynamic height calculation - leaves space for header, profile, stats, tabs */
+            max-height: calc(95vh - 450px);
+            min-height: 400px;
+            /* Smooth scrolling for inner content */
+            scroll-behavior: smooth;
         }
 
         .tab-content.active {
-            display: flex;
-            flex-direction: column;
+            display: block !important;
         }
 
-        .tab-content.active {
-            display: block;
+        /* Custom scrollbar for tab content */
+        .tab-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .tab-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .tab-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+
+        .tab-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
         }
 
         @keyframes fadeIn {
@@ -1707,6 +1748,7 @@ body.modal-open {
             border-radius: 20px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
             min-height: 400px;
+            /* Remove overflow-y: auto since tab-content handles scrolling */
         }
 
         .profile-info p {
@@ -1733,6 +1775,7 @@ body.modal-open {
             padding: 2rem;
             border-radius: 15px;
             min-height: 400px;
+            /* Remove overflow-y: auto since tab-content handles scrolling */
         }
         .success-icon {
             font-size: 4rem;
@@ -7246,6 +7289,12 @@ function switchToLogin() {
 
 
     console.log('✅ All authentication functions loaded!');
+
+
+</script>
+
+</body>
+</html>
 
 
 </script>
