@@ -1969,6 +1969,536 @@ body.modal-open {
             from, to { border-color: transparent }
             50% { border-color: #667eea }
         }
+
+        /* ===== ENHANCED DASHBOARD STYLES ===== */
+        .dashboard-profile-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .profile-card-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .profile-photo-section {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        #dashboard-profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            cursor: pointer;
+            object-fit: cover;
+        }
+
+        .profile-info-header h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.8rem;
+        }
+
+        .profile-growth {
+            margin-top: 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .daily-motivation {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+        }
+
+        .daily-motivation h4 {
+            margin: 0 0 1rem 0;
+        }
+
+        /* Home Dashboard */
+        .home-dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .activity-summary-card, .recent-activity-card, .recommended-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Learning Section */
+        .learning-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .learning-tab-btn {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .learning-tab-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .learning-section {
+            display: none;
+        }
+
+        .learning-section.active {
+            display: block;
+        }
+
+        .roadmap-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .roadmap-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .roadmap-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .roadmap-steps {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .course-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .course-card-content {
+            padding: 1.5rem;
+        }
+
+        /* Community Section */
+        .community-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .community-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .community-tab-btn {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .community-tab-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .community-section {
+            display: none;
+        }
+
+        .community-section.active {
+            display: block;
+        }
+
+        .community-post {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .post-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Leaderboard */
+        .leaderboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .leaderboard-podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+
+        .podium-first, .podium-second, .podium-third {
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .podium-first {
+            height: 200px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: white;
+        }
+
+        .podium-second {
+            height: 160px;
+            background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
+            color: white;
+        }
+
+        .podium-third {
+            height: 140px;
+            background: linear-gradient(135deg, #CD7F32, #B8860B);
+            color: white;
+        }
+
+        .podium-rank {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .leaderboard-list {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .leaderboard-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Achievements */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .achievement-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .achievement-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .certificate-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        /* Analytics */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .analytics-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .analytics-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 1rem 0;
+        }
+
+        .interests-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .interest-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        /* Notifications */
+        .notifications-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .notification-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .notification-item:hover {
+            background: #f8f9fa;
+        }
+
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        /* Profile Customization */
+        .profile-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-share-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .referral-code-display {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .referral-code-display input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+        }
+
+        .feedback-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+        }
+
+        .feedback-section textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        /* Mentorship */
+        .mentorship-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .mentor-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .mentor-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .discussion-room-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .message-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .message-input input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+        }
+
+        /* Global Community */
+        .global-community-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .world-map-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            min-height: 400px;
+        }
+
+        .top-users-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-card-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .home-dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mentorship-sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .global-community-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .leaderboard-podium {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
@@ -2316,31 +2846,31 @@ body.modal-open {
                 
                 <!-- Photo 2 -->
                 <div class="gallery-item">
-                    <img src="journey.jpg" alt="Gallery Photo 2">
-                    <div class="gallery-caption">Journey</div>
+                    <img src="https://via.placeholder.com/400x300/f5576c/ffffff?text=Photo+4" alt="Gallery Photo 2">
+                    <div class="gallery-caption">Community Events</div>
                 </div>
                 
                 <!-- Photo 3 -->
                 <div class="gallery-item">
-                    <img src="journey2.jpg" alt="Gallery Photo 3">
+                    <img src="https://via.placeholder.com/400x300/f5576c/ffffff?text=Photo+4" alt="Gallery Photo 3">
                     <div class="gallery-caption">Innovation Sessions</div>
                 </div>
                 
                 <!-- Photo 4 -->
                 <div class="gallery-item">
-                    <img src="journey3.webp" alt="Gallery Photo 4">
-                    <div class="gallery-caption">Journey</div>
+                    <img src="https://via.placeholder.com/400x300/f5576c/ffffff?text=Photo+4" alt="Gallery Photo 4">
+                    <div class="gallery-caption">Meeting Winners</div>
                 </div>
                 
                 <!-- Photo 5 -->
                 <div class="gallery-item">
-                    <img src="meetyourfuture.jpg" alt="Gallery Photo 6">
+                    <img src="https://via.placeholder.com/400x300/667eea/ffffff?text=Photo+5" alt="Gallery Photo 5">
                     <div class="gallery-caption">Creative Workspace</div>
                 </div>
                 
                 <!-- Photo 6 -->
                 <div class="gallery-item">
-                    <img src="journey4.jpeg" alt="Gallery Photo 6">
+                    <img src="https://via.placeholder.com/400x300/764ba2/ffffff?text=Photo+6" alt="Gallery Photo 6">
                     <div class="gallery-caption">Behind the Scenes</div>
                 </div>
             </div>
@@ -2398,14 +2928,14 @@ body.modal-open {
             <div class="winner-card winner-second">
                 <div class="winner-badge">🥈 2nd Place</div>
                 <div class="winner-image">
-                    <img src="maria.jpg" alt="Winner 2">
+                    <img src="https://via.placeholder.com/300x300/764ba2/ffffff?text=Winner+2" alt="Winner 2">
                 </div>
                 <div class="winner-content">
-                    <h3 class="winner-name">Maria  </h3>
+                    <h3 class="winner-name">Chandana </h3>
                     <p class="winner-title">"Community Gardens for Urban Sustainability"</p>
                     <p class="winner-category">Category: Environmental Solutions</p>
                     <p class="winner-description">
-                        Maria's thoughtful plan focuses on transforming unused urban spaces into community 
+                        Chandana's thoughtful plan focuses on transforming unused urban spaces into community 
                         gardens. Her approach combines sustainable farming, community building, and food 
                         security to create greener, more connected cities.
                     </p>
@@ -2417,7 +2947,7 @@ body.modal-open {
             <div class="winner-card winner-third">
                 <div class="winner-badge">🥉 3rd Place</div>
                 <div class="winner-image">
-                    <img src="naveen1.jpg" alt="Winner 3">
+                    <img src="https://via.placeholder.com/300x300/f093fb/ffffff?text=Winner+3" alt="Winner 3">
                 </div>
                 <div class="winner-content">
                     <h3 class="winner-name">Naveen Malatesh Kori  </h3>
@@ -2845,6 +3375,35 @@ body.modal-open {
                 </div>
                 
                 <div class="form-group">
+                    <label for="edit-bio">
+                        <span class="label-icon">📝</span> Bio
+                    </label>
+                    <textarea id="edit-bio" placeholder="Tell us about yourself..." rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-skills">
+                        <span class="label-icon">💼</span> Skills (comma separated)
+                    </label>
+                    <input type="text" id="edit-skills" placeholder="JavaScript, Python, React, etc.">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-domain">
+                        <span class="label-icon">🎯</span> Preferred Domain
+                    </label>
+                    <select id="edit-domain">
+                        <option value="">Select domain</option>
+                        <option value="tech">Tech</option>
+                        <option value="design">Design</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="data-science">Data Science</option>
+                        <option value="mobile">Mobile Development</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
                     <label for="edit-phone">
                         <span class="label-icon">📱</span> Phone Number (Optional)
                     </label>
@@ -2871,6 +3430,112 @@ body.modal-open {
         </div>
     </div>
 
+    <!-- Notifications Modal -->
+    <div id="notificationsModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close" onclick="closeNotifications()">&times;</span>
+            <div class="auth-modal-header">
+                <div class="auth-logo">🔔</div>
+                <h2>Notifications</h2>
+            </div>
+            <div class="notifications-list" id="notifications-list">
+                <!-- Notifications will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- New Post Modal -->
+    <div id="newPostModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close" onclick="closeNewPostModal()">&times;</span>
+            <div class="auth-modal-header">
+                <div class="auth-logo">💡</div>
+                <h2>Share Your Thought</h2>
+            </div>
+            <form id="newPostForm" onsubmit="submitNewPost(event)">
+                <div class="form-group">
+                    <label for="post-title">Title</label>
+                    <input type="text" id="post-title" required placeholder="Give your thought a title">
+                </div>
+                <div class="form-group">
+                    <label for="post-content">Your Thought</label>
+                    <textarea id="post-content" required rows="6" placeholder="Share your idea, thought, or question..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-auth">Post</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Ask Mentor Modal -->
+    <div id="askMentorModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close" onclick="closeAskMentorModal()">&times;</span>
+            <div class="auth-modal-header">
+                <div class="auth-logo">🤝</div>
+                <h2>Ask a Mentor</h2>
+                <p>Book a 15-minute chat with our team</p>
+            </div>
+            <form id="askMentorForm" onsubmit="submitMentorRequest(event)">
+                <div class="form-group">
+                    <label for="mentor-select">Select Mentor</label>
+                    <select id="mentor-select" required>
+                        <option value="">Choose a mentor</option>
+                        <option value="dileep">Dileep Choudhary - Founder & CEO</option>
+                        <option value="alena">Alena Alekseevna - Creative Director</option>
+                        <option value="ruslan">Ruslan Savenko - Team Leader</option>
+                        <option value="alina">Alina Ryabova - Community Manager</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="mentor-message">Your Question</label>
+                    <textarea id="mentor-message" required rows="4" placeholder="What would you like to ask?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="mentor-date">Preferred Date</label>
+                    <input type="date" id="mentor-date" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-auth">Send Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Roadmap Modal -->
+    <div id="roadmapModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content" style="max-width: 800px;">
+            <span class="close" onclick="closeRoadmapModal()">&times;</span>
+            <div class="auth-modal-header">
+                <div class="auth-logo">🗺️</div>
+                <h2 id="roadmap-title">Career Roadmap</h2>
+            </div>
+            <div class="roadmap-content" id="roadmap-content">
+                <!-- Roadmap steps will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Community Modal -->
+    <div id="globalCommunityModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content" style="max-width: 900px;">
+            <span class="close" onclick="closeGlobalCommunityModal()">&times;</span>
+            <div class="auth-modal-header">
+                <div class="auth-logo">🌍</div>
+                <h2>Global Community</h2>
+                <p>Users from around the world</p>
+            </div>
+            <div class="global-community-content">
+                <div class="world-map-section" id="world-map">
+                    <!-- World map will be rendered here -->
+                </div>
+                <div class="top-users-section">
+                    <h3>🌟 Top Users of the Month</h3>
+                    <div id="top-users-list">
+                        <!-- Top users will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- User Dashboard Modal -->
     <div id="dashboardModal" class="modal dashboard-modal">
         <div class="modal-content dashboard-modal-content">
@@ -2885,13 +3550,58 @@ body.modal-open {
                     <button class="btn-logout" onclick="handleLogout()">Logout</button>
                 </div>
             </div>
+            <!-- Personalized Dashboard Header -->
+            <div class="dashboard-profile-card">
+                <div class="profile-card-content">
+                    <div class="profile-photo-section">
+                        <img id="dashboard-profile-photo" src="https://via.placeholder.com/120/667eea/ffffff?text=User" alt="Profile" onclick="triggerPhotoUpload()">
+                        <input type="file" id="photo-upload" accept="image/*" style="display: none;" onchange="uploadProfilePhoto(event)">
+                        <div class="profile-info-header">
+                            <h3 id="dashboard-username-full">User</h3>
+                            <p id="dashboard-user-bio">No bio yet. Click edit to add one!</p>
+                            <div class="profile-growth">
+                                <span>Your Growth: <strong id="user-growth-percent">0%</strong></span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="growth-progress-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="daily-motivation">
+                        <h4>💡 Daily Motivation</h4>
+                        <p id="daily-quote">Loading your daily inspiration...</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Quick Stats -->
             <div class="dashboard-stats">
                 <div class="stat-card">
                     <div class="stat-icon">📝</div>
                     <div>
                         <div class="stat-value" id="stat-submissions">0</div>
-                        <div class="stat-label">Your Submissions</div>
+                        <div class="stat-label">Submissions</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div>
+                        <div class="stat-value" id="stat-points">0</div>
+                        <div class="stat-label">Points</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎓</div>
+                    <div>
+                        <div class="stat-value" id="stat-courses">0</div>
+                        <div class="stat-label">Courses</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div>
+                        <div class="stat-value" id="stat-achievements">0</div>
+                        <div class="stat-label">Achievements</div>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -2901,30 +3611,150 @@ body.modal-open {
                         <div class="stat-label">Member Since</div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">✅</div>
+                <div class="stat-card" onclick="openNotifications()" style="cursor: pointer;">
+                    <div class="stat-icon">🔔</div>
                     <div>
-                        <div class="stat-value" id="stat-verified">—</div>
-                        <div class="stat-label">Email Status</div>
+                        <div class="stat-value" id="stat-notifications">0</div>
+                        <div class="stat-label">Notifications</div>
                     </div>
                 </div>
             </div>
 
             <!-- Dashboard Tabs -->
             <div class="dashboard-tabs">
-                <button class="tab-btn active" onclick="showTab('opportunities')">Opportunities</button>
-                <button class="tab-btn" onclick="showTab('submissions')">My Submissions</button>
-                <button class="tab-btn" onclick="showTab('exclusive')">⭐ Exclusive Content</button>
-                <button class="tab-btn" onclick="showTab('profile')">Profile</button>
+                <button class="tab-btn active" onclick="showTab('home')">🏠 Home</button>
+                <button class="tab-btn" onclick="showTab('learning')">🎓 Learning</button>
+                <button class="tab-btn" onclick="showTab('opportunities')">🚀 Opportunities</button>
+                <button class="tab-btn" onclick="showTab('community')">💬 Community</button>
+                <button class="tab-btn" onclick="showTab('leaderboard')">🏆 Leaderboard</button>
+                <button class="tab-btn" onclick="showTab('achievements')">🎖️ Achievements</button>
+                <button class="tab-btn" onclick="showTab('exclusive')">⭐ Premium</button>
+                <button class="tab-btn" onclick="showTab('mentorship')">🤝 Mentorship</button>
+                <button class="tab-btn" onclick="showTab('analytics')">📊 Analytics</button>
+                <button class="tab-btn" onclick="showTab('profile')">👤 Profile</button>
+            </div>
+
+            <!-- Home Tab -->
+            <div id="home-tab" class="tab-content active">
+                <div class="home-dashboard-grid">
+                    <div class="activity-summary-card">
+                        <h3>📊 Activity Summary</h3>
+                        <div class="activity-item">
+                            <span>Thoughts Submitted:</span>
+                            <strong id="home-submissions-count">0</strong>
+                        </div>
+                        <div class="activity-item">
+                            <span>Courses Joined:</span>
+                            <strong id="home-courses-count">0</strong>
+                        </div>
+                        <div class="activity-item">
+                            <span>Points Earned:</span>
+                            <strong id="home-points-count">0</strong>
+                        </div>
+                        <div class="activity-item">
+                            <span>Hours Learning:</span>
+                            <strong id="home-hours-count">0h</strong>
+                        </div>
+                    </div>
+                    <div class="recent-activity-card">
+                        <h3>📝 Recent Activity</h3>
+                        <div id="recent-activity-list">
+                            <p style="text-align: center; color: #888;">No recent activity</p>
+                        </div>
+                    </div>
+                    <div class="recommended-card">
+                        <h3>🎯 Recommended for You</h3>
+                        <div id="recommended-content">
+                            <p style="text-align: center; color: #888;">Loading recommendations...</p>
+                        </div>
+                    </div>
+                    <div class="global-community-card" style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                        <h3>🌍 Global Community</h3>
+                        <p>See users from around the world</p>
+                        <button class="btn btn-primary" onclick="openGlobalCommunity()">View Global Community</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Tab -->
+            <div id="learning-tab" class="tab-content">
+                <div class="learning-tabs">
+                    <button class="learning-tab-btn active" onclick="showLearningTab('roadmaps')">🗺️ Career Roadmaps</button>
+                    <button class="learning-tab-btn" onclick="showLearningTab('courses')">📚 Courses</button>
+                    <button class="learning-tab-btn" onclick="showLearningTab('mentors')">👨‍🏫 Learn with Mentors</button>
+                    <button class="learning-tab-btn" onclick="showLearningTab('my-courses')">📖 My Courses</button>
+                </div>
+                
+                <div id="roadmaps-section" class="learning-section active">
+                    <h3>Career Roadmaps</h3>
+                    <div class="roadmap-cards">
+                        <div class="roadmap-card" onclick="openRoadmap('web-developer')">
+                            <h4>🌐 Web Developer</h4>
+                            <p>Complete roadmap from beginner to advanced</p>
+                            <div class="roadmap-steps">
+                                <span>5 Steps</span>
+                                <span>•</span>
+                                <span>20 Resources</span>
+                            </div>
+                        </div>
+                        <div class="roadmap-card" onclick="openRoadmap('data-scientist')">
+                            <h4>📊 Data Scientist</h4>
+                            <p>Master data science and machine learning</p>
+                            <div class="roadmap-steps">
+                                <span>7 Steps</span>
+                                <span>•</span>
+                                <span>30 Resources</span>
+                            </div>
+                        </div>
+                        <div class="roadmap-card" onclick="openRoadmap('mobile-developer')">
+                            <h4>📱 Mobile Developer</h4>
+                            <p>Build iOS and Android applications</p>
+                            <div class="roadmap-steps">
+                                <span>6 Steps</span>
+                                <span>•</span>
+                                <span>25 Resources</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="courses-section" class="learning-section">
+                    <h3>Available Courses</h3>
+                    <div class="course-grid" id="courses-grid">
+                        <!-- Courses will be loaded here -->
+                    </div>
+                </div>
+                
+                <div id="mentors-section" class="learning-section">
+                    <h3>Learn with Mentors</h3>
+                    <div class="mentor-videos-grid" id="mentor-videos">
+                        <!-- Mentor videos will be loaded here -->
+                    </div>
+                </div>
+                
+                <div id="my-courses-section" class="learning-section">
+                    <h3>My Courses</h3>
+                    <div id="my-courses-list">
+                        <p style="text-align: center; color: #888;">You haven't enrolled in any courses yet.</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Opportunities Tab -->
-            <div id="opportunities-tab" class="tab-content active">
-                <h3>🚀 Upcoming Hackathons & Internships</h3>
+            <div id="opportunities-tab" class="tab-content">
+                <div class="opportunities-header">
+                    <h3>🚀 Hackathons & Internships</h3>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" onclick="filterOpportunities('all')">All</button>
+                        <button class="filter-btn" onclick="filterOpportunities('hackathon')">Hackathons</button>
+                        <button class="filter-btn" onclick="filterOpportunities('internship')">Internships</button>
+                        <button class="filter-btn" onclick="filterOpportunities('recommended')">Recommended for You</button>
+                    </div>
+                </div>
                 
-                <div class="opportunity-cards">
+                <div class="opportunity-cards" id="opportunities-list">
                     <!-- Hackathon 1 -->
-                    <div class="opportunity-card">
+                    <div class="opportunity-card" data-type="hackathon">
                         <div class="opportunity-badge hackathon">Hackathon</div>
                         <h4>Tech Innovation Challenge 2025</h4>
                         <p class="opportunity-desc">Build innovative solutions for real-world problems. Win prizes up to ₹1,00,000!</p>
@@ -2933,11 +3763,11 @@ body.modal-open {
                             <p><strong>💰 Prize Pool:</strong> ₹1,00,000</p>
                             <p><strong>📍 Mode:</strong> Online</p>
                         </div>
-                        <a href="https://example.com/hackathon1" target="_blank" class="btn btn-primary">Join Now →</a>
+                        <button onclick="applyToOpportunity('hackathon1')" class="btn btn-primary">Join Now →</button>
                     </div>
 
                     <!-- Internship 1 -->
-                    <div class="opportunity-card">
+                    <div class="opportunity-card" data-type="internship">
                         <div class="opportunity-badge internship">Internship</div>
                         <h4>Software Development Internship</h4>
                         <p class="opportunity-desc">6-month paid internship with leading tech company. Hands-on experience with latest technologies.</p>
@@ -2946,11 +3776,11 @@ body.modal-open {
                             <p><strong>💰 Stipend:</strong> ₹15,000/month</p>
                             <p><strong>📍 Location:</strong> Remote</p>
                         </div>
-                        <a href="https://example.com/internship1" target="_blank" class="btn btn-primary">Apply Now →</a>
+                        <button onclick="applyToOpportunity('internship1')" class="btn btn-primary">Apply Now →</button>
                     </div>
 
                     <!-- Hackathon 2 -->
-                    <div class="opportunity-card">
+                    <div class="opportunity-card" data-type="hackathon">
                         <div class="opportunity-badge hackathon">Hackathon</div>
                         <h4>AI/ML Competition 2025</h4>
                         <p class="opportunity-desc">Solve machine learning challenges and compete with top developers globally.</p>
@@ -2959,11 +3789,11 @@ body.modal-open {
                             <p><strong>💰 Prize Pool:</strong> ₹75,000</p>
                             <p><strong>📍 Mode:</strong> Online</p>
                         </div>
-                        <a href="https://example.com/hackathon2" target="_blank" class="btn btn-primary">Join Now →</a>
+                        <button onclick="applyToOpportunity('hackathon2')" class="btn btn-primary">Join Now →</button>
                     </div>
 
                     <!-- Internship 2 -->
-                    <div class="opportunity-card">
+                    <div class="opportunity-card" data-type="internship">
                         <div class="opportunity-badge internship">Internship</div>
                         <h4>Data Science Internship</h4>
                         <p class="opportunity-desc">Work on real data projects and learn from industry experts. Certificate provided.</p>
@@ -2972,7 +3802,7 @@ body.modal-open {
                             <p><strong>💰 Stipend:</strong> ₹12,000/month</p>
                             <p><strong>📍 Location:</strong> Hybrid</p>
                         </div>
-                        <a href="https://example.com/internship2" target="_blank" class="btn btn-primary">Apply Now →</a>
+                        <button onclick="applyToOpportunity('internship2')" class="btn btn-primary">Apply Now →</button>
                     </div>
                 </div>
 
@@ -2983,16 +3813,86 @@ body.modal-open {
                 2. Update the badge (hackathon/internship)
                 3. Update title, description, deadline, prize/stipend, mode/location
                 4. Update the link URL
+                5. Add data-type attribute for filtering
                 -->
             </div>
 
-            <!-- My Submissions Tab -->
-            <div id="submissions-tab" class="tab-content">
-                <h3>📝 Your Contest Submissions</h3>
-                <div class="submissions-list" id="user-submissions">
-                    <p style="text-align: center; color: #888; padding: 2rem;">
-                        Your submissions will appear here after you participate in contests.
-                    </p>
+            <!-- Community Tab -->
+            <div id="community-tab" class="tab-content">
+                <div class="community-header">
+                    <h3>💬 Express Your Thoughts Community</h3>
+                    <button class="btn btn-primary" onclick="openNewPostModal()">+ New Post</button>
+                </div>
+                <div class="community-tabs">
+                    <button class="community-tab-btn active" onclick="showCommunityTab('idea-wall')">💡 Idea Wall</button>
+                    <button class="community-tab-btn" onclick="showCommunityTab('best-thought')">🌟 Best Thought of the Week</button>
+                    <button class="community-tab-btn" onclick="showCommunityTab('discussions')">💬 Discussions</button>
+                </div>
+                <div id="idea-wall-section" class="community-section active">
+                    <div id="community-posts">
+                        <!-- Community posts will be loaded here -->
+                    </div>
+                </div>
+                <div id="best-thought-section" class="community-section">
+                    <div id="best-thought-content">
+                        <h4>🌟 Best Thought of the Week</h4>
+                        <div id="weekly-winner">
+                            <!-- Weekly winner will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                <div id="discussions-section" class="community-section">
+                    <div id="discussion-threads">
+                        <!-- Discussion threads will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard Tab -->
+            <div id="leaderboard-tab" class="tab-content">
+                <div class="leaderboard-header">
+                    <h3>🏆 Leaderboard</h3>
+                    <div class="leaderboard-filters">
+                        <button class="filter-btn active" onclick="filterLeaderboard('all-time')">All Time</button>
+                        <button class="filter-btn" onclick="filterLeaderboard('monthly')">This Month</button>
+                        <button class="filter-btn" onclick="filterLeaderboard('weekly')">This Week</button>
+                    </div>
+                </div>
+                <div class="leaderboard-top3">
+                    <div class="leaderboard-podium">
+                        <div class="podium-second">
+                            <div class="podium-rank">2</div>
+                            <div class="podium-name" id="leaderboard-2nd">-</div>
+                            <div class="podium-points" id="leaderboard-2nd-points">0 pts</div>
+                        </div>
+                        <div class="podium-first">
+                            <div class="podium-rank">👑</div>
+                            <div class="podium-name" id="leaderboard-1st">-</div>
+                            <div class="podium-points" id="leaderboard-1st-points">0 pts</div>
+                        </div>
+                        <div class="podium-third">
+                            <div class="podium-rank">3</div>
+                            <div class="podium-name" id="leaderboard-3rd">-</div>
+                            <div class="podium-points" id="leaderboard-3rd-points">0 pts</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="leaderboard-list" id="leaderboard-list">
+                    <!-- Leaderboard entries will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Achievements Tab -->
+            <div id="achievements-tab" class="tab-content">
+                <h3>🎖️ Your Achievements & Certificates</h3>
+                <div class="achievements-grid" id="achievements-grid">
+                    <!-- Achievements will be loaded here -->
+                </div>
+                <div class="certificates-section">
+                    <h4>📜 Certificates</h4>
+                    <div class="certificates-grid" id="certificates-grid">
+                        <!-- Certificates will be loaded here -->
+                    </div>
                 </div>
             </div>
 
@@ -3003,17 +3903,109 @@ body.modal-open {
                 </div>
             </div>
 
+            <!-- Mentorship Tab -->
+            <div id="mentorship-tab" class="tab-content">
+                <div class="mentorship-header">
+                    <h3>🤝 Mentorship & Chat</h3>
+                    <button class="btn btn-primary" onclick="openAskMentorModal()">Ask a Mentor</button>
+                </div>
+                <div class="mentorship-sections">
+                    <div class="ask-mentor-section">
+                        <h4>💬 Ask a Mentor</h4>
+                        <p>Book a 15-minute chat with our team members for guidance</p>
+                        <div class="mentor-list" id="mentor-list">
+                            <!-- Mentors will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="discussion-room-section">
+                        <h4>💬 Discussion Room</h4>
+                        <p>Join group discussions about hackathons and career guidance</p>
+                        <div id="discussion-room-messages">
+                            <!-- Discussion messages will be loaded here -->
+                        </div>
+                        <div class="message-input">
+                            <input type="text" id="discussion-message-input" placeholder="Type your message...">
+                            <button class="btn btn-primary" onclick="sendDiscussionMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="analytics-tab" class="tab-content">
+                <h3>📊 Your Analytics</h3>
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h4>⏱️ Hours Spent Learning</h4>
+                        <div class="analytics-value" id="analytics-hours">0h</div>
+                        <div class="analytics-chart" id="hours-chart">
+                            <!-- Chart will be rendered here -->
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>🎓 Courses Completed</h4>
+                        <div class="analytics-value" id="analytics-courses-completed">0</div>
+                        <div class="analytics-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="courses-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>🔥 Top 3 Interests</h4>
+                        <div class="interests-list" id="top-interests">
+                            <!-- Top interests will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h4>📈 Learning Streak</h4>
+                        <div class="analytics-value" id="learning-streak">0 days</div>
+                        <p>Keep learning to maintain your streak!</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Profile Tab -->
             <div id="profile-tab" class="tab-content">
-                <h3>👤 Your Profile</h3>
-                <div class="profile-info">
-                    <p><strong>Name:</strong> <span id="profile-name">-</span> 
-                          <button onclick="openEditProfile()" class="btn-login" style="margin-left: 10px; padding: 5px 10px; font-size: 0.8rem;">Edit</button>
-                    </p>
-                    <p><strong>Email:</strong> <span id="profile-email">-</span></p>
-                    <p><strong>Phone:</strong> <span id="profile-phone">Not set</span></p>
-                    <p><strong>Member Since:</strong> <span id="profile-joined">-</span></p>
-                    <p><strong>Total Submissions:</strong> <span id="profile-submissions">0</span></p>
+                <div class="profile-header">
+                    <h3>👤 Your Profile</h3>
+                    <button onclick="openEditProfile()" class="btn btn-primary">Edit Profile</button>
+                </div>
+                <div class="profile-content-grid">
+                    <div class="profile-main-info">
+                        <div class="profile-info">
+                            <p><strong>Name:</strong> <span id="profile-name">-</span></p>
+                            <p><strong>Email:</strong> <span id="profile-email">-</span></p>
+                            <p><strong>Phone:</strong> <span id="profile-phone">Not set</span></p>
+                            <p><strong>Bio:</strong> <span id="profile-bio">No bio yet</span></p>
+                            <p><strong>Skills:</strong> <span id="profile-skills">No skills added</span></p>
+                            <p><strong>Preferred Domain:</strong> <span id="profile-domain">Not set</span></p>
+                            <p><strong>Member Since:</strong> <span id="profile-joined">-</span></p>
+                            <p><strong>Total Submissions:</strong> <span id="profile-submissions">0</span></p>
+                            <p><strong>Referral Code:</strong> <span id="profile-referral-code">-</span></p>
+                        </div>
+                    </div>
+                    <div class="profile-social-section">
+                        <h4>🌐 Social Media</h4>
+                        <div class="social-share-buttons">
+                            <button class="btn btn-primary" onclick="shareOnLinkedIn()">Share on LinkedIn</button>
+                            <button class="btn btn-primary" onclick="shareOnInstagram()">Share on Instagram</button>
+                        </div>
+                        <div class="referral-section">
+                            <h4>👥 Refer a Friend</h4>
+                            <p>Share your referral code and earn bonus points!</p>
+                            <div class="referral-code-display">
+                                <input type="text" id="referral-code-input" readonly>
+                                <button class="btn btn-primary" onclick="copyReferralCode()">Copy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feedback-section">
+                    <h4>💡 Feedback & Suggestions</h4>
+                    <p>How can we make this platform better?</p>
+                    <textarea id="feedback-textarea" placeholder="Share your thoughts..."></textarea>
+                    <button class="btn btn-primary" onclick="submitFeedback()">Submit Feedback</button>
                 </div>
             </div>
         </div>
@@ -3431,7 +4423,11 @@ function setupAuthListener() {
                         name: user.displayName || 'User',
                         email: user.email,
                         phone: '',
-                        joinedDate: new Date().toLocaleDateString()
+                        joinedDate: new Date().toLocaleDateString(),
+                        points: 0,
+                        submissionsCount: 0,
+                        coursesJoined: 0,
+                        learningHours: 0
                     };
                     
                     updateAuthUI(userData);
@@ -3439,8 +4435,16 @@ function setupAuthListener() {
                 // Update dashboard stat cards if visible
                 const joinedEl = document.getElementById('stat-joined');
                 const verifiedEl = document.getElementById('stat-verified');
+                const pointsEl = document.getElementById('stat-points');
+                const coursesEl = document.getElementById('stat-courses');
+                
                 if (joinedEl) joinedEl.textContent = userData.joinedDate || new Date().toLocaleDateString();
                 if (verifiedEl) verifiedEl.textContent = (user.emailVerified || userData.emailVerified) ? 'Verified' : 'Not Verified';
+                if (pointsEl) pointsEl.textContent = userData.points || 0;
+                if (coursesEl) coursesEl.textContent = userData.coursesJoined || 0;
+                
+                // Load referral code
+                loadReferralCode();
                 });
                 
             } catch (error) {
@@ -4011,8 +5015,11 @@ function switchToLogin() {
             return;
         }
         
-        // Load user submissions
+        // Load all dashboard data
         loadUserSubmissions();
+        loadHomeDashboard();
+        loadNotifications();
+        loadReferralCode();
         
         // Update user info in dashboard - FIXED VERSION
         const dashboardUsername = document.getElementById('dashboard-username');
@@ -4034,6 +5041,20 @@ function switchToLogin() {
                 if (profileName) profileName.textContent = userName;
                 if (profileEmail) profileEmail.textContent = currentUser.email;
                 if (profilePhone) profilePhone.textContent = userData?.phone || 'Not set';
+                
+                // Update stats
+                if (document.getElementById('stat-points')) {
+                    document.getElementById('stat-points').textContent = userData?.points || 0;
+                }
+                if (document.getElementById('stat-courses')) {
+                    document.getElementById('stat-courses').textContent = userData?.coursesJoined || 0;
+                }
+                if (document.getElementById('stat-achievements')) {
+                    // Will be updated when achievements are loaded
+                }
+                
+                // Update profile display with all data
+                updateProfileDisplay(userData);
                 
                 console.log('✅ Dashboard updated with name:', userName);
             });
@@ -4077,13 +5098,1295 @@ function switchToLogin() {
             btn.classList.remove('active');
         });
 
-        document.getElementById(tabName + '-tab').classList.add('active');
-        event.target.classList.add('active');
+        const tabElement = document.getElementById(tabName + '-tab');
+        if (tabElement) {
+            tabElement.classList.add('active');
+        }
         
-        // Load exclusive content if that tab is opened
+        if (event && event.target) {
+            event.target.classList.add('active');
+        } else {
+            // Find the button and mark it active
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.textContent.includes(tabName.charAt(0).toUpperCase() + tabName.slice(1))) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+        
+        // Load content based on tab
         if (tabName === 'exclusive') {
             loadExclusiveContent();
+        } else if (tabName === 'home') {
+            loadHomeDashboard();
+        } else if (tabName === 'learning') {
+            loadLearningContent();
+        } else if (tabName === 'community') {
+            loadCommunityPosts();
+        } else if (tabName === 'leaderboard') {
+            loadLeaderboard();
+        } else if (tabName === 'achievements') {
+            loadAchievements();
+        } else if (tabName === 'analytics') {
+            loadAnalytics();
+        } else if (tabName === 'mentorship') {
+            loadMentorship();
         }
+    }
+
+    // ===== POINTS & REWARDS SYSTEM =====
+    async function addPoints(userId, points, reason) {
+        if (!database) return;
+        
+        try {
+            const userRef = database.ref('users/' + userId);
+            const snapshot = await userRef.once('value');
+            const userData = snapshot.val();
+            const currentPoints = userData?.points || 0;
+            const newPoints = currentPoints + points;
+            
+            await userRef.update({
+                points: newPoints,
+                lastPointsUpdate: new Date().toISOString()
+            });
+            
+            // Record points transaction
+            await database.ref('pointsTransactions/' + userId).push({
+                points: points,
+                reason: reason,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Check for achievements
+            checkAchievements(userId, newPoints);
+            
+            return newPoints;
+        } catch (error) {
+            console.error('Error adding points:', error);
+            return 0;
+        }
+    }
+
+    async function checkAchievements(userId, points) {
+        const achievements = [
+            { points: 100, name: 'First Steps', icon: '👶' },
+            { points: 500, name: 'Rising Star', icon: '⭐' },
+            { points: 1000, name: 'Champion', icon: '🏆' },
+            { points: 5000, name: 'Legend', icon: '👑' }
+        ];
+        
+        for (const achievement of achievements) {
+            if (points >= achievement.points) {
+                await awardAchievement(userId, achievement.name, achievement.icon);
+            }
+        }
+    }
+
+    async function awardAchievement(userId, name, icon) {
+        if (!database) return;
+        
+        try {
+            const achievementRef = database.ref('achievements/' + userId).push();
+            await achievementRef.set({
+                name: name,
+                icon: icon,
+                earnedAt: new Date().toISOString()
+            });
+            
+            // Send notification
+            await createNotification(userId, `🎉 Achievement Unlocked: ${name}`, 'achievement');
+        } catch (error) {
+            console.error('Error awarding achievement:', error);
+        }
+    }
+
+    // ===== NOTIFICATIONS =====
+    async function createNotification(userId, message, type) {
+        if (!database) return;
+        
+        try {
+            await database.ref('notifications/' + userId).push({
+                message: message,
+                type: type,
+                read: false,
+                timestamp: new Date().toISOString()
+            });
+        } catch (error) {
+            console.error('Error creating notification:', error);
+        }
+    }
+
+    async function loadNotifications() {
+        if (!currentUser || !database) return;
+        
+        try {
+            const notificationsRef = database.ref('notifications/' + currentUser.uid).orderByChild('timestamp').limitToLast(20);
+            notificationsRef.once('value', (snapshot) => {
+                const notifications = snapshot.val();
+                const notificationsList = document.getElementById('notifications-list');
+                const notificationsCount = document.getElementById('stat-notifications');
+                
+                if (!notifications) {
+                    if (notificationsList) notificationsList.innerHTML = '<p style="text-align: center; color: #888;">No notifications</p>';
+                    if (notificationsCount) notificationsCount.textContent = '0';
+                    return;
+                }
+                
+                const unreadCount = Object.values(notifications).filter(n => !n.read).length;
+                if (notificationsCount) notificationsCount.textContent = unreadCount;
+                
+                if (notificationsList) {
+                    let html = '';
+                    Object.values(notifications).reverse().forEach(notification => {
+                        html += `
+                            <div class="notification-item ${notification.read ? '' : 'unread'}">
+                                <p>${notification.message}</p>
+                                <small>${new Date(notification.timestamp).toLocaleString()}</small>
+                            </div>
+                        `;
+                    });
+                    notificationsList.innerHTML = html;
+                }
+            });
+        } catch (error) {
+            console.error('Error loading notifications:', error);
+        }
+    }
+
+    function openNotifications() {
+        loadNotifications();
+        document.getElementById('notificationsModal').style.display = 'block';
+    }
+
+    function closeNotifications() {
+        document.getElementById('notificationsModal').style.display = 'none';
+    }
+
+    // ===== HOME DASHBOARD =====
+    async function loadHomeDashboard() {
+        if (!currentUser || !database) return;
+        
+        try {
+            const userRef = database.ref('users/' + currentUser.uid);
+            userRef.once('value', (snapshot) => {
+                const userData = snapshot.val();
+                
+                // Update activity summary
+                if (document.getElementById('home-submissions-count')) {
+                    document.getElementById('home-submissions-count').textContent = userData?.submissionsCount || 0;
+                }
+                if (document.getElementById('home-courses-count')) {
+                    document.getElementById('home-courses-count').textContent = userData?.coursesJoined || 0;
+                }
+                if (document.getElementById('home-points-count')) {
+                    document.getElementById('home-points-count').textContent = userData?.points || 0;
+                }
+                if (document.getElementById('home-hours-count')) {
+                    document.getElementById('home-hours-count').textContent = (userData?.learningHours || 0) + 'h';
+                }
+                
+                // Load recent activity
+                loadRecentActivity();
+                
+                // Load recommendations
+                loadRecommendations();
+                
+                // Load daily motivation
+                loadDailyMotivation();
+            });
+        } catch (error) {
+            console.error('Error loading home dashboard:', error);
+        }
+    }
+
+    async function loadRecentActivity() {
+        if (!currentUser || !database) return;
+        
+        try {
+            const activityRef = database.ref('userActivity/' + currentUser.uid).orderByChild('timestamp').limitToLast(5);
+            activityRef.once('value', (snapshot) => {
+                const activities = snapshot.val();
+                const activityList = document.getElementById('recent-activity-list');
+                
+                if (!activities || !activityList) {
+                    if (activityList) activityList.innerHTML = '<p style="text-align: center; color: #888;">No recent activity</p>';
+                    return;
+                }
+                
+                let html = '';
+                Object.values(activities).reverse().forEach(activity => {
+                    html += `<p>${activity.action} - ${new Date(activity.timestamp).toLocaleString()}</p>`;
+                });
+                activityList.innerHTML = html;
+            });
+        } catch (error) {
+            console.error('Error loading recent activity:', error);
+        }
+    }
+
+    function loadRecommendations() {
+        const recommendations = [
+            'Check out the Web Developer roadmap',
+            'Join the Tech Innovation Hackathon',
+            'Complete the JavaScript Basics course'
+        ];
+        
+        const recommendedContent = document.getElementById('recommended-content');
+        if (recommendedContent) {
+            let html = '<ul>';
+            recommendations.forEach(rec => {
+                html += `<li style="margin: 0.5rem 0;">${rec}</li>`;
+            });
+            html += '</ul>';
+            recommendedContent.innerHTML = html;
+        }
+    }
+
+    function loadDailyMotivation() {
+        const quotes = [
+            'The only way to do great work is to love what you do. - Steve Jobs',
+            'Innovation distinguishes between a leader and a follower. - Steve Jobs',
+            'The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt',
+            'Code is like humor. When you have to explain it, it\'s bad. - Cory House',
+            'Programming isn\'t about what you know; it\'s about what you can figure out. - Chris Pine'
+        ];
+        
+        const dailyQuote = document.getElementById('daily-quote');
+        if (dailyQuote) {
+            const today = new Date().getDate();
+            const quote = quotes[today % quotes.length];
+            dailyQuote.textContent = quote;
+        }
+    }
+
+    // ===== LEARNING SECTION =====
+    function showLearningTab(tabName) {
+        document.querySelectorAll('.learning-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.querySelectorAll('.learning-tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        document.getElementById(tabName + '-section').classList.add('active');
+        event.target.classList.add('active');
+        
+        if (tabName === 'courses') {
+            loadCourses();
+        } else if (tabName === 'mentors') {
+            loadMentorVideos();
+        } else if (tabName === 'my-courses') {
+            loadMyCourses();
+        }
+    }
+
+    function loadCourses() {
+        const courses = [
+            { id: 1, title: 'JavaScript Basics', description: 'Learn the fundamentals of JavaScript', duration: '5 hours', free: true },
+            { id: 2, title: 'React Masterclass', description: 'Master React development', duration: '10 hours', free: false },
+            { id: 3, title: 'Python for Beginners', description: 'Start your Python journey', duration: '8 hours', free: true }
+        ];
+        
+        const coursesGrid = document.getElementById('courses-grid');
+        if (coursesGrid) {
+            let html = '';
+            courses.forEach(course => {
+                html += `
+                    <div class="course-card">
+                        <div class="course-card-content">
+                            <h4>${course.title}</h4>
+                            <p>${course.description}</p>
+                            <p><strong>Duration:</strong> ${course.duration}</p>
+                            <button class="btn btn-primary" onclick="enrollCourse(${course.id})">
+                                ${course.free ? 'Enroll Free' : 'Enroll - $5'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            coursesGrid.innerHTML = html;
+        }
+    }
+
+    async function enrollCourse(courseId) {
+        if (!currentUser || !database) {
+            alert('Please login to enroll in courses');
+            return;
+        }
+        
+        try {
+            await database.ref('userCourses/' + currentUser.uid).push({
+                courseId: courseId,
+                enrolledAt: new Date().toISOString(),
+                progress: 0
+            });
+            
+            // Update user courses count
+            const userRef = database.ref('users/' + currentUser.uid);
+            const userSnapshot = await userRef.once('value');
+            const userData = userSnapshot.val();
+            const currentCourses = userData?.coursesJoined || 0;
+            
+            await userRef.update({
+                coursesJoined: currentCourses + 1
+            });
+            
+            // Add points for enrolling
+            await addPoints(currentUser.uid, 50, 'Enrolled in course');
+            
+            // Record activity
+            await database.ref('userActivity/' + currentUser.uid).push({
+                action: 'Enrolled in a course',
+                timestamp: new Date().toISOString()
+            });
+            
+            // Update stats
+            if (document.getElementById('stat-courses')) {
+                document.getElementById('stat-courses').textContent = currentCourses + 1;
+            }
+            if (document.getElementById('home-courses-count')) {
+                document.getElementById('home-courses-count').textContent = currentCourses + 1;
+            }
+            
+            alert('Successfully enrolled in course!');
+            loadMyCourses();
+        } catch (error) {
+            console.error('Error enrolling in course:', error);
+            alert('Error enrolling in course');
+        }
+    }
+
+    function loadMentorVideos() {
+        const videos = [
+            { title: 'Career Guidance by Dileep', url: 'https://www.youtube.com/embed/...' },
+            { title: 'Design Tips by Alena', url: 'https://www.youtube.com/embed/...' }
+        ];
+        
+        const mentorVideos = document.getElementById('mentor-videos');
+        if (mentorVideos) {
+            let html = '';
+            videos.forEach(video => {
+                html += `
+                    <div class="course-card">
+                        <h4>${video.title}</h4>
+                        <iframe width="100%" height="200" src="${video.url}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                `;
+            });
+            mentorVideos.innerHTML = html;
+        }
+    }
+
+    async function loadMyCourses() {
+        if (!currentUser || !database) return;
+        
+        try {
+            const coursesRef = database.ref('userCourses/' + currentUser.uid);
+            coursesRef.once('value', (snapshot) => {
+                const courses = snapshot.val();
+                const myCoursesList = document.getElementById('my-courses-list');
+                
+                if (!courses || !myCoursesList) {
+                    if (myCoursesList) myCoursesList.innerHTML = '<p style="text-align: center; color: #888;">You haven\'t enrolled in any courses yet.</p>';
+                    return;
+                }
+                
+                let html = '';
+                Object.values(courses).forEach(course => {
+                    html += `
+                        <div class="course-card">
+                            <h4>Course ${course.courseId}</h4>
+                            <p>Progress: ${course.progress}%</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${course.progress}%"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+                myCoursesList.innerHTML = html;
+            });
+        } catch (error) {
+            console.error('Error loading my courses:', error);
+        }
+    }
+
+    function loadLearningContent() {
+        loadCourses();
+    }
+
+    // ===== ROADMAP =====
+    const roadmaps = {
+        'web-developer': {
+            title: 'Web Developer Roadmap',
+            steps: [
+                'Learn HTML & CSS',
+                'Master JavaScript',
+                'Learn a Framework (React/Vue)',
+                'Build Projects',
+                'Apply for Internships'
+            ],
+            resources: [
+                'FreeCodeCamp',
+                'MDN Web Docs',
+                'React Official Docs'
+            ]
+        },
+        'data-scientist': {
+            title: 'Data Scientist Roadmap',
+            steps: [
+                'Learn Python',
+                'Study Statistics',
+                'Learn Machine Learning',
+                'Practice with Datasets',
+                'Build Portfolio'
+            ],
+            resources: [
+                'Kaggle',
+                'Coursera',
+                'Towards Data Science'
+            ]
+        }
+    };
+
+    function openRoadmap(roadmapId) {
+        const roadmap = roadmaps[roadmapId];
+        if (!roadmap) return;
+        
+        document.getElementById('roadmap-title').textContent = roadmap.title;
+        const roadmapContent = document.getElementById('roadmap-content');
+        
+        let html = '<h3>Steps:</h3><ol>';
+        roadmap.steps.forEach((step, index) => {
+            html += `<li style="margin: 1rem 0; font-size: 1.1rem;">${step}</li>`;
+        });
+        html += '</ol>';
+        
+        html += '<h3>Resources:</h3><ul>';
+        roadmap.resources.forEach(resource => {
+            html += `<li style="margin: 0.5rem 0;">${resource}</li>`;
+        });
+        html += '</ul>';
+        
+        roadmapContent.innerHTML = html;
+        document.getElementById('roadmapModal').style.display = 'block';
+    }
+
+    function closeRoadmapModal() {
+        document.getElementById('roadmapModal').style.display = 'none';
+    }
+
+    function openGlobalCommunity() {
+        loadGlobalCommunity();
+        document.getElementById('globalCommunityModal').style.display = 'block';
+    }
+
+    function closeGlobalCommunityModal() {
+        document.getElementById('globalCommunityModal').style.display = 'none';
+    }
+
+    async function loadGlobalCommunity() {
+        if (!database) return;
+        
+        try {
+            // Load top users
+            const usersRef = database.ref('users').orderByChild('points').limitToLast(10);
+            usersRef.once('value', (snapshot) => {
+                const users = snapshot.val();
+                const topUsersList = document.getElementById('top-users-list');
+                
+                if (!users || !topUsersList) {
+                    if (topUsersList) topUsersList.innerHTML = '<p>No users yet.</p>';
+                    return;
+                }
+                
+                const usersArray = Object.entries(users).map(([id, data]) => ({
+                    id,
+                    name: data.name || 'Anonymous',
+                    points: data.points || 0,
+                    country: data.country || 'Unknown'
+                })).sort((a, b) => b.points - a.points);
+                
+                let html = '';
+                usersArray.forEach((user, index) => {
+                    html += `
+                        <div class="leaderboard-entry">
+                            <span>${index + 1}. ${user.name} (${user.country})</span>
+                            <strong>${user.points} pts</strong>
+                        </div>
+                    `;
+                });
+                topUsersList.innerHTML = html;
+            });
+            
+            // World map placeholder
+            const worldMap = document.getElementById('world-map');
+            if (worldMap) {
+                worldMap.innerHTML = '<p style="text-align: center; padding: 2rem;">🌍 Global Community Map<br><small>Interactive map showing user locations around the world</small></p>';
+            }
+        } catch (error) {
+            console.error('Error loading global community:', error);
+        }
+    }
+
+    function commentOnPost(postId) {
+        const comment = prompt('Enter your comment:');
+        if (comment && currentUser && database) {
+            database.ref('postComments/' + postId).push({
+                authorId: currentUser.uid,
+                authorName: currentUser.displayName || 'Anonymous',
+                comment: comment,
+                timestamp: new Date().toISOString()
+            });
+            alert('Comment added!');
+        }
+    }
+
+    function downloadCertificate(certId) {
+        alert('Certificate download feature coming soon!');
+        // In a real app, this would generate and download a PDF certificate
+    }
+
+    function bookMentor(mentorId) {
+        openAskMentorModal();
+        // Pre-select the mentor if possible
+        setTimeout(() => {
+            const mentorSelect = document.getElementById('mentor-select');
+            if (mentorSelect) {
+                mentorSelect.value = mentorId;
+            }
+        }, 100);
+    }
+
+    // ===== COMMUNITY =====
+    function showCommunityTab(tabName) {
+        document.querySelectorAll('.community-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.querySelectorAll('.community-tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        document.getElementById(tabName + '-section').classList.add('active');
+        event.target.classList.add('active');
+        
+        if (tabName === 'idea-wall') {
+            loadCommunityPosts();
+        } else if (tabName === 'best-thought') {
+            loadBestThought();
+        }
+    }
+
+    async function loadCommunityPosts() {
+        if (!database) return;
+        
+        try {
+            const postsRef = database.ref('communityPosts').orderByChild('timestamp').limitToLast(20);
+            postsRef.once('value', (snapshot) => {
+                const posts = snapshot.val();
+                const postsContainer = document.getElementById('community-posts');
+                
+                if (!posts || !postsContainer) {
+                    if (postsContainer) postsContainer.innerHTML = '<p style="text-align: center; color: #888;">No posts yet. Be the first to share!</p>';
+                    return;
+                }
+                
+                let html = '';
+                Object.entries(posts).reverse().forEach(([postId, post]) => {
+                    html += `
+                        <div class="community-post">
+                            <div class="post-header">
+                                <strong>${post.authorName}</strong>
+                                <small>${new Date(post.timestamp).toLocaleString()}</small>
+                            </div>
+                            <h4>${post.title}</h4>
+                            <p>${post.content}</p>
+                            <div class="post-actions">
+                                <button class="post-action-btn" onclick="upvotePost('${postId}')">👍 ${post.upvotes || 0}</button>
+                                <button class="post-action-btn" onclick="commentOnPost('${postId}')">💬 Comment</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                postsContainer.innerHTML = html;
+            });
+        } catch (error) {
+            console.error('Error loading community posts:', error);
+        }
+    }
+
+    async function submitNewPost(event) {
+        event.preventDefault();
+        if (!currentUser || !database) {
+            alert('Please login to post');
+            return;
+        }
+        
+        const title = document.getElementById('post-title').value;
+        const content = document.getElementById('post-content').value;
+        
+        try {
+            await database.ref('communityPosts').push({
+                title: title,
+                content: content,
+                authorId: currentUser.uid,
+                authorName: currentUser.displayName || 'Anonymous',
+                timestamp: new Date().toISOString(),
+                upvotes: 0
+            });
+            
+            // Add points for posting
+            await addPoints(currentUser.uid, 10, 'Posted in community');
+            
+            alert('Post submitted successfully!');
+            closeNewPostModal();
+            loadCommunityPosts();
+        } catch (error) {
+            console.error('Error submitting post:', error);
+            alert('Error submitting post');
+        }
+    }
+
+    function openNewPostModal() {
+        if (!currentUser) {
+            alert('Please login to post');
+            return;
+        }
+        document.getElementById('newPostModal').style.display = 'block';
+    }
+
+    function closeNewPostModal() {
+        document.getElementById('newPostModal').style.display = 'none';
+        document.getElementById('newPostForm').reset();
+    }
+
+    async function upvotePost(postId) {
+        if (!currentUser || !database) return;
+        
+        try {
+            const postRef = database.ref('communityPosts/' + postId);
+            const snapshot = await postRef.once('value');
+            const post = snapshot.val();
+            const newUpvotes = (post.upvotes || 0) + 1;
+            
+            await postRef.update({ upvotes: newUpvotes });
+            loadCommunityPosts();
+        } catch (error) {
+            console.error('Error upvoting post:', error);
+        }
+    }
+
+    function loadBestThought() {
+        // Load weekly winner
+        const weeklyWinner = document.getElementById('weekly-winner');
+        if (weeklyWinner) {
+            weeklyWinner.innerHTML = '<p>This week\'s best thought will be announced soon!</p>';
+        }
+    }
+
+    // ===== LEADERBOARD =====
+    async function loadLeaderboard() {
+        if (!database) return;
+        
+        try {
+            const usersRef = database.ref('users').orderByChild('points').limitToLast(10);
+            usersRef.once('value', (snapshot) => {
+                const users = snapshot.val();
+                if (!users) return;
+                
+                const usersArray = Object.entries(users).map(([id, data]) => ({
+                    id,
+                    name: data.name || 'Anonymous',
+                    points: data.points || 0
+                })).sort((a, b) => b.points - a.points);
+                
+                // Update top 3
+                if (usersArray[0]) {
+                    document.getElementById('leaderboard-1st').textContent = usersArray[0].name;
+                    document.getElementById('leaderboard-1st-points').textContent = usersArray[0].points + ' pts';
+                }
+                if (usersArray[1]) {
+                    document.getElementById('leaderboard-2nd').textContent = usersArray[1].name;
+                    document.getElementById('leaderboard-2nd-points').textContent = usersArray[1].points + ' pts';
+                }
+                if (usersArray[2]) {
+                    document.getElementById('leaderboard-3rd').textContent = usersArray[2].name;
+                    document.getElementById('leaderboard-3rd-points').textContent = usersArray[2].points + ' pts';
+                }
+                
+                // Update list
+                const leaderboardList = document.getElementById('leaderboard-list');
+                if (leaderboardList) {
+                    let html = '';
+                    usersArray.forEach((user, index) => {
+                        html += `
+                            <div class="leaderboard-entry">
+                                <span>${index + 1}. ${user.name}</span>
+                                <strong>${user.points} pts</strong>
+                            </div>
+                        `;
+                    });
+                    leaderboardList.innerHTML = html;
+                }
+            });
+        } catch (error) {
+            console.error('Error loading leaderboard:', error);
+        }
+    }
+
+    function filterLeaderboard(filter) {
+        document.querySelectorAll('.leaderboard-filters .filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        loadLeaderboard();
+    }
+
+    // ===== ACHIEVEMENTS =====
+    async function loadAchievements() {
+        if (!currentUser || !database) return;
+        
+        try {
+            const achievementsRef = database.ref('achievements/' + currentUser.uid);
+            achievementsRef.once('value', (snapshot) => {
+                const achievements = snapshot.val();
+                const achievementsGrid = document.getElementById('achievements-grid');
+                
+                if (!achievements || !achievementsGrid) {
+                    if (achievementsGrid) achievementsGrid.innerHTML = '<p>No achievements yet. Keep learning!</p>';
+                    return;
+                }
+                
+                let html = '';
+                Object.values(achievements).forEach(achievement => {
+                    html += `
+                        <div class="achievement-card">
+                            <div class="achievement-icon">${achievement.icon}</div>
+                            <h4>${achievement.name}</h4>
+                            <p>Earned: ${new Date(achievement.earnedAt).toLocaleDateString()}</p>
+                        </div>
+                    `;
+                });
+                achievementsGrid.innerHTML = html;
+                
+                // Update stat
+                document.getElementById('stat-achievements').textContent = Object.keys(achievements).length;
+            });
+            
+            // Load certificates
+            loadCertificates();
+        } catch (error) {
+            console.error('Error loading achievements:', error);
+        }
+    }
+
+    async function loadCertificates() {
+        if (!currentUser || !database) return;
+        
+        try {
+            const certificatesRef = database.ref('certificates/' + currentUser.uid);
+            certificatesRef.once('value', (snapshot) => {
+                const certificates = snapshot.val();
+                const certificatesGrid = document.getElementById('certificates-grid');
+                
+                if (!certificates || !certificatesGrid) {
+                    if (certificatesGrid) certificatesGrid.innerHTML = '<p>No certificates yet.</p>';
+                    return;
+                }
+                
+                let html = '';
+                Object.values(certificates).forEach(cert => {
+                    html += `
+                        <div class="certificate-card">
+                            <h4>${cert.name}</h4>
+                            <p>Issued: ${new Date(cert.issuedAt).toLocaleDateString()}</p>
+                            <button class="btn btn-primary" onclick="downloadCertificate('${cert.id}')">Download</button>
+                        </div>
+                    `;
+                });
+                certificatesGrid.innerHTML = html;
+            });
+        } catch (error) {
+            console.error('Error loading certificates:', error);
+        }
+    }
+
+    async function generateCertificate(userId, certificateName) {
+        if (!database) return;
+        
+        try {
+            await database.ref('certificates/' + userId).push({
+                name: certificateName,
+                issuedAt: new Date().toISOString()
+            });
+            
+            await createNotification(userId, `🎉 Certificate earned: ${certificateName}`, 'certificate');
+        } catch (error) {
+            console.error('Error generating certificate:', error);
+        }
+    }
+
+    // ===== ANALYTICS =====
+    async function loadAnalytics() {
+        if (!currentUser || !database) return;
+        
+        try {
+            const userRef = database.ref('users/' + currentUser.uid);
+            userRef.once('value', (snapshot) => {
+                const userData = snapshot.val();
+                
+                if (document.getElementById('analytics-hours')) {
+                    document.getElementById('analytics-hours').textContent = (userData?.learningHours || 0) + 'h';
+                }
+                if (document.getElementById('analytics-courses-completed')) {
+                    document.getElementById('analytics-courses-completed').textContent = userData?.coursesCompleted || 0;
+                }
+                if (document.getElementById('learning-streak')) {
+                    document.getElementById('learning-streak').textContent = (userData?.learningStreak || 0) + ' days';
+                }
+                
+                // Load top interests
+                loadTopInterests();
+            });
+        } catch (error) {
+            console.error('Error loading analytics:', error);
+        }
+    }
+
+    function loadTopInterests() {
+        const interests = ['Web Development', 'Data Science', 'Machine Learning'];
+        const interestsList = document.getElementById('top-interests');
+        if (interestsList) {
+            let html = '';
+            interests.forEach(interest => {
+                html += `<div class="interest-item">${interest}</div>`;
+            });
+            interestsList.innerHTML = html;
+        }
+    }
+
+    // ===== MENTORSHIP =====
+    function loadMentorship() {
+        loadMentors();
+        loadDiscussionRoom();
+    }
+
+    function loadMentors() {
+        const mentors = [
+            { id: 'dileep', name: 'Dileep Choudhary', role: 'Founder & CEO' },
+            { id: 'alena', name: 'Alena Alekseevna', role: 'Creative Director' },
+            { id: 'ruslan', name: 'Ruslan Savenko', role: 'Team Leader' },
+            { id: 'alina', name: 'Alina Ryabova', role: 'Community Manager' }
+        ];
+        
+        const mentorList = document.getElementById('mentor-list');
+        if (mentorList) {
+            let html = '';
+            mentors.forEach(mentor => {
+                html += `
+                    <div class="mentor-card">
+                        <h4>${mentor.name}</h4>
+                        <p>${mentor.role}</p>
+                        <button class="btn btn-primary" onclick="bookMentor('${mentor.id}')">Book Session</button>
+                    </div>
+                `;
+            });
+            mentorList.innerHTML = html;
+        }
+    }
+
+    function openAskMentorModal() {
+        if (!currentUser) {
+            alert('Please login to ask a mentor');
+            return;
+        }
+        document.getElementById('askMentorModal').style.display = 'block';
+    }
+
+    function closeAskMentorModal() {
+        document.getElementById('askMentorModal').style.display = 'none';
+        document.getElementById('askMentorForm').reset();
+    }
+
+    async function submitMentorRequest(event) {
+        event.preventDefault();
+        if (!currentUser || !database) return;
+        
+        const mentor = document.getElementById('mentor-select').value;
+        const message = document.getElementById('mentor-message').value;
+        const date = document.getElementById('mentor-date').value;
+        
+        try {
+            await database.ref('mentorRequests').push({
+                userId: currentUser.uid,
+                mentor: mentor,
+                message: message,
+                date: date,
+                status: 'pending',
+                timestamp: new Date().toISOString()
+            });
+            
+            alert('Mentor request submitted! We\'ll contact you soon.');
+            closeAskMentorModal();
+        } catch (error) {
+            console.error('Error submitting mentor request:', error);
+            alert('Error submitting request');
+        }
+    }
+
+    async function loadDiscussionRoom() {
+        if (!database) return;
+        
+        try {
+            const messagesRef = database.ref('discussionRoom').orderByChild('timestamp').limitToLast(20);
+            messagesRef.once('value', (snapshot) => {
+                const messages = snapshot.val();
+                const messagesContainer = document.getElementById('discussion-room-messages');
+                
+                if (!messages || !messagesContainer) {
+                    if (messagesContainer) messagesContainer.innerHTML = '<p>No messages yet.</p>';
+                    return;
+                }
+                
+                let html = '';
+                Object.values(messages).forEach(msg => {
+                    html += `
+                        <div class="community-post">
+                            <strong>${msg.authorName}:</strong>
+                            <p>${msg.message}</p>
+                            <small>${new Date(msg.timestamp).toLocaleString()}</small>
+                        </div>
+                    `;
+                });
+                messagesContainer.innerHTML = html;
+            });
+        } catch (error) {
+            console.error('Error loading discussion room:', error);
+        }
+    }
+
+    async function sendDiscussionMessage() {
+        if (!currentUser || !database) {
+            alert('Please login to send messages');
+            return;
+        }
+        
+        const input = document.getElementById('discussion-message-input');
+        const message = input.value.trim();
+        
+        if (!message) return;
+        
+        try {
+            await database.ref('discussionRoom').push({
+                authorId: currentUser.uid,
+                authorName: currentUser.displayName || 'Anonymous',
+                message: message,
+                timestamp: new Date().toISOString()
+            });
+            
+            input.value = '';
+            loadDiscussionRoom();
+        } catch (error) {
+            console.error('Error sending message:', error);
+            alert('Error sending message');
+        }
+    }
+
+    // ===== PROFILE FUNCTIONS =====
+    function triggerPhotoUpload() {
+        document.getElementById('photo-upload').click();
+    }
+
+    async function uploadProfilePhoto(event) {
+        const file = event.target.files[0];
+        if (!file || !currentUser) return;
+        
+        // In a real app, you would upload to Firebase Storage
+        // For now, we'll just use a data URL
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('dashboard-profile-photo').src = e.target.result;
+            // Save to database
+            if (database) {
+                database.ref('users/' + currentUser.uid).update({
+                    profilePhoto: e.target.result
+                });
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // ===== FEEDBACK =====
+    async function submitFeedback() {
+        if (!currentUser || !database) {
+            alert('Please login to submit feedback');
+            return;
+        }
+        
+        const feedback = document.getElementById('feedback-textarea').value;
+        if (!feedback) {
+            alert('Please enter your feedback');
+            return;
+        }
+        
+        try {
+            await database.ref('feedback').push({
+                userId: currentUser.uid,
+                feedback: feedback,
+                timestamp: new Date().toISOString()
+            });
+            
+            alert('Thank you for your feedback!');
+            document.getElementById('feedback-textarea').value = '';
+        } catch (error) {
+            console.error('Error submitting feedback:', error);
+            alert('Error submitting feedback');
+        }
+    }
+
+    // ===== SOCIAL MEDIA =====
+    function shareOnLinkedIn() {
+        const text = `Check out my achievements on Express Your Thoughts!`;
+        const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
+        window.open(url, '_blank');
+    }
+
+    function shareOnInstagram() {
+        alert('Share your achievements on Instagram! Copy your profile link and share it on Instagram.');
+    }
+
+    // ===== REFERRAL SYSTEM =====
+    function generateReferralCode(userId) {
+        return 'REF' + userId.substring(0, 8).toUpperCase();
+    }
+
+    async function loadReferralCode() {
+        if (!currentUser || !database) return;
+        
+        try {
+            const userRef = database.ref('users/' + currentUser.uid);
+            userRef.once('value', (snapshot) => {
+                const userData = snapshot.val();
+                let referralCode = userData?.referralCode;
+                
+                if (!referralCode) {
+                    referralCode = generateReferralCode(currentUser.uid);
+                    userRef.update({ referralCode: referralCode });
+                }
+                
+                if (document.getElementById('referral-code-input')) {
+                    document.getElementById('referral-code-input').value = referralCode;
+                }
+                if (document.getElementById('profile-referral-code')) {
+                    document.getElementById('profile-referral-code').textContent = referralCode;
+                }
+            });
+        } catch (error) {
+            console.error('Error loading referral code:', error);
+        }
+    }
+
+    function copyReferralCode() {
+        const input = document.getElementById('referral-code-input');
+        input.select();
+        document.execCommand('copy');
+        alert('Referral code copied!');
+    }
+
+    // ===== OPPORTUNITIES FILTER =====
+    function filterOpportunities(filter) {
+        document.querySelectorAll('.filter-buttons .filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        
+        const cards = document.querySelectorAll('.opportunity-card');
+        cards.forEach(card => {
+            if (filter === 'all') {
+                card.style.display = 'block';
+            } else if (filter === 'recommended') {
+                // Show recommended based on user preferences
+                card.style.display = 'block';
+            } else {
+                const cardType = card.getAttribute('data-type');
+                if (cardType === filter) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    async function applyToOpportunity(opportunityId) {
+        if (!currentUser || !database) {
+            alert('Please login to apply');
+            return;
+        }
+        
+        try {
+            await database.ref('opportunityApplications').push({
+                userId: currentUser.uid,
+                opportunityId: opportunityId,
+                appliedAt: new Date().toISOString(),
+                status: 'pending'
+            });
+            
+            // Add points for applying
+            await addPoints(currentUser.uid, 15, 'Applied to opportunity');
+            
+            // Record activity
+            await database.ref('userActivity/' + currentUser.uid).push({
+                action: 'Applied to an opportunity',
+                timestamp: new Date().toISOString()
+            });
+            
+            alert('Application submitted successfully!');
+        } catch (error) {
+            console.error('Error applying to opportunity:', error);
+            alert('Error submitting application');
+        }
+    }
+
+    // ===== UPDATE PROFILE FUNCTION =====
+    async function handleProfileUpdate(event) {
+        event.preventDefault();
+        
+        if (!currentUser || !database) {
+            alert('Database not available. Please try again.');
+            return;
+        }
+        
+        const name = document.getElementById('edit-name').value.trim();
+        const phone = document.getElementById('edit-phone').value.trim();
+        const bio = document.getElementById('edit-bio').value.trim();
+        const skills = document.getElementById('edit-skills').value.trim();
+        const domain = document.getElementById('edit-domain').value;
+        
+        if (!name) {
+            alert('Please enter your name.');
+            return;
+        }
+
+        const submitBtn = event.target.querySelector('button[type="submit"]');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline';
+        submitBtn.disabled = true;
+
+        try {
+            await database.ref('users/' + currentUser.uid).update({
+                name: name,
+                phone: phone,
+                bio: bio,
+                skills: skills,
+                preferredDomain: domain,
+                updatedAt: new Date().toISOString()
+            });
+            
+            await currentUser.updateProfile({
+                displayName: name
+            });
+            
+            alert('✅ Profile updated successfully!');
+            closeEditProfile();
+            
+            const updatedData = {
+                name: name,
+                phone: phone,
+                bio: bio,
+                skills: skills,
+                preferredDomain: domain,
+                email: currentUser.email
+            };
+            updateProfileDisplay(updatedData);
+            updateAuthUI(updatedData);
+            
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            alert('Error updating profile: ' + error.message);
+        } finally {
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+            submitBtn.disabled = false;
+        }
+    }
+
+    async function loadUserProfileData() {
+        if (!currentUser || !database) return;
+        
+        try {
+            const userRef = database.ref('users/' + currentUser.uid);
+            userRef.once('value', (snapshot) => {
+                const userData = snapshot.val();
+                
+                const nameInput = document.getElementById('edit-name');
+                const phoneInput = document.getElementById('edit-phone');
+                const emailInput = document.getElementById('edit-email');
+                const bioInput = document.getElementById('edit-bio');
+                const skillsInput = document.getElementById('edit-skills');
+                const domainInput = document.getElementById('edit-domain');
+                
+                if (nameInput) nameInput.value = userData?.name || currentUser.displayName || '';
+                if (phoneInput) phoneInput.value = userData?.phone || '';
+                if (emailInput) emailInput.value = currentUser.email || '';
+                if (bioInput) bioInput.value = userData?.bio || '';
+                if (skillsInput) skillsInput.value = userData?.skills || '';
+                if (domainInput) domainInput.value = userData?.preferredDomain || '';
+                
+                updateProfileDisplay(userData);
+            });
+        } catch (error) {
+            console.error('Error loading profile data:', error);
+        }
+    }
+
+    function updateProfileDisplay(userData) {
+        const profileName = document.getElementById('profile-name');
+        const profileEmail = document.getElementById('profile-email');
+        const profilePhone = document.getElementById('profile-phone');
+        const profileBio = document.getElementById('profile-bio');
+        const profileSkills = document.getElementById('profile-skills');
+        const profileDomain = document.getElementById('profile-domain');
+        const dashboardUsername = document.getElementById('dashboard-username');
+        const dashboardUsernameFull = document.getElementById('dashboard-username-full');
+        
+        const userName = userData?.name || currentUser?.displayName || userData?.email?.split('@')[0] || 'User';
+        
+        if (profileName) profileName.textContent = userName;
+        if (profileEmail) profileEmail.textContent = userData?.email || currentUser?.email || 'No email';
+        if (profilePhone) profilePhone.textContent = userData?.phone || 'Not set';
+        if (profileBio) profileBio.textContent = userData?.bio || 'No bio yet';
+        if (profileSkills) profileSkills.textContent = userData?.skills || 'No skills added';
+        if (profileDomain) profileDomain.textContent = userData?.preferredDomain || 'Not set';
+        if (dashboardUsername) dashboardUsername.textContent = userName;
+        if (dashboardUsernameFull) dashboardUsernameFull.textContent = userName;
+        if (document.getElementById('dashboard-user-bio')) {
+            document.getElementById('dashboard-user-bio').textContent = userData?.bio || 'No bio yet. Click edit to add one!';
+        }
+        
+        if (userData?.profilePhoto) {
+            document.getElementById('dashboard-profile-photo').src = userData.profilePhoto;
+        }
+        
+        // Update growth percentage
+        const growthPercent = calculateGrowthPercent(userData);
+        if (document.getElementById('user-growth-percent')) {
+            document.getElementById('user-growth-percent').textContent = growthPercent + '%';
+        }
+        if (document.getElementById('growth-progress-bar')) {
+            document.getElementById('growth-progress-bar').style.width = growthPercent + '%';
+        }
+    }
+
+    function calculateGrowthPercent(userData) {
+        let score = 0;
+        if (userData?.points) score += Math.min(userData.points / 10, 30);
+        if (userData?.coursesCompleted) score += userData.coursesCompleted * 10;
+        if (userData?.submissionsCount) score += userData.submissionsCount * 5;
+        if (userData?.learningHours) score += userData.learningHours * 2;
+        return Math.min(Math.round(score), 100);
     }
 
     // ===== EXCLUSIVE CONTENT FUNCTIONS =====
@@ -4576,6 +6879,26 @@ function switchToLogin() {
                 submittedAt: new Date().toISOString(),
                 id: submissionRef.key
             });
+            
+            // Update user submission count
+            const userRef = database.ref('users/' + currentUser.uid);
+            const userSnapshot = await userRef.once('value');
+            const userData = userSnapshot.val();
+            const currentCount = userData?.submissionsCount || 0;
+            
+            await userRef.update({
+                submissionsCount: currentCount + 1
+            });
+            
+            // Add points for submission
+            await addPoints(currentUser.uid, 20, 'Submitted a thought');
+            
+            // Record activity
+            await database.ref('userActivity/' + currentUser.uid).push({
+                action: 'Submitted a thought: ' + submissionData.title,
+                timestamp: new Date().toISOString()
+            });
+            
             return submissionRef.key;
         } catch (error) {
             console.error('Error saving submission:', error);
@@ -4627,6 +6950,11 @@ function switchToLogin() {
                 // Update stats card count
                 const statEl = document.getElementById('stat-submissions');
                 if (statEl) statEl.textContent = String(keys.length);
+                
+                // Update home dashboard if visible
+                if (document.getElementById('home-submissions-count')) {
+                    document.getElementById('home-submissions-count').textContent = String(keys.length);
+                }
             });
 
         } catch (error) {
@@ -4809,6 +7137,11 @@ function switchToLogin() {
 
     console.log('✅ All authentication functions loaded!');
 
+
+</script>
+
+</body>
+</html>
 
 </script>
 
