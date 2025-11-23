@@ -7,7 +7,6 @@
   <meta name="description" content="Share your ideas, opinions, and creative thoughts freely on Express Your Thoughts.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://expressyourthoughts.live">
-  
 
   <!-- These help when people share your site -->
   <meta property="og:title" content="Express Your Thoughts">
@@ -15,12 +14,20 @@
   <meta property="og:url" content="https://expressyourthoughts.live">
   <meta property="og:type" content="website">
 
+
+
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <!-- CHANGE FROM FIRESTORE TO REALTIME DATABASE -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
+
     <title>Express Your Thoughts | Share Your Ideas & Win Cash Prizes</title>
+    
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="Express Your Thoughts - Share your innovative ideas, future plans, and creative visions. Top 3 submissions win cash prizes! Join our community of forward-thinkers.">
@@ -1286,6 +1293,22 @@ body.modal-open {
             text-align: left;
         }
 
+        /* Font Awesome Icon Styles */
+        .label-icon i,
+        .stat-icon i,
+        .icon i,
+        .auth-logo i,
+        .tab-btn i,
+        .learning-tab-btn i,
+        .community-tab-btn i {
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+        
+        .stat-icon i {
+            font-size: 2rem;
+        }
+        
         .label-icon {
             font-size: 1.1rem;
             margin-right: 0.5rem;
@@ -2286,6 +2309,8 @@ body.modal-open {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         .course-card {
@@ -2293,6 +2318,15 @@ body.modal-open {
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .course-card:hover {
+            z-index: 10;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         }
 
         .course-card img {
@@ -2790,7 +2824,7 @@ body.modal-open {
             
             <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2.5rem;">
                 <div class="impact-card scroll-animation" style="text-align: center; background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%); backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.3);">
-                    <div style="font-size: 4rem; margin-bottom: 1.5rem; animation: bounce 2s ease-in-out infinite;">🚀</div>
+                    <div style="font-size: 4rem; margin-bottom: 1.5rem; animation: bounce 2s ease-in-out infinite;"><i class="fas fa-rocket"></i></div>
                     <h3 style="font-size: 3rem; margin-bottom: 0.5rem; color: white; font-weight: 800; text-shadow: 2px 2px 8px rgba(0,0,0,0.3);">1,000+</h3>
                     <p style="color: rgba(255,255,255,0.95); font-size: 1.2rem; font-weight: 500; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">Creative Thoughts Shared</p>
                 </div>
@@ -2802,7 +2836,7 @@ body.modal-open {
                 </div>
                 
                 <div class="impact-card scroll-animation" style="text-align: center; background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%); backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.3);">
-                    <div style="font-size: 4rem; margin-bottom: 1.5rem; animation: bounce 2s ease-in-out infinite 0.4s;">💰</div>
+                    <div style="font-size: 4rem; margin-bottom: 1.5rem; animation: bounce 2s ease-in-out infinite 0.4s;"><i class="fas fa-coins"></i></div>
                     <h3 style="font-size: 3rem; margin-bottom: 0.5rem; color: white; font-weight: 800; text-shadow: 2px 2px 8px rgba(0,0,0,0.3);">$5,000+</h3>
                     <p style="color: rgba(255,255,255,0.95); font-size: 1.2rem; font-weight: 500; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">Prize Money Distributed</p>
                 </div>
@@ -2824,7 +2858,7 @@ body.modal-open {
         
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
             <div class="impact-card scroll-animation">
-                <div style="font-size: 4rem; text-align: center; margin-bottom: 1rem;">💡</div>
+                <div style="font-size: 4rem; text-align: center; margin-bottom: 1rem;"><i class="fas fa-lightbulb"></i></div>
                 <h3 style="text-align: center; color: #667eea; margin-bottom: 1rem;">Share Ideas Freely</h3>
                 <p style="text-align: center; color: #666; line-height: 1.6;">
                     Express your most innovative thoughts without limitations. Your ideas deserve to be heard and celebrated.
@@ -2832,7 +2866,7 @@ body.modal-open {
             </div>
             
             <div class="impact-card scroll-animation">
-                <div style="font-size: 4rem; text-align: center; margin-bottom: 1rem;">🏆</div>
+                <div style="font-size: 4rem; text-align: center; margin-bottom: 1rem;"><i class="fas fa-trophy"></i></div>
                 <h3 style="text-align: center; color: #667eea; margin-bottom: 1rem;">Win Exciting Prizes</h3>
                 <p style="text-align: center; color: #666; line-height: 1.6;">
                     Top 3 most inspiring thoughts win cash prizes every month. Turn your creativity into rewards!
@@ -2860,7 +2894,7 @@ body.modal-open {
             </p>
             <div class="scroll-animation">
                 <a href="#submit" class="btn btn-primary" style="background: white; color: #f5576c; font-size: 1.2rem; padding: 15px 40px;">
-                    Start Sharing Now 🚀
+                    Start Sharing Now <i class="fas fa-rocket"></i>
                 </a>
             </div>
         </div>
@@ -2936,12 +2970,12 @@ body.modal-open {
             <h2 style="color: white;">Contest Rules & Prizes (50$) </h2>
             <div class="rules-grid">
                 <div class="rule-card">
-                    <div class="icon">🏆</div>
+                    <div class="icon"><i class="fas fa-trophy"></i></div>
                     <h3>Top 3 Winners</h3>
                     <p>The most innovative and inspiring thoughts will be selected as winners and receive cash prizes.1st Winner will Get 30$ Prize Money.</p>
                 </div>
                 <div class="rule-card">
-                    <div class="icon">💡</div>
+                    <div class="icon"><i class="fas fa-lightbulb"></i></div>
                     <h3>Originality</h3>
                     <p>Your thoughts should be original, creative, and showcase your unique perspective on the future.</p>
                 </div>
@@ -2951,7 +2985,7 @@ body.modal-open {
                     <p>Well-thought-out submissions with clear vision and potential impact have better chances of winning.</p>
                 </div>
                 <div class="rule-card">
-                    <div class="icon">📅</div>
+                    <div class="icon"><i class="fas fa-calendar"></i></div>
                     <h3>Regular Contests</h3>
                     <p>Upcoming Contest : 26 October to 30 October. Winners will be announced on 30 October. Follow our social media to stay updated on deadlines..</p>
                 </div>
@@ -2991,8 +3025,8 @@ body.modal-open {
                     and great ideas are recognized and rewarded.
                 </p>
                 <div class="about-me-contact">
-                    <p><strong>📧 Email:</strong> choudharydileep990@gmail.com</p>
-                    <p><strong>🌐 Website:</strong> expressyourthoughts.live</p>
+                    <p><strong><i class="fas fa-envelope"></i> Email:</strong> choudharydileep990@gmail.com</p>
+                    <p><strong><i class="fas fa-globe"></i> Website:</strong> expressyourthoughts.live</p>
                 </div>
             </div>
         </div>
@@ -3012,32 +3046,32 @@ body.modal-open {
                 
                 <!-- Photo 2 -->
                 <div class="gallery-item">
-                    <img src="journey.jpg" alt="Gallery Photo 2">
-                    <div class="gallery-caption">Journey</div>
+                    <img src="https://via.placeholder.com/400x300/f5576c/ffffff?text=Photo+4" alt="Gallery Photo 2">
+                    <div class="gallery-caption">Community Events</div>
                 </div>
                 
                 <!-- Photo 3 -->
                 <div class="gallery-item">
-                    <img src="journey2.jpg" alt="Gallery Photo 3">
-                    <div class="gallery-caption">Journey</div>
+                    <img src="https://via.placeholder.com/400x300/f5576c/ffffff?text=Photo+4" alt="Gallery Photo 3">
+                    <div class="gallery-caption">Innovation Sessions</div>
                 </div>
                 
                 <!-- Photo 4 -->
                 <div class="gallery-item">
-                    <img src="journey3.webp" alt="Gallery Photo 4">
-                    <div class="gallery-caption">Journey</div>
+                    <img src="https://via.placeholder.com/400x300/f5576c/ffffff?text=Photo+4" alt="Gallery Photo 4">
+                    <div class="gallery-caption">Meeting Winners</div>
                 </div>
                 
                 <!-- Photo 5 -->
                 <div class="gallery-item">
-                    <img src="journey4.jpeg" alt="Gallery Photo 5">
-                    <div class="gallery-caption">Journey</div>
+                    <img src="https://via.placeholder.com/400x300/667eea/ffffff?text=Photo+5" alt="Gallery Photo 5">
+                    <div class="gallery-caption">Creative Workspace</div>
                 </div>
                 
                 <!-- Photo 6 -->
                 <div class="gallery-item">
-                    <img src="meetyourfuture.jpg" alt="Gallery Photo 6">
-                    <div class="gallery-caption">Journey</div>
+                    <img src="https://via.placeholder.com/400x300/764ba2/ffffff?text=Photo+6" alt="Gallery Photo 6">
+                    <div class="gallery-caption">Behind the Scenes</div>
                 </div>
             </div>
         </div>
@@ -3058,7 +3092,7 @@ body.modal-open {
     </section>
 <!-- Winners Gallery Section -->
     <section id="winners" class="section">
-        <h2>🏆 Our Winners</h2>
+        <h2><i class="fas fa-trophy"></i> Our Winners</h2>
         <p style="text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 3rem;">
             Celebrating the most inspiring thoughts and innovative ideas from our community!
         </p>
@@ -3094,14 +3128,14 @@ body.modal-open {
             <div class="winner-card winner-second">
                 <div class="winner-badge">🥈 2nd Place</div>
                 <div class="winner-image">
-                    <img src="maria1.jpg" alt="Winner 2">
+                    <img src="https://via.placeholder.com/300x300/764ba2/ffffff?text=Winner+2" alt="Winner 2">
                 </div>
                 <div class="winner-content">
-                    <h3 class="winner-name">Maria </h3>
+                    <h3 class="winner-name">Chandana </h3>
                     <p class="winner-title">"Community Gardens for Urban Sustainability"</p>
                     <p class="winner-category">Category: Environmental Solutions</p>
                     <p class="winner-description">
-                        Maria's thoughtful plan focuses on transforming unused urban spaces into community 
+                        Chandana's thoughtful plan focuses on transforming unused urban spaces into community 
                         gardens. Her approach combines sustainable farming, community building, and food 
                         security to create greener, more connected cities.
                     </p>
@@ -3113,7 +3147,7 @@ body.modal-open {
             <div class="winner-card winner-third">
                 <div class="winner-badge">🥉 3rd Place</div>
                 <div class="winner-image">
-                    <img src="naveen1.jpg" alt="Winner 3">
+                    <img src="https://via.placeholder.com/300x300/f093fb/ffffff?text=Winner+3" alt="Winner 3">
                 </div>
                 <div class="winner-content">
                     <h3 class="winner-name">Naveen Malatesh Kori  </h3>
@@ -3264,7 +3298,7 @@ body.modal-open {
     <div id="successModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <div class="success-icon">✅</div>
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
             <h2>Thank You!</h2>
             <p>Your thoughts have been submitted successfully! We've sent you a confirmation email.</p>
             <p>Your submission will be carefully reviewed for our contest, and the top 3 winners will be announced on our social media platforms.</p>
@@ -3295,14 +3329,14 @@ body.modal-open {
         <div class="modal-content auth-modal-content">
             <span class="close" onclick="closeLoginModal()">&times;</span>
             <div class="auth-modal-header">
-                <div class="auth-logo">🚀</div>
+                <div class="auth-logo"><i class="fas fa-rocket"></i></div>
                 <h2>Welcome Back!</h2>
                 <p>Login to access your dashboard and opportunities</p>
             </div>
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label for="login-email">
-                        <span class="label-icon">📧</span> Email Address
+                        <span class="label-icon"><i class="fas fa-envelope"></i></span> Email Address
                     </label>
                     <input type="email" id="login-email" required placeholder="your@email.com" autocomplete="email">
                 </div>
@@ -3350,21 +3384,21 @@ body.modal-open {
             <form id="signupForm" onsubmit="handleSignup(event)">
                 <div class="form-group">
                     <label for="signup-name">
-                        <span class="label-icon">👤</span> Full Name
+                        <span class="label-icon"><i class="fas fa-user"></i></span> Full Name
                     </label>
-                    <input type="text" id="signup-name" required placeholder="Dileep Matrix" autocomplete="name">
+                    <input type="text" id="signup-name" required placeholder="John Doe" autocomplete="name">
                 </div>
                 <div class="form-group">
                     <label for="signup-email">
-                        <span class="label-icon">📧</span> Email Address
+                        <span class="label-icon"><i class="fas fa-envelope"></i></span> Email Address
                     </label>
                     <input type="email" id="signup-email" required placeholder="your@email.com" autocomplete="email">
                 </div>
                 <div class="form-group">
                     <label for="signup-phone">
-                        <span class="label-icon">📱</span> Phone Number (Optional)
+                        <span class="label-icon"><i class="fas fa-phone"></i></span> Phone Number (Optional)
                     </label>
-                    <input type="tel" id="signup-phone" placeholder="+91 1234567890" autocomplete="tel">
+                    <input type="tel" id="signup-phone" placeholder="+91 98765 43210" autocomplete="tel">
                 </div>
                 <div class="form-group">
                     <label for="signup-password">
@@ -3429,7 +3463,7 @@ body.modal-open {
             <form id="forgotPasswordForm" onsubmit="handleForgotPassword(event)">
                 <div class="form-group">
                     <label for="forgot-email">
-                        <span class="label-icon">📧</span> Email Address
+                        <span class="label-icon"><i class="fas fa-envelope"></i></span> Email Address
                     </label>
                     <input type="email" id="forgot-email" required placeholder="your@email.com" autocomplete="email">
                 </div>
@@ -3449,7 +3483,7 @@ body.modal-open {
         <div class="modal-content auth-modal-content">
             <span class="close" onclick="closeVerification()">&times;</span>
             <div class="auth-modal-header">
-                <div class="auth-logo">📧</div>
+                <div class="auth-logo"><i class="fas fa-envelope"></i></div>
                 <h2>Verify Your Email</h2>
                 <p>We've sent a verification link to your email</p>
             </div>
@@ -3516,7 +3550,7 @@ body.modal-open {
                     </button>
                     <p style="text-align: center; margin-top: 1rem; color: #888; font-size: 0.85rem;">
                         🔒 Secure payment processing<br>
-                        <small>Note: For now, this is a demo. I will add all system , I know, You don't have Money so first go and earn and then You can buy.</small>
+                        <small>Note: For now, this is a demo. To connect real payments, see instructions below.</small>
                     </p>
                 </form>
             </div>
@@ -3528,35 +3562,35 @@ body.modal-open {
         <div class="modal-content auth-modal-content">
             <span class="close" onclick="closeEditProfile()">&times;</span>
             <div class="auth-modal-header">
-                <div class="auth-logo">👤</div>
+                <div class="auth-logo"><i class="fas fa-user"></i></div>
                 <h2>Edit Your Profile</h2>
                 <p>Update your personal information</p>
             </div>
             <form id="editProfileForm" onsubmit="handleProfileUpdate(event)">
                 <div class="form-group">
                     <label for="edit-name">
-                        <span class="label-icon">👤</span> Full Name
+                        <span class="label-icon"><i class="fas fa-user"></i></span> Full Name
                     </label>
                     <input type="text" id="edit-name" required placeholder="Your full name" autocomplete="name">
                 </div>
                 
                 <div class="form-group">
                     <label for="edit-bio">
-                        <span class="label-icon">📝</span> Bio
+                        <span class="label-icon"><i class="fas fa-edit"></i></span> Bio
                     </label>
                     <textarea id="edit-bio" placeholder="Tell us about yourself..." rows="3"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label for="edit-skills">
-                        <span class="label-icon">💼</span> Skills (comma separated)
+                        <span class="label-icon"><i class="fas fa-briefcase"></i></span> Skills (comma separated)
                     </label>
                     <input type="text" id="edit-skills" placeholder="JavaScript, Python, React, etc.">
                 </div>
                 
                 <div class="form-group">
                     <label for="edit-domain">
-                        <span class="label-icon">🎯</span> Preferred Domain
+                        <span class="label-icon"><i class="fas fa-bullseye"></i></span> Preferred Domain
                     </label>
                     <select id="edit-domain">
                         <option value="">Select domain</option>
@@ -3571,14 +3605,14 @@ body.modal-open {
                 
                 <div class="form-group">
                     <label for="edit-phone">
-                        <span class="label-icon">📱</span> Phone Number (Optional)
+                        <span class="label-icon"><i class="fas fa-phone"></i></span> Phone Number (Optional)
                     </label>
                     <input type="tel" id="edit-phone" placeholder="+91 98765 43210" autocomplete="tel">
                 </div>
                 
                 <div class="form-group">
                     <label for="edit-email">
-                        <span class="label-icon">📧</span> Email Address
+                        <span class="label-icon"><i class="fas fa-envelope"></i></span> Email Address
                     </label>
                     <input type="email" id="edit-email" disabled style="background: #f5f5f5; color: #666;">
                     <small style="color: #888;">Email cannot be changed</small>
@@ -3601,7 +3635,7 @@ body.modal-open {
         <div class="modal-content auth-modal-content">
             <span class="close" onclick="closeNotifications()">&times;</span>
             <div class="auth-modal-header">
-                <div class="auth-logo">🔔</div>
+                <div class="auth-logo"><i class="fas fa-bell"></i></div>
                 <h2>Notifications</h2>
             </div>
             <div class="notifications-list" id="notifications-list">
@@ -3615,7 +3649,7 @@ body.modal-open {
         <div class="modal-content auth-modal-content">
             <span class="close" onclick="closeNewPostModal()">&times;</span>
             <div class="auth-modal-header">
-                <div class="auth-logo">💡</div>
+                <div class="auth-logo"><i class="fas fa-lightbulb"></i></div>
                 <h2>Share Your Thought</h2>
             </div>
             <form id="newPostForm" onsubmit="submitNewPost(event)">
@@ -3637,7 +3671,7 @@ body.modal-open {
         <div class="modal-content auth-modal-content">
             <span class="close" onclick="closeAskMentorModal()">&times;</span>
             <div class="auth-modal-header">
-                <div class="auth-logo">🤝</div>
+                <div class="auth-logo"><i class="fas fa-handshake"></i></div>
                 <h2>Ask a Mentor</h2>
                 <p>Book a 15-minute chat with our team</p>
             </div>
@@ -3708,7 +3742,7 @@ body.modal-open {
             <span class="close" onclick="closeDashboard()">&times;</span>
             
                        <div class="dashboard-header">
-                <h2 style="font-size: 2rem;">🎯 Welcome, <span id="dashboard-username">User</span>!</h2>
+                <h2 style="font-size: 2rem;"><i class="fas fa-bullseye"></i> Welcome, <span id="dashboard-username">User</span>!</h2>
                 <div style="display: flex; gap: 1rem; align-items: center;">
                     <button class="btn-login" onclick="minimizeDashboard()" style="padding: 10px 20px;">
                         Minimize
@@ -3734,7 +3768,7 @@ body.modal-open {
                         </div>
                     </div>
                     <div class="daily-motivation">
-                        <h4>💡 Daily Motivation</h4>
+                        <h4><i class="fas fa-lightbulb"></i> Daily Motivation</h4>
                         <p id="daily-quote">Loading your daily inspiration...</p>
                     </div>
                 </div>
@@ -3743,42 +3777,42 @@ body.modal-open {
             <!-- Quick Stats -->
             <div class="dashboard-stats">
                 <div class="stat-card">
-                    <div class="stat-icon">📝</div>
+                    <div class="stat-icon"><i class="fas fa-edit"></i></div>
                     <div>
                         <div class="stat-value" id="stat-submissions">0</div>
                         <div class="stat-label">Submissions</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">⭐</div>
+                    <div class="stat-icon"><i class="fas fa-star"></i></div>
                     <div>
                         <div class="stat-value" id="stat-points">0</div>
                         <div class="stat-label">Points</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">🎓</div>
+                    <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
                     <div>
                         <div class="stat-value" id="stat-courses">0</div>
                         <div class="stat-label">Courses</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">🏆</div>
+                    <div class="stat-icon"><i class="fas fa-trophy"></i></div>
                     <div>
                         <div class="stat-value" id="stat-achievements">0</div>
                         <div class="stat-label">Achievements</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">📅</div>
+                    <div class="stat-icon"><i class="fas fa-calendar"></i></div>
                     <div>
                         <div class="stat-value" id="stat-joined">—</div>
                         <div class="stat-label">Member Since</div>
                     </div>
                 </div>
                 <div class="stat-card" onclick="openNotifications()" style="cursor: pointer;">
-                    <div class="stat-icon">🔔</div>
+                    <div class="stat-icon"><i class="fas fa-bell"></i></div>
                     <div>
                         <div class="stat-value" id="stat-notifications">0</div>
                         <div class="stat-label">Notifications</div>
@@ -3788,23 +3822,23 @@ body.modal-open {
 
             <!-- Dashboard Tabs -->
             <div class="dashboard-tabs">
-                <button class="tab-btn active" onclick="showTab('home')">🏠 Home</button>
-                <button class="tab-btn" onclick="showTab('learning')">🎓 Learning</button>
-                <button class="tab-btn" onclick="showTab('opportunities')">🚀 Opportunities</button>
-                <button class="tab-btn" onclick="showTab('community')">💬 Community</button>
-                <button class="tab-btn" onclick="showTab('leaderboard')">🏆 Leaderboard</button>
-                <button class="tab-btn" onclick="showTab('achievements')">🎖️ Achievements</button>
-                <button class="tab-btn" onclick="showTab('exclusive')">⭐ Premium</button>
-                <button class="tab-btn" onclick="showTab('mentorship')">🤝 Mentorship</button>
-                <button class="tab-btn" onclick="showTab('analytics')">📊 Analytics</button>
-                <button class="tab-btn" onclick="showTab('profile')">👤 Profile</button>
+                <button class="tab-btn active" onclick="showTab('home')"><i class="fas fa-home"></i> Home</button>
+                <button class="tab-btn" onclick="showTab('learning')"><i class="fas fa-graduation-cap"></i> Learning</button>
+                <button class="tab-btn" onclick="showTab('opportunities')"><i class="fas fa-rocket"></i> Opportunities</button>
+                <button class="tab-btn" onclick="showTab('community')"><i class="fas fa-comments"></i> Community</button>
+                <button class="tab-btn" onclick="showTab('leaderboard')"><i class="fas fa-trophy"></i> Leaderboard</button>
+                <button class="tab-btn" onclick="showTab('achievements')"><i class="fas fa-medal"></i> Achievements</button>
+                <button class="tab-btn" onclick="showTab('exclusive')"><i class="fas fa-star"></i> Premium</button>
+                <button class="tab-btn" onclick="showTab('mentorship')"><i class="fas fa-handshake"></i> Mentorship</button>
+                <button class="tab-btn" onclick="showTab('analytics')"><i class="fas fa-chart-bar"></i> Analytics</button>
+                <button class="tab-btn" onclick="showTab('profile')"><i class="fas fa-user"></i> Profile</button>
             </div>
 
             <!-- Home Tab -->
             <div id="home-tab" class="tab-content active">
                 <div class="home-dashboard-grid">
                     <div class="activity-summary-card">
-                        <h3>📊 Activity Summary</h3>
+                        <h3><i class="fas fa-chart-bar"></i> Activity Summary</h3>
                         <div class="activity-item">
                             <span>Thoughts Submitted:</span>
                             <strong id="home-submissions-count">0</strong>
@@ -3823,13 +3857,13 @@ body.modal-open {
                         </div>
                     </div>
                     <div class="recent-activity-card">
-                        <h3>📝 Recent Activity</h3>
+                        <h3><i class="fas fa-edit"></i> Recent Activity</h3>
                         <div id="recent-activity-list">
                             <p style="text-align: center; color: #888;">No recent activity</p>
                         </div>
                     </div>
                     <div class="recommended-card">
-                        <h3>🎯 Recommended for You</h3>
+                        <h3><i class="fas fa-bullseye"></i> Recommended for You</h3>
                         <div id="recommended-content">
                             <p style="text-align: center; color: #888;">Loading recommendations...</p>
                         </div>
@@ -3845,17 +3879,17 @@ body.modal-open {
             <!-- Learning Tab -->
             <div id="learning-tab" class="tab-content">
                 <div class="learning-tabs">
-                    <button class="learning-tab-btn active" onclick="showLearningTab('roadmaps')">🗺️ Career Roadmaps</button>
-                    <button class="learning-tab-btn" onclick="showLearningTab('courses')">📚 Courses</button>
-                    <button class="learning-tab-btn" onclick="showLearningTab('mentors')">👨‍🏫 Learn with Mentors</button>
-                    <button class="learning-tab-btn" onclick="showLearningTab('my-courses')">📖 My Courses</button>
+                    <button class="learning-tab-btn active" onclick="showLearningTab('roadmaps')"><i class="fas fa-map"></i> Career Roadmaps</button>
+                    <button class="learning-tab-btn" onclick="showLearningTab('courses')"><i class="fas fa-book"></i> Courses</button>
+                    <button class="learning-tab-btn" onclick="showLearningTab('mentors')"><i class="fas fa-chalkboard-teacher"></i> Learn with Mentors</button>
+                    <button class="learning-tab-btn" onclick="showLearningTab('my-courses')"><i class="fas fa-book-open"></i> My Courses</button>
                 </div>
                 
                 <div id="roadmaps-section" class="learning-section active">
                     <h3>Career Roadmaps</h3>
                     <div class="roadmap-cards">
                         <div class="roadmap-card" onclick="openRoadmap('web-developer')">
-                            <h4>🌐 Web Developer</h4>
+                            <h4><i class="fas fa-globe"></i> Web Developer</h4>
                             <p>Complete roadmap from beginner to advanced</p>
                             <div class="roadmap-steps">
                                 <span>5 Steps</span>
@@ -3864,7 +3898,7 @@ body.modal-open {
                             </div>
                         </div>
                         <div class="roadmap-card" onclick="openRoadmap('data-scientist')">
-                            <h4>📊 Data Scientist</h4>
+                            <h4><i class="fas fa-chart-bar"></i> Data Scientist</h4>
                             <p>Master data science and machine learning</p>
                             <div class="roadmap-steps">
                                 <span>7 Steps</span>
@@ -3873,7 +3907,7 @@ body.modal-open {
                             </div>
                         </div>
                         <div class="roadmap-card" onclick="openRoadmap('mobile-developer')">
-                            <h4>📱 Mobile Developer</h4>
+                            <h4><i class="fas fa-mobile-alt"></i> Mobile Developer</h4>
                             <p>Build iOS and Android applications</p>
                             <div class="roadmap-steps">
                                 <span>6 Steps</span>
@@ -3909,7 +3943,7 @@ body.modal-open {
             <!-- Opportunities Tab -->
             <div id="opportunities-tab" class="tab-content">
                 <div class="opportunities-header">
-                    <h3>🚀 Hackathons & Internships</h3>
+                    <h3><i class="fas fa-rocket"></i> Hackathons & Internships</h3>
                     <div class="filter-buttons">
                         <button class="filter-btn active" onclick="filterOpportunities('all')">All</button>
                         <button class="filter-btn" onclick="filterOpportunities('hackathon')">Hackathons</button>
@@ -3925,8 +3959,8 @@ body.modal-open {
                         <h4>Tech Innovation Challenge 2025</h4>
                         <p class="opportunity-desc">Build innovative solutions for real-world problems. Win prizes up to ₹1,00,000!</p>
                         <div class="opportunity-details">
-                            <p><strong>📅 Deadline:</strong> March 15, 2025</p>
-                            <p><strong>💰 Prize Pool:</strong> ₹1,00,000</p>
+                            <p><strong><i class="fas fa-calendar"></i> Deadline:</strong> March 15, 2025</p>
+                            <p><strong><i class="fas fa-coins"></i> Prize Pool:</strong> ₹1,00,000</p>
                             <p><strong>📍 Mode:</strong> Online</p>
                         </div>
                         <button onclick="applyToOpportunity('hackathon1')" class="btn btn-primary">Join Now →</button>
@@ -3938,8 +3972,8 @@ body.modal-open {
                         <h4>Software Development Internship</h4>
                         <p class="opportunity-desc">6-month paid internship with leading tech company. Hands-on experience with latest technologies.</p>
                         <div class="opportunity-details">
-                            <p><strong>📅 Deadline:</strong> February 28, 2025</p>
-                            <p><strong>💰 Stipend:</strong> ₹15,000/month</p>
+                            <p><strong><i class="fas fa-calendar"></i> Deadline:</strong> February 28, 2025</p>
+                            <p><strong><i class="fas fa-coins"></i> Stipend:</strong> ₹15,000/month</p>
                             <p><strong>📍 Location:</strong> Remote</p>
                         </div>
                         <button onclick="applyToOpportunity('internship1')" class="btn btn-primary">Apply Now →</button>
@@ -3951,8 +3985,8 @@ body.modal-open {
                         <h4>AI/ML Competition 2025</h4>
                         <p class="opportunity-desc">Solve machine learning challenges and compete with top developers globally.</p>
                         <div class="opportunity-details">
-                            <p><strong>📅 Deadline:</strong> April 10, 2025</p>
-                            <p><strong>💰 Prize Pool:</strong> ₹75,000</p>
+                            <p><strong><i class="fas fa-calendar"></i> Deadline:</strong> April 10, 2025</p>
+                            <p><strong><i class="fas fa-coins"></i> Prize Pool:</strong> ₹75,000</p>
                             <p><strong>📍 Mode:</strong> Online</p>
                         </div>
                         <button onclick="applyToOpportunity('hackathon2')" class="btn btn-primary">Join Now →</button>
@@ -3964,7 +3998,7 @@ body.modal-open {
                         <h4>Data Science Internship</h4>
                         <p class="opportunity-desc">Work on real data projects and learn from industry experts. Certificate provided.</p>
                         <div class="opportunity-details">
-                            <p><strong>📅 Deadline:</strong> March 5, 2025</p>
+                            <p><strong><i class="fas fa-calendar"></i> Deadline:</strong> March 5, 2025</p>
                             <p><strong>💰 Stipend:</strong> ₹12,000/month</p>
                             <p><strong>📍 Location:</strong> Hybrid</p>
                         </div>
@@ -3986,13 +4020,13 @@ body.modal-open {
             <!-- Community Tab -->
             <div id="community-tab" class="tab-content">
                 <div class="community-header">
-                    <h3>💬 Express Your Thoughts Community</h3>
+                    <h3><i class="fas fa-comments"></i> Express Your Thoughts Community</h3>
                     <button class="btn btn-primary" onclick="openNewPostModal()">+ New Post</button>
                 </div>
                 <div class="community-tabs">
-                    <button class="community-tab-btn active" onclick="showCommunityTab('idea-wall')">💡 Idea Wall</button>
+                    <button class="community-tab-btn active" onclick="showCommunityTab('idea-wall')"><i class="fas fa-lightbulb"></i> Idea Wall</button>
                     <button class="community-tab-btn" onclick="showCommunityTab('best-thought')">🌟 Best Thought of the Week</button>
-                    <button class="community-tab-btn" onclick="showCommunityTab('discussions')">💬 Discussions</button>
+                    <button class="community-tab-btn" onclick="showCommunityTab('discussions')"><i class="fas fa-comments"></i> Discussions</button>
                 </div>
                 <div id="idea-wall-section" class="community-section active">
                     <div id="community-posts">
@@ -4017,7 +4051,7 @@ body.modal-open {
             <!-- Leaderboard Tab -->
             <div id="leaderboard-tab" class="tab-content">
                 <div class="leaderboard-header">
-                    <h3>🏆 Leaderboard</h3>
+                    <h3><i class="fas fa-trophy"></i> Leaderboard</h3>
                     <div class="leaderboard-filters">
                         <button class="filter-btn active" onclick="filterLeaderboard('all-time')">All Time</button>
                         <button class="filter-btn" onclick="filterLeaderboard('monthly')">This Month</button>
@@ -4050,7 +4084,7 @@ body.modal-open {
 
             <!-- Achievements Tab -->
             <div id="achievements-tab" class="tab-content">
-                <h3>🎖️ Your Achievements & Certificates</h3>
+                <h3><i class="fas fa-medal"></i> Your Achievements & Certificates</h3>
                 <div class="achievements-grid" id="achievements-grid">
                     <!-- Achievements will be loaded here -->
                 </div>
@@ -4072,19 +4106,19 @@ body.modal-open {
             <!-- Mentorship Tab -->
             <div id="mentorship-tab" class="tab-content">
                 <div class="mentorship-header">
-                    <h3>🤝 Mentorship & Chat</h3>
+                    <h3><i class="fas fa-handshake"></i> Mentorship & Chat</h3>
                     <button class="btn btn-primary" onclick="openAskMentorModal()">Ask a Mentor</button>
                 </div>
                 <div class="mentorship-sections">
                     <div class="ask-mentor-section">
-                        <h4>💬 Ask a Mentor</h4>
+                        <h4><i class="fas fa-comments"></i> Ask a Mentor</h4>
                         <p>Book a 15-minute chat with our team members for guidance</p>
                         <div class="mentor-list" id="mentor-list">
                             <!-- Mentors will be loaded here -->
                         </div>
                     </div>
                     <div class="discussion-room-section">
-                        <h4>💬 Discussion Room</h4>
+                        <h4><i class="fas fa-comments"></i> Discussion Room</h4>
                         <p>Join group discussions about hackathons and career guidance</p>
                         <div id="discussion-room-messages">
                             <!-- Discussion messages will be loaded here -->
@@ -4109,7 +4143,7 @@ body.modal-open {
                         </div>
                     </div>
                     <div class="analytics-card">
-                        <h4>🎓 Courses Completed</h4>
+                        <h4><i class="fas fa-graduation-cap"></i> Courses Completed</h4>
                         <div class="analytics-value" id="analytics-courses-completed">0</div>
                         <div class="analytics-progress">
                             <div class="progress-bar">
@@ -4118,7 +4152,7 @@ body.modal-open {
                         </div>
                     </div>
                     <div class="analytics-card">
-                        <h4>🔥 Top 3 Interests</h4>
+                        <h4><i class="fas fa-fire"></i> Top 3 Interests</h4>
                         <div class="interests-list" id="top-interests">
                             <!-- Top interests will be loaded here -->
                         </div>
@@ -4134,7 +4168,7 @@ body.modal-open {
             <!-- Profile Tab -->
             <div id="profile-tab" class="tab-content">
                 <div class="profile-header">
-                    <h3>👤 Your Profile</h3>
+                    <h3><i class="fas fa-user"></i> Your Profile</h3>
                     <button onclick="openEditProfile()" class="btn btn-primary">Edit Profile</button>
                 </div>
                 <div class="profile-content-grid">
@@ -4152,7 +4186,7 @@ body.modal-open {
                         </div>
                     </div>
                     <div class="profile-social-section">
-                        <h4>🌐 Social Media</h4>
+                        <h4><i class="fas fa-globe"></i> Social Media</h4>
                         <div class="social-share-buttons">
                             <button class="btn btn-primary" onclick="shareOnLinkedIn()">Share on LinkedIn</button>
                             <button class="btn btn-primary" onclick="shareOnInstagram()">Share on Instagram</button>
@@ -4168,7 +4202,7 @@ body.modal-open {
                     </div>
                 </div>
                 <div class="feedback-section">
-                    <h4>💡 Feedback & Suggestions</h4>
+                    <h4><i class="fas fa-lightbulb"></i> Feedback & Suggestions</h4>
                     <p>How can we make this platform better?</p>
                     <textarea id="feedback-textarea" placeholder="Share your thoughts..."></textarea>
                     <button class="btn btn-primary" onclick="submitFeedback()">Submit Feedback</button>
@@ -5219,8 +5253,11 @@ function switchToLogin() {
                     // Will be updated when achievements are loaded
                 }
                 
-                // Update profile display with all data
+                // Update profile display with all data (including photo and bio)
                 updateProfileDisplay(userData);
+                
+                // Also load profile data to ensure photo and bio are loaded
+                loadUserProfileData();
                 
                 console.log('✅ Dashboard updated with name:', userName);
             });
@@ -5336,8 +5373,8 @@ function switchToLogin() {
     async function checkAchievements(userId, points) {
         const achievements = [
             { points: 100, name: 'First Steps', icon: '👶' },
-            { points: 500, name: 'Rising Star', icon: '⭐' },
-            { points: 1000, name: 'Champion', icon: '🏆' },
+            { points: 500, name: 'Rising Star', icon: '<i class="fas fa-star"></i>' },
+            { points: 1000, name: 'Champion', icon: '<i class="fas fa-trophy"></i>' },
             { points: 5000, name: 'Legend', icon: '👑' }
         ];
         
@@ -5872,7 +5909,7 @@ function switchToLogin() {
                             <p>${post.content}</p>
                             <div class="post-actions">
                                 <button class="post-action-btn" onclick="upvotePost('${postId}')">👍 ${post.upvotes || 0}</button>
-                                <button class="post-action-btn" onclick="commentOnPost('${postId}')">💬 Comment</button>
+                                <button class="post-action-btn" onclick="commentOnPost('${postId}')"><i class="fas fa-comments"></i> Comment</button>
                             </div>
                         </div>
                     `;
@@ -6509,7 +6546,16 @@ function switchToLogin() {
                 if (skillsInput) skillsInput.value = userData?.skills || '';
                 if (domainInput) domainInput.value = userData?.preferredDomain || '';
                 
+                // Fix: Always update profile display to show photo and bio on dashboard
                 updateProfileDisplay(userData);
+                
+                // Also ensure photo is loaded if it exists
+                if (userData?.profilePhoto) {
+                    const dashboardPhoto = document.getElementById('dashboard-profile-photo');
+                    if (dashboardPhoto) {
+                        dashboardPhoto.src = userData.profilePhoto;
+                    }
+                }
             });
         } catch (error) {
             console.error('Error loading profile data:', error);
@@ -6525,6 +6571,8 @@ function switchToLogin() {
         const profileDomain = document.getElementById('profile-domain');
         const dashboardUsername = document.getElementById('dashboard-username');
         const dashboardUsernameFull = document.getElementById('dashboard-username-full');
+        const dashboardUserBio = document.getElementById('dashboard-user-bio');
+        const dashboardProfilePhoto = document.getElementById('dashboard-profile-photo');
         
         const userName = userData?.name || currentUser?.displayName || userData?.email?.split('@')[0] || 'User';
         
@@ -6536,12 +6584,20 @@ function switchToLogin() {
         if (profileDomain) profileDomain.textContent = userData?.preferredDomain || 'Not set';
         if (dashboardUsername) dashboardUsername.textContent = userName;
         if (dashboardUsernameFull) dashboardUsernameFull.textContent = userName;
-        if (document.getElementById('dashboard-user-bio')) {
-            document.getElementById('dashboard-user-bio').textContent = userData?.bio || 'No bio yet. Click edit to add one!';
+        
+        // Fix: Always update bio on dashboard, even if empty
+        if (dashboardUserBio) {
+            dashboardUserBio.textContent = userData?.bio || 'No bio yet. Click edit to add one!';
         }
         
-        if (userData?.profilePhoto) {
-            document.getElementById('dashboard-profile-photo').src = userData.profilePhoto;
+        // Fix: Always load photo if it exists in database
+        if (dashboardProfilePhoto) {
+            if (userData?.profilePhoto) {
+                dashboardProfilePhoto.src = userData.profilePhoto;
+            } else {
+                // Keep default placeholder if no photo
+                dashboardProfilePhoto.src = dashboardProfilePhoto.src || "https://via.placeholder.com/120/667eea/ffffff?text=User";
+            }
         }
         
         // Update growth percentage
@@ -6580,12 +6636,12 @@ function switchToLogin() {
                     // Show enrolled content
                     contentArea.innerHTML = `
                         <div class="exclusive-card">
-                            <h3>🎉 Welcome to Exclusive Content!</h3>
+                            <h3><i class="fas fa-party-horn"></i> Welcome to Exclusive Content!</h3>
                             <p>You have full access to all premium courses and resources.</p>
                         </div>
                         <div class="exclusive-content">
                             <div class="content-item">
-                                <h4>📹 Course Video 1</h4>
+                                <h4><i class="fas fa-video"></i> Course Video 1</h4>
                                 <video controls>
                                     <source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
@@ -6598,13 +6654,13 @@ function switchToLogin() {
                                 <p>Downloadable resources and study materials</p>
                             </div>
                             <div class="content-item">
-                                <h4>📚 Course Module 2</h4>
+                                <h4><i class="fas fa-book"></i> Course Module 2</h4>
                                 <p>Advanced topics and hands-on exercises</p>
                                 <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Access Course →</a>
                             </div>
                         </div>
                         <div style="margin-top: 2rem; padding: 1.5rem; background: #f8f9fa; border-radius: 15px;">
-                            <h4>💡 How to Add Your Content:</h4>
+                            <h4><i class="fas fa-lightbulb"></i> How to Add Your Content:</h4>
                             <p>1. Replace video URLs with your course videos<br>
                                2. Upload images to your server and update image src<br>
                                3. Add links to downloadable resources<br>
@@ -6615,10 +6671,10 @@ function switchToLogin() {
                     // Show enrollment prompt
                     contentArea.innerHTML = `
                         <div class="exclusive-card">
-                            <h3>⭐ Exclusive Content</h3>
+                            <h3><i class="fas fa-star"></i> Exclusive Content</h3>
                             <p style="font-size: 1.2rem; margin: 1rem 0;">Unlock premium courses, videos, and exclusive resources</p>
                             <div style="margin: 2rem 0;">
-                                <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
+                                <div style="font-size: 3rem; margin-bottom: 1rem;"><i class="fas fa-coins"></i></div>
                                 <div class="price-display" style="color: white;">$1.00</div>
                                 <p style="font-size: 0.9rem; opacity: 0.9;">One-time payment for lifetime access</p>
                             </div>
@@ -6629,10 +6685,10 @@ function switchToLogin() {
                         <div style="background: white; border-radius: 15px; padding: 2rem; margin-top: 2rem;">
                             <h4 style="color: #667eea; margin-bottom: 1rem;">What You'll Get:</h4>
                             <ul style="list-style: none; padding: 0;">
-                                <li style="padding: 0.5rem 0; color: #555;">✅ Premium video courses</li>
-                                <li style="padding: 0.5rem 0; color: #555;">✅ Exclusive study materials</li>
-                                <li style="padding: 0.5rem 0; color: #555;">✅ Downloadable resources</li>
-                                <li style="padding: 0.5rem 0; color: #555;">✅ Lifetime access</li>
+                                <li style="padding: 0.5rem 0; color: #555;"><i class="fas fa-check-circle"></i> Premium video courses</li>
+                                <li style="padding: 0.5rem 0; color: #555;"><i class="fas fa-check-circle"></i> Exclusive study materials</li>
+                                <li style="padding: 0.5rem 0; color: #555;"><i class="fas fa-check-circle"></i> Downloadable resources</li>
+                                <li style="padding: 0.5rem 0; color: #555;"><i class="fas fa-check-circle"></i> Lifetime access</li>
                             </ul>
                         </div>
                     `;
@@ -7113,7 +7169,7 @@ function switchToLogin() {
                     html += `
                         <div style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 1.5rem; border-radius: 15px;">
                             <h4 style="color: #667eea; margin-bottom: 0.5rem;">${data.title || 'Untitled'}</h4>
-                            <p style="color: #888; font-size: 0.9rem; margin-bottom: 0.5rem;">📅 ${date} | 📂 ${data.category || 'General'}</p>
+                            <p style="color: #888; font-size: 0.9rem; margin-bottom: 0.5rem;"><i class="fas fa-calendar"></i> ${date} | <i class="fas fa-folder"></i> ${data.category || 'General'}</p>
                             <p style="color: #555; line-height: 1.6;">${data.thoughts ? data.thoughts.substring(0, 150) + '...' : ''}</p>
                         </div>
                     `;
