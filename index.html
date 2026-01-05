@@ -8,12 +8,14 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://expressyourthoughts.live">
 
-  
   <!-- These help when people share your site -->
   <meta property="og:title" content="Express Your Thoughts">
   <meta property="og:description" content="A platform to express and explore creative thoughts.">
   <meta property="og:url" content="https://expressyourthoughts.live">
   <meta property="og:type" content="website">
+
+
+
 
 <!-- Font Awesome Icons with Colorful Styling -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -2376,6 +2378,321 @@ body.modal-open {
             padding: 1.5rem;
         }
 
+        /* Election Hub Styles */
+        .election-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .election-header h3 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .election-header-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .elections-section {
+            margin-bottom: 3rem;
+        }
+
+        .elections-section h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .elections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .election-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .election-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .election-card.active {
+            border-left: 4px solid #667eea;
+        }
+
+        .election-card.past {
+            opacity: 0.8;
+            border-left: 4px solid #888;
+        }
+
+        .election-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .election-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .election-card-position {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .election-card-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .election-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .election-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .election-status.active {
+            background: #4caf50;
+            color: white;
+        }
+
+        .election-status.ended {
+            background: #888;
+            color: white;
+        }
+
+        .election-status.upcoming {
+            background: #ff9800;
+            color: white;
+        }
+
+        .candidates-count {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .candidates-count i {
+            color: #667eea;
+        }
+
+        .candidate-list {
+            margin-top: 2rem;
+        }
+
+        .candidate-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .candidate-card:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .candidate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .candidate-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .candidate-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .candidate-details h5 {
+            margin: 0 0 0.3rem 0;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .candidate-details p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .candidate-manifesto {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 1rem 0;
+        }
+
+        .candidate-post-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .candidate-post-link:hover {
+            text-decoration: underline;
+        }
+
+        .vote-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .vote-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .vote-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .vote-button.voted {
+            background: #4caf50;
+        }
+
+        .vote-count {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .election-results {
+            margin-top: 2rem;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-header h4 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .result-stat-card h5 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .result-stat-card .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .winner-badge {
+            display: inline-block;
+            background: #ffd700;
+            color: #333;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
         /* Community Section */
         .community-header {
             display: flex;
@@ -3024,7 +3341,7 @@ body.modal-open {
                 <div class="rule-card">
                     <div class="icon">📅</div>
                     <h3>Regular Contests</h3>
-                    <p>Upcoming Contest : 1 December to 15 December. Winners will be announced on 20 October. Follow our social media to stay updated on deadlines..</p>
+                    <p>Upcoming Contest : 26 October to 30 October. Winners will be announced on 30 October. Follow our social media to stay updated on deadlines..</p>
                 </div>
             </div>
         </div>
@@ -3868,6 +4185,7 @@ body.modal-open {
                 <button class="tab-btn" onclick="showTab('exclusive')"><i class="fas fa-star"></i> Premium</button>
                 <button class="tab-btn" onclick="showTab('mentorship')"><i class="fas fa-handshake"></i> Mentorship</button>
                 <button class="tab-btn" onclick="showTab('analytics')"><i class="fas fa-chart-bar"></i> Analytics</button>
+                <button class="tab-btn" onclick="showTab('elections')"><i class="fas fa-vote-yea"></i> Election Hub</button>
                 <button class="tab-btn" onclick="showTab('profile')"><i class="fas fa-user"></i> Profile</button>
             </div>
 
@@ -4244,6 +4562,160 @@ body.modal-open {
                     <textarea id="feedback-textarea" placeholder="Share your thoughts..."></textarea>
                     <button class="btn btn-primary" onclick="submitFeedback()">Submit Feedback</button>
                 </div>
+            </div>
+
+            <!-- Election Hub Tab -->
+            <div id="elections-tab" class="tab-content">
+                <div class="election-header">
+                    <h3><i class="fas fa-vote-yea"></i> Election Hub</h3>
+                    <div class="election-header-actions">
+                        <button onclick="openCreateElectionModal()" class="btn btn-primary" id="create-election-btn" style="display: none;">
+                            <i class="fas fa-plus"></i> Create Election
+                        </button>
+                        <button onclick="openCandidateRegistrationModal()" class="btn btn-secondary">
+                            <i class="fas fa-user-tie"></i> Register as Candidate
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Elections -->
+                <div class="elections-section">
+                    <h4><i class="fas fa-poll"></i> Active Elections</h4>
+                    <div id="active-elections-list" class="elections-grid">
+                        <p style="text-align: center; color: #888; padding: 2rem;">No active elections at the moment.</p>
+                    </div>
+                </div>
+
+                <!-- Past Elections -->
+                <div class="elections-section" style="margin-top: 3rem;">
+                    <h4><i class="fas fa-history"></i> Past Elections</h4>
+                    <div id="past-elections-list" class="elections-grid">
+                        <p style="text-align: center; color: #888; padding: 2rem;">No past elections to display.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Election Modal (Admin Only) -->
+    <div id="createElectionModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close" onclick="closeCreateElectionModal()">&times;</span>
+            <div class="auth-modal-header">
+                <div class="auth-logo"><i class="fas fa-vote-yea"></i></div>
+                <h2>Create New Election</h2>
+                <p>Set up a new election for your community</p>
+            </div>
+            <form id="createElectionForm" onsubmit="createElection(event)">
+                <div class="form-group">
+                    <label for="election-title">
+                        <span class="label-icon"><i class="fas fa-heading"></i></span> Election Title
+                    </label>
+                    <input type="text" id="election-title" required placeholder="e.g., Class Monitor Election 2024">
+                </div>
+                <div class="form-group">
+                    <label for="election-description">
+                        <span class="label-icon"><i class="fas fa-align-left"></i></span> Description
+                    </label>
+                    <textarea id="election-description" required rows="3" placeholder="Describe the election and its importance..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="election-position">
+                        <span class="label-icon"><i class="fas fa-briefcase"></i></span> Position
+                    </label>
+                    <select id="election-position" required onchange="handlePositionChange()">
+                        <option value="">Select Position</option>
+                        <option value="Class Monitor">Class Monitor</option>
+                        <option value="Class Representative">Class Representative</option>
+                        <option value="Student Council President">Student Council President</option>
+                        <option value="Student Council Vice President">Student Council Vice President</option>
+                        <option value="Secretary">Secretary</option>
+                        <option value="Treasurer">Treasurer</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group" id="custom-position-group" style="display: none;">
+                    <label for="custom-position">
+                        <span class="label-icon"><i class="fas fa-edit"></i></span> Custom Position Name
+                    </label>
+                    <input type="text" id="custom-position" placeholder="Enter position name">
+                </div>
+                <div class="form-group">
+                    <label for="election-start-date">
+                        <span class="label-icon"><i class="fas fa-calendar-alt"></i></span> Start Date
+                    </label>
+                    <input type="datetime-local" id="election-start-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="election-end-date">
+                        <span class="label-icon"><i class="fas fa-calendar-times"></i></span> End Date
+                    </label>
+                    <input type="datetime-local" id="election-end-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="election-max-candidates">
+                        <span class="label-icon"><i class="fas fa-users"></i></span> Max Candidates
+                    </label>
+                    <input type="number" id="election-max-candidates" min="2" max="20" value="10" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-auth">
+                    <span class="btn-text">Create Election</span>
+                    <span class="btn-loading" style="display: none;">Creating...</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Candidate Registration Modal -->
+    <div id="candidateRegistrationModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close" onclick="closeCandidateRegistrationModal()">&times;</span>
+            <div class="auth-modal-header">
+                <div class="auth-logo"><i class="fas fa-user-tie"></i></div>
+                <h2>Register as Candidate</h2>
+                <p>Join an election and share your vision</p>
+            </div>
+            <form id="candidateRegistrationForm" onsubmit="registerAsCandidate(event)">
+                <div class="form-group">
+                    <label for="candidate-election-select">
+                        <span class="label-icon"><i class="fas fa-vote-yea"></i></span> Select Election
+                    </label>
+                    <select id="candidate-election-select" required>
+                        <option value="">Choose an election</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="candidate-manifesto">
+                        <span class="label-icon"><i class="fas fa-file-alt"></i></span> Campaign Manifesto
+                    </label>
+                    <textarea id="candidate-manifesto" required rows="5" placeholder="Share your vision, goals, and why you're the best candidate..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="candidate-post-link">
+                        <span class="label-icon"><i class="fas fa-link"></i></span> Link to Your Post (Optional)
+                    </label>
+                    <input type="text" id="candidate-post-link" placeholder="Paste link to your community post">
+                    <small style="color: #888; font-size: 0.85rem;">Link your campaign to an existing post from the Community section</small>
+                </div>
+                <button type="submit" class="btn btn-primary btn-auth">
+                    <span class="btn-text">Register as Candidate</span>
+                    <span class="btn-loading" style="display: none;">Registering...</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Election Details Modal -->
+    <div id="electionDetailsModal" class="modal auth-modal">
+        <div class="modal-content auth-modal-content" style="max-width: 900px;">
+            <span class="close" onclick="closeElectionDetailsModal()">&times;</span>
+            <div class="auth-modal-header">
+                <div class="auth-logo"><i class="fas fa-poll"></i></div>
+                <h2 id="election-details-title">Election Details</h2>
+                <p id="election-details-position"></p>
+            </div>
+            <div id="election-details-content">
+                <!-- Content will be dynamically loaded -->
             </div>
         </div>
     </div>
@@ -5371,6 +5843,9 @@ function switchToLogin() {
             loadAnalytics();
         } else if (tabName === 'mentorship') {
             loadMentorship();
+        } else if (tabName === 'elections') {
+            loadElections();
+            checkAdminStatus();
         }
     }
 
@@ -5586,7 +6061,6 @@ function switchToLogin() {
 
     function loadDailyMotivation() {
         const quotes = [
-            'If you are not working hard then you should die because you are useless on earth. - Dileep Choudhary',
             'The only way to do great work is to love what you do. - Steve Jobs',
             'Innovation distinguishes between a leader and a follower. - Steve Jobs',
             'The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt',
@@ -6254,6 +6728,560 @@ function switchToLogin() {
     function closeAskMentorModal() {
         document.getElementById('askMentorModal').style.display = 'none';
         document.getElementById('askMentorForm').reset();
+    }
+
+    // ===== ELECTION HUB SYSTEM =====
+    
+    // Admin email list - Add your admin emails here
+    const ADMIN_EMAILS = ['dileepchoudhary1008@gmail.com', 'admin@expressyourthoughts.live'];
+    
+    function isAdmin() {
+        if (!currentUser) return false;
+        return ADMIN_EMAILS.includes(currentUser.email);
+    }
+    
+    function checkAdminStatus() {
+        const createBtn = document.getElementById('create-election-btn');
+        if (createBtn) {
+            createBtn.style.display = isAdmin() ? 'block' : 'none';
+        }
+    }
+    
+    async function loadElections() {
+        if (!database) return;
+        
+        try {
+            const electionsRef = database.ref('elections');
+            electionsRef.once('value', (snapshot) => {
+                const elections = snapshot.val();
+                if (!elections) {
+                    document.getElementById('active-elections-list').innerHTML = 
+                        '<p style="text-align: center; color: #888; padding: 2rem;">No active elections at the moment.</p>';
+                    return;
+                }
+                
+                const now = new Date();
+                const activeElections = [];
+                const pastElections = [];
+                
+                Object.entries(elections).forEach(([id, election]) => {
+                    const startDate = new Date(election.startDate);
+                    const endDate = new Date(election.endDate);
+                    
+                    if (now >= startDate && now <= endDate) {
+                        activeElections.push({ id, ...election });
+                    } else if (now > endDate) {
+                        pastElections.push({ id, ...election });
+                    }
+                });
+                
+                // Sort by end date (soonest first for active, most recent first for past)
+                activeElections.sort((a, b) => new Date(a.endDate) - new Date(b.endDate));
+                pastElections.sort((a, b) => new Date(b.endDate) - new Date(a.endDate));
+                
+                renderElections(activeElections, 'active-elections-list', true);
+                renderElections(pastElections, 'past-elections-list', false);
+            });
+        } catch (error) {
+            console.error('Error loading elections:', error);
+        }
+    }
+    
+    function renderElections(elections, containerId, isActive) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        
+        if (elections.length === 0) {
+            container.innerHTML = `<p style="text-align: center; color: #888; padding: 2rem;">No ${isActive ? 'active' : 'past'} elections ${isActive ? 'at the moment' : 'to display'}.</p>`;
+            return;
+        }
+        
+        let html = '';
+        elections.forEach(election => {
+            const startDate = new Date(election.startDate);
+            const endDate = new Date(election.endDate);
+            const now = new Date();
+            
+            let status = 'ended';
+            let statusText = 'Ended';
+            if (now < startDate) {
+                status = 'upcoming';
+                statusText = 'Upcoming';
+            } else if (now >= startDate && now <= endDate) {
+                status = 'active';
+                statusText = 'Active';
+            }
+            
+            const candidatesCount = election.candidates ? Object.keys(election.candidates).length : 0;
+            const votesCount = election.votes ? Object.keys(election.votes).length : 0;
+            
+            html += `
+                <div class="election-card ${status}" onclick="viewElectionDetails('${election.id}')">
+                    <div class="election-card-header">
+                        <div>
+                            <h4 class="election-card-title">${election.title}</h4>
+                            <p class="election-card-position">${election.position}</p>
+                        </div>
+                        <span class="election-status ${status}">${statusText}</span>
+                    </div>
+                    <p class="election-card-description">${election.description || 'No description provided.'}</p>
+                    <div class="election-card-meta">
+                        <div class="candidates-count">
+                            <i class="fas fa-users"></i>
+                            <span>${candidatesCount} Candidate${candidatesCount !== 1 ? 's' : ''}</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-vote-yea"></i>
+                            <span>${votesCount} Vote${votesCount !== 1 ? 's' : ''}</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; font-size: 0.85rem; color: #888;">
+                        <i class="fas fa-calendar"></i> Ends: ${endDate.toLocaleDateString()} ${endDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                    </div>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+    }
+    
+    function openCreateElectionModal() {
+        if (!isAdmin()) {
+            alert('Only administrators can create elections.');
+            return;
+        }
+        const modal = document.getElementById('createElectionModal');
+        modal.style.display = 'block';
+        modal.style.zIndex = '13000';
+    }
+    
+    function closeCreateElectionModal() {
+        document.getElementById('createElectionModal').style.display = 'none';
+        document.getElementById('createElectionForm').reset();
+        document.getElementById('custom-position-group').style.display = 'none';
+    }
+    
+    function handlePositionChange() {
+        const positionSelect = document.getElementById('election-position');
+        const customGroup = document.getElementById('custom-position-group');
+        if (positionSelect.value === 'Other') {
+            customGroup.style.display = 'block';
+        } else {
+            customGroup.style.display = 'none';
+        }
+    }
+    
+    async function createElection(event) {
+        event.preventDefault();
+        
+        if (!isAdmin()) {
+            alert('Only administrators can create elections.');
+            return;
+        }
+        
+        if (!database || !currentUser) {
+            alert('Database not available. Please try again.');
+            return;
+        }
+        
+        const title = document.getElementById('election-title').value.trim();
+        const description = document.getElementById('election-description').value.trim();
+        let position = document.getElementById('election-position').value;
+        const startDate = document.getElementById('election-start-date').value;
+        const endDate = document.getElementById('election-end-date').value;
+        const maxCandidates = parseInt(document.getElementById('election-max-candidates').value);
+        
+        if (position === 'Other') {
+            position = document.getElementById('custom-position').value.trim();
+            if (!position) {
+                alert('Please enter a custom position name.');
+                return;
+            }
+        }
+        
+        if (!title || !description || !position || !startDate || !endDate) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+        
+        if (new Date(startDate) >= new Date(endDate)) {
+            alert('End date must be after start date.');
+            return;
+        }
+        
+        const submitBtn = event.target.querySelector('button[type="submit"]');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline';
+        submitBtn.disabled = true;
+        
+        try {
+            const electionRef = database.ref('elections').push();
+            await electionRef.set({
+                title,
+                description,
+                position,
+                startDate: new Date(startDate).toISOString(),
+                endDate: new Date(endDate).toISOString(),
+                maxCandidates,
+                createdBy: currentUser.uid,
+                createdAt: new Date().toISOString(),
+                candidates: {},
+                votes: {}
+            });
+            
+            // Notify all users
+            await createNotificationForAll('New Election Created', `${title} - ${position} election is now open!`, 'election');
+            
+            alert('✅ Election created successfully!');
+            closeCreateElectionModal();
+            loadElections();
+        } catch (error) {
+            console.error('Error creating election:', error);
+            alert('Error creating election: ' + error.message);
+        } finally {
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+            submitBtn.disabled = false;
+        }
+    }
+    
+    function openCandidateRegistrationModal() {
+        if (!currentUser) {
+            alert('Please login to register as a candidate.');
+            openLoginModal();
+            return;
+        }
+        
+        // Load active elections into dropdown
+        if (database) {
+            const electionsRef = database.ref('elections');
+            electionsRef.once('value', (snapshot) => {
+                const elections = snapshot.val();
+                const select = document.getElementById('candidate-election-select');
+                if (!select) return;
+                
+                select.innerHTML = '<option value="">Choose an election</option>';
+                
+                if (elections) {
+                    const now = new Date();
+                    Object.entries(elections).forEach(([id, election]) => {
+                        const startDate = new Date(election.startDate);
+                        const endDate = new Date(election.endDate);
+                        if (now >= startDate && now <= endDate) {
+                            const option = document.createElement('option');
+                            option.value = id;
+                            option.textContent = `${election.title} - ${election.position}`;
+                            select.appendChild(option);
+                        }
+                    });
+                }
+            });
+        }
+        
+        const modal = document.getElementById('candidateRegistrationModal');
+        modal.style.display = 'block';
+        modal.style.zIndex = '13000';
+    }
+    
+    function closeCandidateRegistrationModal() {
+        document.getElementById('candidateRegistrationModal').style.display = 'none';
+        document.getElementById('candidateRegistrationForm').reset();
+    }
+    
+    async function registerAsCandidate(event) {
+        event.preventDefault();
+        
+        if (!currentUser || !database) {
+            alert('Please login to register as a candidate.');
+            return;
+        }
+        
+        const electionId = document.getElementById('candidate-election-select').value;
+        const manifesto = document.getElementById('candidate-manifesto').value.trim();
+        const postLink = document.getElementById('candidate-post-link').value.trim();
+        
+        if (!electionId || !manifesto) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+        
+        try {
+            const electionRef = database.ref('elections/' + electionId);
+            const electionSnapshot = await electionRef.once('value');
+            const election = electionSnapshot.val();
+            
+            if (!election) {
+                alert('Election not found.');
+                return;
+            }
+            
+            // Check if already registered
+            if (election.candidates) {
+                const existingCandidate = Object.values(election.candidates).find(
+                    c => c.userId === currentUser.uid
+                );
+                if (existingCandidate) {
+                    alert('You are already registered as a candidate for this election.');
+                    return;
+                }
+                
+                // Check max candidates
+                const candidatesCount = Object.keys(election.candidates).length;
+                if (candidatesCount >= election.maxCandidates) {
+                    alert(`Maximum number of candidates (${election.maxCandidates}) reached for this election.`);
+                    return;
+                }
+            }
+            
+            // Get user data
+            const userRef = database.ref('users/' + currentUser.uid);
+            const userSnapshot = await userRef.once('value');
+            const userData = userSnapshot.val();
+            
+            const candidateData = {
+                userId: currentUser.uid,
+                userName: userData?.name || currentUser.displayName || currentUser.email.split('@')[0],
+                manifesto,
+                postLink: postLink || null,
+                registeredAt: new Date().toISOString(),
+                votes: 0
+            };
+            
+            await database.ref(`elections/${electionId}/candidates`).push(candidateData);
+            
+            // Add points
+            await addPoints(currentUser.uid, 100, 'Registered as election candidate');
+            
+            // Create notification
+            await createNotification(currentUser.uid, `You've successfully registered as a candidate for ${election.title}!`, 'election');
+            
+            alert('✅ Successfully registered as candidate!');
+            closeCandidateRegistrationModal();
+            loadElections();
+        } catch (error) {
+            console.error('Error registering as candidate:', error);
+            alert('Error registering as candidate: ' + error.message);
+        }
+    }
+    
+    async function viewElectionDetails(electionId) {
+        if (!database) return;
+        
+        try {
+            const electionRef = database.ref('elections/' + electionId);
+            const snapshot = await electionRef.once('value');
+            const election = snapshot.val();
+            
+            if (!election) {
+                alert('Election not found.');
+                return;
+            }
+            
+            const now = new Date();
+            const startDate = new Date(election.startDate);
+            const endDate = new Date(election.endDate);
+            const isActive = now >= startDate && now <= endDate;
+            const isEnded = now > endDate;
+            
+            document.getElementById('election-details-title').textContent = election.title;
+            document.getElementById('election-details-position').textContent = election.position;
+            
+            const candidates = election.candidates || {};
+            const votes = election.votes || {};
+            const candidatesArray = Object.entries(candidates).map(([id, candidate]) => ({
+                id,
+                ...candidate
+            }));
+            
+            // Sort by votes (descending)
+            candidatesArray.sort((a, b) => (b.votes || 0) - (a.votes || 0));
+            
+            let html = `
+                <div style="margin-bottom: 2rem;">
+                    <p style="color: #666; line-height: 1.6;">${election.description}</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 2rem; flex-wrap: wrap;">
+                        <div><i class="fas fa-calendar-alt"></i> <strong>Start:</strong> ${startDate.toLocaleDateString()} ${startDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                        <div><i class="fas fa-calendar-times"></i> <strong>End:</strong> ${endDate.toLocaleDateString()} ${endDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                        <div><i class="fas fa-users"></i> <strong>Candidates:</strong> ${candidatesArray.length}</div>
+                        <div><i class="fas fa-vote-yea"></i> <strong>Total Votes:</strong> ${Object.keys(votes).length}</div>
+                    </div>
+                </div>
+            `;
+            
+            if (isEnded) {
+                html += `
+                    <div class="election-results">
+                        <div class="results-header">
+                            <h4>Final Results</h4>
+                        </div>
+                        <div class="candidate-list">
+                `;
+            } else {
+                html += `
+                    <div class="candidate-list">
+                        <h4 style="margin-bottom: 1rem;">Candidates ${isActive ? '(Voting is Active)' : '(Voting Not Started)'}</h4>
+                `;
+            }
+            
+            if (candidatesArray.length === 0) {
+                html += '<p style="text-align: center; color: #888; padding: 2rem;">No candidates registered yet.</p>';
+            } else {
+                candidatesArray.forEach((candidate, index) => {
+                    const hasVoted = votes[currentUser?.uid] === candidate.id;
+                    const canVote = isActive && currentUser && !votes[currentUser.uid];
+                    const isWinner = isEnded && index === 0 && candidate.votes > 0;
+                    
+                    html += `
+                        <div class="candidate-card">
+                            <div class="candidate-header">
+                                <div class="candidate-info">
+                                    <div class="candidate-avatar">${candidate.userName.charAt(0).toUpperCase()}</div>
+                                    <div class="candidate-details">
+                                        <h5>${candidate.userName} ${isWinner ? '<span class="winner-badge">🏆 Winner</span>' : ''}</h5>
+                                        <p>Registered: ${new Date(candidate.registeredAt).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                                <div class="vote-count">
+                                    <i class="fas fa-vote-yea"></i>
+                                    <span>${candidate.votes || 0} Vote${(candidate.votes || 0) !== 1 ? 's' : ''}</span>
+                                </div>
+                            </div>
+                            <div class="candidate-manifesto">
+                                <strong>Campaign Manifesto:</strong><br>
+                                ${candidate.manifesto}
+                            </div>
+                            ${candidate.postLink ? `
+                                <a href="${candidate.postLink}" target="_blank" class="candidate-post-link">
+                                    <i class="fas fa-link"></i> View Candidate's Post
+                                </a>
+                            ` : ''}
+                            ${canVote ? `
+                                <button class="vote-button" onclick="castVote('${electionId}', '${candidate.id}')">
+                                    <i class="fas fa-check"></i> Vote for ${candidate.userName}
+                                </button>
+                            ` : hasVoted ? `
+                                <button class="vote-button voted" disabled>
+                                    <i class="fas fa-check-circle"></i> You Voted for This Candidate
+                                </button>
+                            ` : !isActive ? `
+                                <button class="vote-button" disabled>Voting Not Started</button>
+                            ` : !currentUser ? `
+                                <button class="vote-button" onclick="openLoginModal()">Login to Vote</button>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+            }
+            
+            html += '</div>';
+            
+            if (isEnded) {
+                html += '</div>';
+            }
+            
+            document.getElementById('election-details-content').innerHTML = html;
+            
+            const modal = document.getElementById('electionDetailsModal');
+            modal.style.display = 'block';
+            modal.style.zIndex = '13000';
+        } catch (error) {
+            console.error('Error loading election details:', error);
+            alert('Error loading election details.');
+        }
+    }
+    
+    function closeElectionDetailsModal() {
+        document.getElementById('electionDetailsModal').style.display = 'none';
+    }
+    
+    async function castVote(electionId, candidateId) {
+        if (!currentUser || !database) {
+            alert('Please login to vote.');
+            openLoginModal();
+            return;
+        }
+        
+        if (!confirm('Are you sure you want to cast your vote? This action cannot be undone.')) {
+            return;
+        }
+        
+        try {
+            const electionRef = database.ref('elections/' + electionId);
+            const electionSnapshot = await electionRef.once('value');
+            const election = electionSnapshot.val();
+            
+            if (!election) {
+                alert('Election not found.');
+                return;
+            }
+            
+            // Check if already voted
+            if (election.votes && election.votes[currentUser.uid]) {
+                alert('You have already voted in this election.');
+                return;
+            }
+            
+            // Check if election is active
+            const now = new Date();
+            const startDate = new Date(election.startDate);
+            const endDate = new Date(election.endDate);
+            
+            if (now < startDate || now > endDate) {
+                alert('Voting is not active for this election.');
+                return;
+            }
+            
+            // Record vote
+            await database.ref(`elections/${electionId}/votes/${currentUser.uid}`).set(candidateId);
+            
+            // Update candidate vote count
+            const candidates = election.candidates || {};
+            let candidateKey = null;
+            Object.entries(candidates).forEach(([key, candidate]) => {
+                if (candidate.id === candidateId || key === candidateId) {
+                    candidateKey = key;
+                }
+            });
+            
+            if (candidateKey) {
+                const currentVotes = candidates[candidateKey].votes || 0;
+                await database.ref(`elections/${electionId}/candidates/${candidateKey}/votes`).set(currentVotes + 1);
+            }
+            
+            // Add points
+            await addPoints(currentUser.uid, 50, 'Voted in election');
+            
+            // Create notification
+            await createNotification(currentUser.uid, 'Your vote has been recorded! Thank you for participating.', 'election');
+            
+            alert('✅ Vote cast successfully!');
+            viewElectionDetails(electionId); // Refresh view
+        } catch (error) {
+            console.error('Error casting vote:', error);
+            alert('Error casting vote: ' + error.message);
+        }
+    }
+    
+    async function createNotificationForAll(title, message, type) {
+        if (!database) return;
+        
+        try {
+            const usersRef = database.ref('users');
+            const usersSnapshot = await usersRef.once('value');
+            const users = usersSnapshot.val();
+            
+            if (users) {
+                const promises = Object.keys(users).map(userId => 
+                    createNotification(userId, message, type)
+                );
+                await Promise.all(promises);
+            }
+        } catch (error) {
+            console.error('Error creating notifications for all:', error);
+        }
     }
 
     async function submitMentorRequest(event) {
@@ -7410,3 +8438,4 @@ function switchToLogin() {
 
 </body>
 </html>
+
