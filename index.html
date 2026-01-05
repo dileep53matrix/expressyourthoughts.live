@@ -2628,6 +2628,63 @@ body.modal-open {
             font-weight: 600;
             color: #667eea;
         }
+        
+        .winner-vote-count {
+            color: #ffd700;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .winner-card {
+            border: 3px solid #ffd700;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffffff 100%);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transform: scale(1.02);
+        }
+        
+        .winner-card::before {
+            content: '🏆';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 8rem;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+            pointer-events: none;
+        }
+        
+        .winner-avatar {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%) !important;
+            border: 3px solid #ffd700;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+            transform: scale(1.1);
+        }
+        
+        .winner-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #333;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 3px 10px rgba(255, 215, 0, 0.4);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 5px 20px rgba(255, 215, 0, 0.6);
+            }
+        }
 
         .election-results {
             margin-top: 2rem;
@@ -4682,9 +4739,6 @@ body.modal-open {
                     </label>
                     <select id="candidate-election-select" required>
                         <option value="">Choose an election</option>
-                      <option value="">Class Representative</option>
-                       <option value="">Aura in college/school</option>
-                      <option value="">Most lovely student</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -6807,6 +6861,7 @@ function switchToLogin() {
             
             let status = 'ended';
             let statusText = 'Ended';
+            const isEnded = now > endDate;
             if (now < startDate) {
                 status = 'upcoming';
                 statusText = 'Upcoming';
@@ -6833,10 +6888,17 @@ function switchToLogin() {
                             <i class="fas fa-users"></i>
                             <span>${candidatesCount} Candidate${candidatesCount !== 1 ? 's' : ''}</span>
                         </div>
-                        <div>
-                            <i class="fas fa-vote-yea"></i>
-                            <span>${votesCount} Vote${votesCount !== 1 ? 's' : ''}</span>
-                        </div>
+                        ${isEnded ? `
+                            <div>
+                                <i class="fas fa-vote-yea"></i>
+                                <span>${votesCount} Vote${votesCount !== 1 ? 's' : ''}</span>
+                            </div>
+                        ` : `
+                            <div style="opacity: 0.6;">
+                                <i class="fas fa-lock"></i>
+                                <span>Results Hidden</span>
+                            </div>
+                        `}
                     </div>
                     <div style="margin-top: 1rem; font-size: 0.85rem; color: #888;">
                         <i class="fas fa-calendar"></i> Ends: ${endDate.toLocaleDateString()} ${endDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
@@ -6877,13 +6939,32 @@ function switchToLogin() {
     async function createElection(event) {
         event.preventDefault();
         
-        if (!isAdmin()) {
-            alert('Only administrators can create elections.');
+        // Diagnostic check
+        console.log('=== ELECTION CREATION DIAGNOSTIC ===');
+        console.log('Current User:', currentUser ? currentUser.email : 'NOT LOGGED IN');
+        console.log('Is Admin:', isAdmin());
+        console.log('Database:', database ? 'AVAILABLE' : 'NOT AVAILABLE');
+        console.log('Auth:', auth ? 'AVAILABLE' : 'NOT AVAILABLE');
+        
+        if (!currentUser) {
+            alert('❌ You are not logged in. Please login first.');
+            openLoginModal();
             return;
         }
         
-        if (!database || !currentUser) {
-            alert('Database not available. Please try again.');
+        if (!isAdmin()) {
+            alert('❌ Only administrators can create elections.\n\nYour email: ' + currentUser.email + '\n\nPlease add your email to ADMIN_EMAILS array in the code.');
+            return;
+        }
+        
+        if (!database) {
+            alert('❌ Database not available. Please check:\n1. Firebase is initialized\n2. Database rules allow writes\n3. Check browser console for errors');
+            console.error('Database is null. Check Firebase initialization.');
+            return;
+        }
+        
+        if (!auth) {
+            alert('❌ Authentication not available. Please refresh the page.');
             return;
         }
         
@@ -6935,8 +7016,13 @@ function switchToLogin() {
                 votes: {}
             });
             
-            // Notify all users
-            await createNotificationForAll('New Election Created', `${title} - ${position} election is now open!`, 'election');
+            // Notify all users (don't fail if this errors)
+            try {
+                await createNotificationForAll('New Election Created', `${title} - ${position} election is now open!`, 'election');
+            } catch (notifError) {
+                console.log('Notification creation skipped:', notifError);
+                // Continue even if notifications fail
+            }
             
             alert('✅ Election created successfully!');
             closeCreateElectionModal();
@@ -7099,8 +7185,10 @@ function switchToLogin() {
                 ...candidate
             }));
             
-            // Sort by votes (descending)
-            candidatesArray.sort((a, b) => (b.votes || 0) - (a.votes || 0));
+            // Sort by votes (descending) - but only if election ended, otherwise keep original order
+            if (isEnded) {
+                candidatesArray.sort((a, b) => (b.votes || 0) - (a.votes || 0));
+            }
             
             let html = `
                 <div style="margin-bottom: 2rem;">
@@ -7109,22 +7197,45 @@ function switchToLogin() {
                         <div><i class="fas fa-calendar-alt"></i> <strong>Start:</strong> ${startDate.toLocaleDateString()} ${startDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
                         <div><i class="fas fa-calendar-times"></i> <strong>End:</strong> ${endDate.toLocaleDateString()} ${endDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
                         <div><i class="fas fa-users"></i> <strong>Candidates:</strong> ${candidatesArray.length}</div>
-                        <div><i class="fas fa-vote-yea"></i> <strong>Total Votes:</strong> ${Object.keys(votes).length}</div>
+                        ${isEnded ? `<div><i class="fas fa-vote-yea"></i> <strong>Total Votes:</strong> ${Object.keys(votes).length}</div>` : '<div><i class="fas fa-lock"></i> <strong>Results:</strong> Hidden until results day</div>'}
+                        ${isEnded ? `<div style="color: #4caf50; font-weight: 600;"><i class="fas fa-check-circle"></i> Election Ended</div>` : isActive ? '<div style="color: #ff9800; font-weight: 600;"><i class="fas fa-clock"></i> Voting Active</div>' : '<div style="color: #888;"><i class="fas fa-hourglass-half"></i> Not Started</div>'}
                     </div>
                 </div>
             `;
             
             if (isEnded) {
+                const winner = candidatesArray[0];
+                const hasWinner = winner && winner.votes > 0;
+                
                 html += `
                     <div class="election-results">
                         <div class="results-header">
-                            <h4>Final Results</h4>
+                            ${hasWinner ? `
+                                <div style="text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);">
+                                    <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+                                    <h3 style="font-size: 2rem; margin-bottom: 0.5rem; color: white;">Election Results Are In!</h3>
+                                    <p style="font-size: 1.2rem; opacity: 0.95;">The votes have been counted and the winner has been announced</p>
+                                </div>
+                                <div style="text-align: center; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);">
+                                    <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: #333;">🏆 Congratulations to the Winner! 🏆</h4>
+                                    <p style="font-size: 1.1rem; color: #555; font-weight: 600;">${winner.userName}</p>
+                                </div>
+                            ` : `
+                                <h4 style="text-align: center; color: #333; margin-bottom: 1rem;">Final Results</h4>
+                                <p style="text-align: center; color: #888; margin-bottom: 2rem;">No votes were cast in this election.</p>
+                            `}
                         </div>
                         <div class="candidate-list">
                 `;
             } else {
                 html += `
                     <div class="candidate-list">
+                        <div style="background: #f0f4ff; border-left: 4px solid #667eea; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                            <p style="margin: 0; color: #555; display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-lock" style="color: #667eea;"></i>
+                                <strong>Vote counts are hidden during the election.</strong> Results will be revealed on ${endDate.toLocaleDateString()}!
+                            </p>
+                        </div>
                         <h4 style="margin-bottom: 1rem;">Candidates ${isActive ? '(Voting is Active)' : '(Voting Not Started)'}</h4>
                 `;
             }
@@ -7136,21 +7247,29 @@ function switchToLogin() {
                     const hasVoted = votes[currentUser?.uid] === candidate.id;
                     const canVote = isActive && currentUser && !votes[currentUser.uid];
                     const isWinner = isEnded && index === 0 && candidate.votes > 0;
+                    const voteCount = candidate.votes || 0;
                     
                     html += `
-                        <div class="candidate-card">
+                        <div class="candidate-card ${isWinner ? 'winner-card' : ''}">
                             <div class="candidate-header">
                                 <div class="candidate-info">
-                                    <div class="candidate-avatar">${candidate.userName.charAt(0).toUpperCase()}</div>
+                                    <div class="candidate-avatar ${isWinner ? 'winner-avatar' : ''}">${candidate.userName.charAt(0).toUpperCase()}</div>
                                     <div class="candidate-details">
                                         <h5>${candidate.userName} ${isWinner ? '<span class="winner-badge">🏆 Winner</span>' : ''}</h5>
                                         <p>Registered: ${new Date(candidate.registeredAt).toLocaleDateString()}</p>
                                     </div>
                                 </div>
-                                <div class="vote-count">
-                                    <i class="fas fa-vote-yea"></i>
-                                    <span>${candidate.votes || 0} Vote${(candidate.votes || 0) !== 1 ? 's' : ''}</span>
-                                </div>
+                                ${isEnded ? `
+                                    <div class="vote-count ${isWinner ? 'winner-vote-count' : ''}">
+                                        <i class="fas fa-vote-yea"></i>
+                                        <span>${voteCount} Vote${voteCount !== 1 ? 's' : ''}</span>
+                                    </div>
+                                ` : `
+                                    <div class="vote-count" style="opacity: 0.5;">
+                                        <i class="fas fa-lock"></i>
+                                        <span>Hidden</span>
+                                    </div>
+                                `}
                             </div>
                             <div class="candidate-manifesto">
                                 <strong>Campaign Manifesto:</strong><br>
@@ -7161,7 +7280,15 @@ function switchToLogin() {
                                     <i class="fas fa-link"></i> View Candidate's Post
                                 </a>
                             ` : ''}
-                            ${canVote ? `
+                            ${isEnded ? `
+                                ${isWinner ? `
+                                    <div style="background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); padding: 1rem; border-radius: 10px; text-align: center; margin-top: 1rem;">
+                                        <p style="margin: 0; color: #333; font-weight: 700; font-size: 1.1rem;">
+                                            🎊 Congratulations! You are the winner! 🎊
+                                        </p>
+                                    </div>
+                                ` : ''}
+                            ` : canVote ? `
                                 <button class="vote-button" onclick="castVote('${electionId}', '${candidate.id}')">
                                     <i class="fas fa-check"></i> Vote for ${candidate.userName}
                                 </button>
@@ -7276,14 +7403,21 @@ function switchToLogin() {
             const usersSnapshot = await usersRef.once('value');
             const users = usersSnapshot.val();
             
-            if (users) {
-                const promises = Object.keys(users).map(userId => 
-                    createNotification(userId, message, type)
-                );
-                await Promise.all(promises);
+            if (users && Object.keys(users).length > 0) {
+                // Create notifications one by one to avoid overwhelming the database
+                const userIds = Object.keys(users);
+                for (const userId of userIds) {
+                    try {
+                        await createNotification(userId, message, type);
+                    } catch (err) {
+                        console.log(`Failed to notify user ${userId}:`, err);
+                        // Continue with other users
+                    }
+                }
             }
         } catch (error) {
             console.error('Error creating notifications for all:', error);
+            // Don't throw - this is not critical
         }
     }
 
@@ -8441,4 +8575,5 @@ function switchToLogin() {
 
 </body>
 </html>
+
 
