@@ -4243,6 +4243,7 @@ body.modal-open {
                 <button class="tab-btn" onclick="showTab('mentorship')"><i class="fas fa-handshake"></i> Mentorship</button>
                 <button class="tab-btn" onclick="showTab('analytics')"><i class="fas fa-chart-bar"></i> Analytics</button>
                 <button class="tab-btn" onclick="showTab('elections')"><i class="fas fa-vote-yea"></i> Election Hub</button>
+                <button class="tab-btn" onclick="showTab('admin')" id="admin-tab-btn" style="display: none;"><i class="fas fa-cog"></i> Admin Panel</button>
                 <button class="tab-btn" onclick="showTab('profile')"><i class="fas fa-user"></i> Profile</button>
             </div>
 
@@ -4375,7 +4376,7 @@ body.modal-open {
                             <p><strong><i class="fas fa-coins"></i> Prize Pool:</strong> ₹1,00,000</p>
                             <p><strong>📍 Mode:</strong> Online</p>
                         </div>
-                        <button onclick="applyToOpportunity('hackathon1')" class="btn btn-primary">Join Now →</button>
+                        <a href="https://example.com/hackathon1" target="_blank" class="btn btn-primary" style="text-decoration: none; display: inline-block; width: 100%; text-align: center;">Join Now →</a>
                     </div>
 
                     <!-- Internship 1 -->
@@ -4388,7 +4389,7 @@ body.modal-open {
                             <p><strong><i class="fas fa-coins"></i> Stipend:</strong> ₹15,000/month</p>
                             <p><strong>📍 Location:</strong> Remote</p>
                         </div>
-                        <button onclick="applyToOpportunity('internship1')" class="btn btn-primary">Apply Now →</button>
+                        <a href="https://example.com/internship1" target="_blank" class="btn btn-primary" style="text-decoration: none; display: inline-block; width: 100%; text-align: center;">Apply Now →</a>
                     </div>
 
                     <!-- Hackathon 2 -->
@@ -4401,7 +4402,7 @@ body.modal-open {
                             <p><strong><i class="fas fa-coins"></i> Prize Pool:</strong> ₹75,000</p>
                             <p><strong>📍 Mode:</strong> Online</p>
                         </div>
-                        <button onclick="applyToOpportunity('hackathon2')" class="btn btn-primary">Join Now →</button>
+                        <a href="https://example.com/hackathon2" target="_blank" class="btn btn-primary" style="text-decoration: none; display: inline-block; width: 100%; text-align: center;">Join Now →</a>
                     </div>
 
                     <!-- Internship 2 -->
@@ -4414,7 +4415,7 @@ body.modal-open {
                             <p><strong><i class="fas fa-coins"></i> Stipend:</strong> ₹12,000/month</p>
                             <p><strong>📍 Location:</strong> Hybrid</p>
                         </div>
-                        <button onclick="applyToOpportunity('internship2')" class="btn btn-primary">Apply Now →</button>
+                        <a href="https://example.com/internship2" target="_blank" class="btn btn-primary" style="text-decoration: none; display: inline-block; width: 100%; text-align: center;">Apply Now →</a>
                     </div>
                 </div>
 
@@ -4539,6 +4540,17 @@ body.modal-open {
                             <input type="text" id="discussion-message-input" placeholder="Type your message...">
                             <button class="btn btn-primary" onclick="sendDiscussionMessage()">Send</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Panel Tab -->
+            <div id="admin-tab" class="tab-content">
+                <h3><i class="fas fa-cog"></i> Admin Panel</h3>
+                <div style="margin-bottom: 2rem;">
+                    <h4><i class="fas fa-handshake"></i> Mentorship Requests</h4>
+                    <div id="mentor-requests-list" style="margin-top: 1rem;">
+                        <p style="text-align: center; color: #888;">Loading requests...</p>
                     </div>
                 </div>
             </div>
@@ -4688,7 +4700,7 @@ body.modal-open {
                         <option value="Student Council Vice President">Student Council Vice President</option>
                         <option value="Secretary">Secretary</option>
                         <option value="Treasurer">Treasurer</option>
-                      <option value="Other">Boy with most Girlfriend</option>
+                      <option value="Treasurer">Boy with most girlfriend</option>
                         <option value="Other">Other</option>
                     </select>
                 </div>
@@ -5826,6 +5838,30 @@ function switchToLogin() {
                 // Also load profile data to ensure photo and bio are loaded
                 loadUserProfileData();
                 
+                // Force update dashboard photo and bio immediately
+                if (userData?.profilePhoto) {
+                    const dashboardPhoto = document.getElementById('dashboard-profile-photo');
+                    if (dashboardPhoto) {
+                        dashboardPhoto.src = userData.profilePhoto;
+                        dashboardPhoto.onerror = function() {
+                            this.src = "https://via.placeholder.com/120/667eea/ffffff?text=User";
+                        };
+                    }
+                }
+                
+                if (userData?.bio) {
+                    const dashboardBio = document.getElementById('dashboard-user-bio');
+                    if (dashboardBio) {
+                        dashboardBio.textContent = userData.bio;
+                    }
+                }
+                
+                // Update admin tab visibility
+                const adminTabBtn = document.getElementById('admin-tab-btn');
+                if (adminTabBtn) {
+                    adminTabBtn.style.display = isAdmin() ? 'block' : 'none';
+                }
+                
                 console.log('✅ Dashboard updated with name:', userName);
             });
         } else {
@@ -5904,6 +5940,13 @@ function switchToLogin() {
         } else if (tabName === 'elections') {
             loadElections();
             checkAdminStatus();
+        } else if (tabName === 'admin') {
+            if (isAdmin()) {
+                loadMentorRequests();
+            } else {
+                alert('Access denied. Admin only.');
+                showTab('home');
+            }
         }
     }
 
@@ -6190,8 +6233,34 @@ function switchToLogin() {
         }
         
         try {
+            // Get course details first
+            const courseRef = database.ref('courses/' + courseId);
+            const courseSnapshot = await courseRef.once('value');
+            let courseData = courseSnapshot.val();
+            
+            // If course doesn't exist in database, create basic structure
+            if (!courseData) {
+                const courseTitles = {
+                    1: 'JavaScript Basics',
+                    2: 'React Masterclass',
+                    3: 'Python for Beginners'
+                };
+                courseData = {
+                    title: courseTitles[courseId] || `Course ${courseId}`,
+                    description: 'Learn and master this course',
+                    duration: '5 hours',
+                    lessons: [
+                        { title: 'Introduction', completed: false },
+                        { title: 'Getting Started', completed: false },
+                        { title: 'Advanced Concepts', completed: false }
+                    ]
+                };
+                await courseRef.set(courseData);
+            }
+            
             await database.ref('userCourses/' + currentUser.uid).push({
                 courseId: courseId,
+                courseTitle: courseData.title,
                 enrolledAt: new Date().toISOString(),
                 progress: 0
             });
@@ -6257,7 +6326,7 @@ function switchToLogin() {
         
         try {
             const coursesRef = database.ref('userCourses/' + currentUser.uid);
-            coursesRef.once('value', (snapshot) => {
+            coursesRef.once('value', async (snapshot) => {
                 const courses = snapshot.val();
                 const myCoursesList = document.getElementById('my-courses-list');
                 
@@ -6266,23 +6335,62 @@ function switchToLogin() {
                     return;
                 }
                 
+                // Get course details from courses list
+                const allCoursesRef = database.ref('courses');
+                const allCoursesSnapshot = await allCoursesRef.once('value');
+                const allCourses = allCoursesSnapshot.val() || {};
+                
                 let html = '';
-                Object.values(courses).forEach(course => {
+                for (const [enrollmentId, enrollment] of Object.entries(courses)) {
+                    const courseId = enrollment.courseId;
+                    const courseData = allCourses[courseId] || {
+                        title: `Course ${courseId}`,
+                        description: 'Course content will be available soon',
+                        duration: 'N/A',
+                        lessons: []
+                    };
+                    
                     html += `
-                        <div class="course-card">
-                            <h4>Course ${course.courseId}</h4>
-                            <p>Progress: ${course.progress}%</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${course.progress}%"></div>
+                        <div class="course-card" style="margin-bottom: 1.5rem;">
+                            <h4>${courseData.title || `Course ${courseId}`}</h4>
+                            <p>${courseData.description || 'Course description'}</p>
+                            <p><strong>Duration:</strong> ${courseData.duration || 'N/A'}</p>
+                            <p><strong>Progress:</strong> ${enrollment.progress || 0}%</p>
+                            <div class="progress-bar" style="margin: 1rem 0;">
+                                <div class="progress-fill" style="width: ${enrollment.progress || 0}%"></div>
                             </div>
+                            ${courseData.lessons && courseData.lessons.length > 0 ? `
+                                <div style="margin-top: 1rem;">
+                                    <h5 style="margin-bottom: 0.5rem;">Lessons:</h5>
+                                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                        ${courseData.lessons.map((lesson, index) => `
+                                            <div style="padding: 0.8rem; background: #f5f5f5; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                                <span>${index + 1}. ${lesson.title || `Lesson ${index + 1}`}</span>
+                                                ${lesson.completed ? '<span style="color: #4caf50;">✓ Completed</span>' : '<button class="btn btn-primary" style="padding: 0.3rem 1rem; font-size: 0.85rem;" onclick="openCourseLesson(${courseId}, ${index})">Start</button>'}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : `
+                                <p style="color: #888; font-style: italic; margin-top: 1rem;">Course content is being prepared. Check back soon!</p>
+                            `}
+                            <button class="btn btn-primary" onclick="viewCourseDetails(${courseId})" style="margin-top: 1rem; width: 100%;">View Course Details</button>
                         </div>
                     `;
-                });
+                }
                 myCoursesList.innerHTML = html;
             });
         } catch (error) {
             console.error('Error loading my courses:', error);
         }
+    }
+    
+    function viewCourseDetails(courseId) {
+        alert('Course details feature coming soon! Course ID: ' + courseId);
+    }
+    
+    function openCourseLesson(courseId, lessonIndex) {
+        alert(`Opening lesson ${lessonIndex + 1} of course ${courseId}. This feature will be available soon!`);
     }
 
     function loadLearningContent() {
@@ -6799,6 +6907,12 @@ function switchToLogin() {
     }
     
     function checkAdminStatus() {
+        // Show/hide admin tab button
+        const adminTabBtn = document.getElementById('admin-tab-btn');
+        if (adminTabBtn) {
+            adminTabBtn.style.display = isAdmin() ? 'block' : 'none';
+        }
+        // Show/hide create election button
         const createBtn = document.getElementById('create-election-btn');
         if (createBtn) {
             createBtn.style.display = isAdmin() ? 'block' : 'none';
@@ -7433,6 +7547,8 @@ function switchToLogin() {
         try {
             await database.ref('mentorRequests').push({
                 userId: currentUser.uid,
+                userName: currentUser.displayName || currentUser.email.split('@')[0],
+                userEmail: currentUser.email,
                 mentor: mentor,
                 message: message,
                 date: date,
@@ -7445,6 +7561,113 @@ function switchToLogin() {
         } catch (error) {
             console.error('Error submitting mentor request:', error);
             alert('Error submitting request');
+        }
+    }
+    
+    // Admin function to load and reply to mentorship requests
+    async function loadMentorRequests() {
+        if (!isAdmin() || !database) return;
+        
+        try {
+            const requestsRef = database.ref('mentorRequests');
+            requestsRef.once('value', (snapshot) => {
+                const requests = snapshot.val();
+                const requestsList = document.getElementById('mentor-requests-list');
+                
+                if (!requests || !requestsList) {
+                    if (requestsList) requestsList.innerHTML = '<p style="text-align: center; color: #888;">No mentorship requests yet.</p>';
+                    return;
+                }
+                
+                let html = '';
+                const requestsArray = Object.entries(requests)
+                    .map(([id, request]) => ({ id, ...request }))
+                    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                
+                requestsArray.forEach(request => {
+                    const statusClass = request.status === 'replied' ? 'success' : request.status === 'pending' ? 'warning' : 'info';
+                    html += `
+                        <div class="request-card" style="background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                <div>
+                                    <h4 style="margin: 0 0 0.5rem 0;">${request.userName || 'User'}</h4>
+                                    <p style="margin: 0; color: #666; font-size: 0.9rem;">${request.userEmail || ''}</p>
+                                </div>
+                                <span class="status-badge ${statusClass}" style="padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; background: ${statusClass === 'success' ? '#4caf50' : statusClass === 'warning' ? '#ff9800' : '#2196f3'}; color: white;">
+                                    ${request.status || 'pending'}
+                                </span>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <p><strong>Mentor Requested:</strong> ${request.mentor || 'N/A'}</p>
+                                <p><strong>Preferred Date:</strong> ${request.date ? new Date(request.date).toLocaleDateString() : 'Not specified'}</p>
+                                <p><strong>Message:</strong></p>
+                                <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; margin-top: 0.5rem;">
+                                    ${request.message || 'No message provided'}
+                                </div>
+                            </div>
+                            ${request.reply ? `
+                                <div style="background: #e8f5e9; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                                    <p style="margin: 0 0 0.5rem 0;"><strong>Your Reply:</strong></p>
+                                    <p style="margin: 0;">${request.reply}</p>
+                                    <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem; color: #666;">Replied on: ${request.repliedAt ? new Date(request.repliedAt).toLocaleString() : 'N/A'}</p>
+                                </div>
+                            ` : ''}
+                            ${request.status !== 'replied' ? `
+                                <div style="display: flex; gap: 1rem;">
+                                    <textarea id="reply-${request.id}" placeholder="Type your reply here..." style="flex: 1; padding: 0.8rem; border: 2px solid #ddd; border-radius: 8px; font-family: inherit; resize: vertical; min-height: 80px;"></textarea>
+                                    <button onclick="replyToMentorRequest('${request.id}')" class="btn btn-primary" style="align-self: flex-start;">Send Reply</button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+                
+                requestsList.innerHTML = html;
+            });
+        } catch (error) {
+            console.error('Error loading mentor requests:', error);
+            const requestsList = document.getElementById('mentor-requests-list');
+            if (requestsList) requestsList.innerHTML = '<p style="color: red;">Error loading requests.</p>';
+        }
+    }
+    
+    async function replyToMentorRequest(requestId) {
+        if (!isAdmin() || !database) return;
+        
+        const replyTextarea = document.getElementById(`reply-${requestId}`);
+        const replyText = replyTextarea?.value.trim();
+        
+        if (!replyText) {
+            alert('Please enter a reply message.');
+            return;
+        }
+        
+        try {
+            const requestRef = database.ref(`mentorRequests/${requestId}`);
+            await requestRef.update({
+                reply: replyText,
+                status: 'replied',
+                repliedAt: new Date().toISOString(),
+                repliedBy: currentUser.email
+            });
+            
+            // Get user info to send notification
+            const requestSnapshot = await requestRef.once('value');
+            const requestData = requestSnapshot.val();
+            
+            if (requestData?.userId) {
+                await createNotification(
+                    requestData.userId,
+                    `Your mentorship request has been replied! Check your notifications.`,
+                    'mentorship'
+                );
+            }
+            
+            alert('✅ Reply sent successfully!');
+            loadMentorRequests(); // Reload to show updated status
+        } catch (error) {
+            console.error('Error replying to mentor request:', error);
+            alert('Error sending reply: ' + error.message);
         }
     }
 
@@ -8570,6 +8793,12 @@ function switchToLogin() {
 
 
     console.log('✅ All authentication functions loaded!');
+
+
+</script>
+
+</body>
+</html>
 
 
 </script>
