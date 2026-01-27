@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- 
+
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Express Your Thoughts</title>
@@ -47,21 +47,41 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://expressyourthoughts.live">
     
-    <!-- Structured Data for Search Engines -->
-    <script type="application/ld+json">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Express Your Thoughts",
-        "url": "https://expressyourthoughts.live",
-        "description": "Platform for sharing innovative ideas and future plans with cash prize contests",
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "email": "dileepchoudhary1008@gmail.com",
-            "contactType": "customer support"
-        }
+      "@type": "Person",
+      "@id": "https://expressyourthoughts.live/#person",
+      "name": "Dileep Choudhary",
+      "jobTitle": "Entrepreneur",
+      "description": "Founder and CEO of Express Your Thoughts and Sports Association of Tonk.",
+      "birthPlace": "Tonk, Rajasthan",
+      "url": "https://expressyourthoughts.live",
+      "sameAs": [
+        "https://www.twine.net/Dileepmatrix",
+        "https://about.me/dileepchoudhary"
+      ],
+      "worksFor": { "@id": "https://expressyourthoughts.live/#organization" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://expressyourthoughts.live/#organization",
+      "name": "Express Your Thoughts",
+      "url": "https://expressyourthoughts.live",
+      "logo": "https://expressyourthoughts.live/logo.png",
+      "description": "Platform for sharing innovative ideas and future plans.",
+      "founder": { "@id": "https://expressyourthoughts.live/#person" },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "dileepchoudhary1008@gmail.com",
+        "contactType": "customer support"
+      }
     }
-    </script>
+  ]
+}
+</script>
     <style>
         * {
             margin: 0;
@@ -8790,34 +8810,10 @@ function switchToLogin() {
 
     console.log('✅ All authentication functions loaded!');
 
+
  
 
- <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "@id": "https://expressyourthoughts.live/#person",
-  "name": "Dileep Choudhary",
-  "jobTitle": "Entrepreneur",
-  "birthPlace": "Tonk, Rajasthan",
-  "url": "https://expressyourthoughts.live",
-  "mainEntityOfPage": "https://expressyourthoughts.live",
-  "sameAs": [
-    "https://www.twine.net/Dileepmatrix",
-    "https://about.me/dileepchoudhary"
-  ],
-  "brand": [
-    {
-      "@type": "Brand",
-      "name": "Express Your Thoughts"
-    },
-    {
-      "@type": "Brand",
-      "name": "Sports Association of Tonk"
-    }
-  ]
-}
-</script>
+ </script>
 
 </body>
 </html>
